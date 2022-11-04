@@ -1,0 +1,26 @@
+
+POLITOCEAN COMPUTER VISION TASKS
+
+TASK 1:
+	1.4: piloting into resident ROV docking station
+		- identify docking station -> 1 meter cubed half-inch PVC pipe
+		- push button -> length of half-inch PVC pipe with an end cap on one
+		end inserted into a 3/4-inch by half-inch tee
+		
+TASK 2:
+	2.1: inspecting an offshore aquaculture fish pen
+		- follow transect line -> identify line with red rope
+	2.2: maintaining a healthy environment
+		- distinguish morts and live fish from a video -> highlight morts 
+		in a red box (training videos on the official website). Morts are
+		simulated by rubber fish
+	2.3: measure fish size
+		- measure the size of 3 fish (between 35 and 65 cm with 2 cm precision)
+
+TASK 3:
+	3.2: endurance22
+		- identify lines in image
+		- identify the wreck -> half-inch PVC pipe painted brown 
+		(and reconstruct mapping)
+		- stitch 8 images together to recreate mapping
+		- measure length of the wreck

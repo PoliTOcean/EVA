@@ -1,0 +1,8 @@
+paho-mqtt
+PyYAML
+pyyaml-include
+PyQt5
+pyqtgraph
+PySDL2
+pysdl2-dll
+opencv-python

@@ -1,0 +1,5 @@
+address: "10.0.0.254"
+port: 1883
+id: "politocean-gui"
+topics:
+  components: "components/"

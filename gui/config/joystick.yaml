@@ -1,0 +1,53 @@
+buttons:
+  A:
+    onPress: "TOGGLE THRUSTERS"
+    onRelease:
+  B:
+    onPress: "CLOSE NIPPER"
+    onRelease: "STOP NIPPER"
+  X:
+    onPress: "OPEN NIPPER"
+    onRelease: "STOP NIPPER"
+  Y:
+    onPress: "TOGGLE ARM"
+    onRelease:
+  Back:
+    onPress: "RESET"
+    onRelease:
+  Guide:
+    onPress: "TOGGLE POWER"
+    onRelease:
+  Start:
+    onPress:
+    onRelease:
+  LS:
+    onPress:
+    onRelease:
+  RS:
+    onPress:
+    onRelease:
+  LB:
+    onPress: "DECREASE SPEED"
+    onRelease:
+  RB:
+    onPress: "INCREASE SPEED"
+    onRelease:
+  D-Pad-Up:
+    onPress: "MOVE SHOULDER UP"
+    onRelease: "STOP SHOULDER"
+  D-Pad-Down:
+    onPress: "MOVE SHOULDER DOWN"
+    onRelease: "STOP SHOULDER"
+  D-Pad-Left:
+    onPress: "ROTATE WRIST CCW"
+    onRelease: "STOP WRIST"
+  D-Pad-Right:
+    onPress: "ROTATE WRIST CW"
+    onRelease: "STOP WRIST"
+axes:
+  LSB-X: "X"
+  LSB-Y: "Y"
+  RSB-X: "YAW"
+  RSB-Y: "PITCH"
+  LT: "Z_DOWN"
+  RT: "Z_UP"

@@ -1,0 +1,29 @@
+{
+    "Xbox One S Controller": {
+        "buttons": [
+            "A",
+            "B",
+            "X",
+            "Y",
+            "Back",
+            "Guide",
+            "Start",
+            "LS",
+            "RS",
+            "LB",
+            "RB",
+            "D-Pad-Up",
+            "D-Pad-Down",
+            "D-Pad-Left",
+            "D-Pad-Right"
+        ],
+        "axes": [
+            "LSB-X",
+            "LSB-Y",
+            "RSB-X",
+            "RSB-Y",
+            "LT",
+            "RT"
+        ]
+    }
+}

@@ -1,0 +1,15 @@
+- id: depth
+  name: Depth
+  units: meters
+
+- id: temperature
+  name: Temperature
+  units: degrees
+
+- id: voltage
+  name: Voltage
+  units: volts
+
+- id: current
+  name: Current
+  units: ampere
