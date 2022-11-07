@@ -1,0 +1,317 @@
+<!-- copy below in html.h -->
+
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='https://fonts.googleapis.com/css?family=Poppins|Poppins:300,400,500,700' type="text/css" rel='stylesheet'>
+    <title>PolitOcean ESP Bridge</title>
+    <style>
+    body {
+      margin:0; 
+    }
+    .text1 {
+      position: absolute;
+      font-family: 'Poppins';
+      font-weight: bold;
+      color: #2a2860;
+      font-size: 1.32vw;
+    }
+    .text2 {
+      position: absolute;
+      font-family: 'Poppins';
+      font-weight: lighter;
+      color: #1c1c1c;
+      font-size: 1.32vw;
+    }
+    .line {
+      position: absolute;
+      height:0.146vw;
+      width:16.9vw;
+      border-width:0;
+      background-color: #A9A9A9;
+    }
+    .input {
+      position: absolute;
+      border: none;
+      background: transparent;
+      outline: none;
+    }
+    .button {
+      position: absolute;
+      background-color: #2a2860;
+      border-color: #2a2860;
+      border-style: solid;
+      color: white;
+      border-radius: 1.32vw;
+      -moz-border-radius: 1.32vw;
+      -webkit-border-radius: 1.32vw;
+      width: 10.03vw;
+      height: 3.15vw;
+      font-size: 1.17vw;
+      outline: none;
+      cursor: pointer;
+    }
+    .button:hover {
+      -webkit-transition-duration: 0.4s;
+      transition-duration: 0.4s;
+      background-color: #72a2d7;
+      border-color: #72a2d7;
+    }
+    .button:active {
+      background-color: #4575a8;
+      border-color: #4575a8;
+    }
+    .button2 {
+      position: absolute;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      text-decoration-line: underline;
+      cursor: pointer;
+    }
+    .button2:hover {
+      -webkit-transition-duration: 0.4s;
+      transition-duration: 0.4s;
+      color: #1c1c1c;
+    }
+    .button2:active {
+      color: black;
+    }
+    .dropDownMenu {
+      position: absolute;
+      background-color: #dcdcdc;
+      border-color: #dcdcdc;
+      border-style: solid;
+      border-radius: 0.88vw;
+      -moz-border-radius: 0.88vw;
+      -webkit-border-radius: 0.88vw;
+      width: 10.03vw;
+      height: 3.15vw;
+      padding: 0.5vw;
+      outline: none;
+      cursor: pointer;
+    }
+    .window {
+      position: absolute;
+      background-color: #f9f9f9;
+      border-color: #f9f9f9;
+      border-style: solid;
+      border-radius: 2.2vw;
+      -moz-border-radius: 2.2vw;
+      -webkit-border-radius: 2.2vw;
+      width: 54.17vw;
+      height: 35.14vw;
+      -moz-box-shadow:    0vw 0.25vw 1.1vw -0.37vw black;
+      -webkit-box-shadow: 0vw 0.25vw 1.1vw -0.37vw black;
+      box-shadow: 0vw 0.25vw 1.1vw -0.37vw black;
+    }
+    .msgWindow {
+      position: absolute;
+      background-color: #dcdcdc;
+      border-color: #dcdcdc;
+      border-style: solid;
+      border-radius: 1.46vw;
+      -moz-border-radius: 1.46vw;
+      -webkit-border-radius: 1.46vw;
+      width: 48.32vw;
+      height: 21.6vw;
+    }
+    .msgBox {
+      position: absolute;
+      width: 47vw;
+      height: 21vw;
+      color: #1c1c1c;
+      font-size: 1.32vw;
+      overflow: scroll;
+      overflow-wrap: break-word;
+    }
+    ::-webkit-scrollbar {
+      width: 1.02vw;
+      height: 1.32vw;
+    }
+    ::-webkit-scrollbar-thumb {
+      height: 0.44vw;
+      border: 0.3vw solid rgba(0, 0, 0, 0);
+      background-clip: padding-box;
+      -webkit-border-radius: 0.51vw;
+      background-color: rgba(0, 0, 0, 0.15);
+      -webkit-box-shadow: inset -0.07vw -0.07vw 0vw rgba(0, 0, 0, 0.05), inset 0.07vw 0.07vw 0vw rgba(0, 0, 0, 0.05);
+    }
+    ::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+    ::-webkit-scrollbar-corner {
+      background-color: transparent;
+    }
+    .form {
+      position: absolute;
+      top: 0vw;
+      right: 0vw;
+      left: 0vw;
+      down: 0vw;
+    }
+    </style>
+</head>
+<body>
+  <div style="position:fixed;width:35vw;height:100vh;background-color:#f9f9f9"></div>
+  <div style="position:fixed;width:65vw;height:100vh;left:35vw;background-color:#72a2d7"></div>
+
+    <form class="form" action="setap" method="post">
+    <svg id="Logo" xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:5vw" width="9vw" height="9vw" viewBox="0 0 340 100">
+      <defs><style>.cls-1{fill:#4271b5;}.cls-2{fill:#2a2860;}.cls-3{fill:#72a2d7;}</style></defs>
+      <path class="cls-1" d="M12.63,72.31h-6V28.43H18q7.25,0,7.25,7.52V46a8.89,8.89,0,0,1-2.94,7.12q-2.94,2.53-8.63,2.54h-1Zm0-21.57h1a7,7,0,0,0,4.19-1,3.93,3.93,0,0,0,1.38-3.36V35.28c.08-1.3-.63-2-2.13-2H12.63Z"/>
+      <path class="cls-1" d="M43.38,72.31q-7.25,0-7.25-7.45V36q0-7.51,7.19-7.52h5.13q7.19,0,7.19,7.52V64.86q0,7.45-7.25,7.45Zm4.19-4.89c1.38,0,2.07-.75,2.07-2.26V35.58c0-1.5-.8-2.26-2.38-2.26H44.45a2,2,0,0,0-2.32,2.26V65.16c0,1.51.8,2.26,2.38,2.26Z"/>
+      <path class="cls-1" d="M80.76,72.31H67.51V28.43h6v39h7.25Z"/>
+      <path class="cls-1" d="M91.08,72.31V28.43h6V72.31Z"/>
+      <path class="cls-1" d="M248.58,60.82v4q0,7.45-7.18,7.45h-3.88q-7.19,0-7.19-7.45v-29q0-7.45,7.19-7.46h3.88q7.18,0,7.18,7.46v6.17h-6V35.89c0-1.71-.89-2.57-2.69-2.57h-1.18c-1.59,0-2.38.86-2.38,2.57v29c0,1.71.79,2.56,2.38,2.56h1.5c1.58,0,2.37-.85,2.37-2.56v-4Z"/>
+      <path class="cls-1" d="M259.52,72.31V28.43h13.25v4.89h-7.25v15h7.25v4.88h-7.25V67.42h7.25v4.89Z"/>
+      <path class="cls-1" d="M289.4,72.31h-6V36q0-7.51,7.18-7.52h4.51q7.19,0,7.18,7.52V72.31h-6V56.24H289.4Zm6.87-21.39V36.32a2.29,2.29,0,0,0-2.62-2.57H292a2.29,2.29,0,0,0-2.62,2.57v14.6Z"/>
+      <path class="cls-1" d="M326.27,28.43h6V72.31h-6V63.57l-6.43-20V72.31h-6V28.43h6l6.43,21.21Z"/>
+      <path class="cls-2" d="M176,93.48A42.69,42.69,0,1,1,216.53,64.2a2.12,2.12,0,0,1-2.13,1.49A2.07,2.07,0,0,1,212.59,63a38.61,38.61,0,1,0-10.84,16.51,2.12,2.12,0,0,1,2.45-.35,2.06,2.06,0,0,1,.39,3.34A42.55,42.55,0,0,1,176,93.48Z"/>
+      <path class="cls-1" d="M210.8,40.69a2.08,2.08,0,0,1-1.94-1.35,34.67,34.67,0,0,0-5.07-9.11,2.13,2.13,0,0,1-.18-2.47,2.08,2.08,0,0,1,3.37-.15,38.72,38.72,0,0,1,5.72,10.21,2.07,2.07,0,0,1-1.9,2.87Z"/>
+      <path class="cls-1" d="M176,89.51a38.73,38.73,0,1,1,20.72-71.45,2.11,2.11,0,0,1,.92,2.43,2.07,2.07,0,0,1-3.07,1.09,34.6,34.6,0,1,0,4.52,55,2.12,2.12,0,0,1,2.46-.36,2.06,2.06,0,0,1,.39,3.34A38.61,38.61,0,0,1,176,89.51Z"/>
+      <path class="cls-3" d="M176,85.54A34.76,34.76,0,0,1,176,16a34.4,34.4,0,0,1,4.76.33,2.11,2.11,0,0,1,1.84,1.83,2.06,2.06,0,0,1-2.34,2.26,31.87,31.87,0,0,0-4.26-.29A30.63,30.63,0,1,0,196.42,73.6a2.12,2.12,0,0,1,2.46-.36,2.07,2.07,0,0,1,.39,3.35A34.68,34.68,0,0,1,176,85.54Z"/>
+      <path class="cls-2" d="M119.22,33.09V72.32h-5.87V33.09h-5.62V28.17h17.11v4.92Z"/>
+    </svg>
+    <label class="text1" style="top:7.5vw;left:5vw;font-size:3vw">Settings</label>
+    <label class="text1" style="top:13.5vw;left:5vw">AP IP</label>
+    <input class="input text2" style="top:13.5vw;left:12.5vw" name="ip" type="text" value="%s" size="22" maxlength="15" title="Choose an IP address" />
+    <hr class="line" style="top:14.75vw;left:12.5vw;">
+    <label class="text1" style="top:17.5vw;left:5vw">AP SSID</label>
+    <input class="input text2" style="top:17.5vw;left:12.5vw" name="ssid" type="text" value="%s" size="22" maxlength="32" title="SSID max 32 character" />
+    <hr class="line" style="top:19vw;left:12.5vw;">
+    <label class="text1" style="top:21.5vw;left:5vw">AP PSW</label>
+        <input class="input text2" style="top:21.5vw;left:12.5vw" name="pswd" type="password" placeholder="new password" size="22" minlength="8" maxlength="32" title="Password between 8 and 32 character"/>
+    <hr class="line" style="top:23vw;left:12.5vw;">
+        <button class="text2 button" style="top:27vw;left:5vw;" type="submit" title="Update credential"/>Update</button>
+    <button id="resetESP" class="text1 button2" type="text" style="top:27.5vw;left:20vw" title="Reset ESP board" onclick="resetEsp()" />Reset ESP</button>
+    
+    <label class="text1" style="top:34vw;left:5vw">Local IP</label>
+    <label class="text2" style="top:34vw;left:16vw">%s</label>
+    <label class="text1" style="top:36.4vw;left:5vw">Gateway</label>
+        <label class="text2" style="top:36.4vw;left:16vw">%s</label>
+    <label class="text1" style="top:38.8vw;left:5vw">SubnetMask</label>
+        <label class="text2" style="top:38.8vw;left:16vw">%s</label>
+    <label class="text1" style="top:41.2vw;left:5vw">DNS</label>
+        <label class="text2" style="top:41.2vw;left:16vw">%s</label> 
+    </form>
+  <div class="form">
+    <div class="window" style="top:7.47vw;left:40.26vw"></div>  
+    <input id="textToSend" class="input text2" style="top:10.61vw;left:43.34vw" type="text" placeholder="message" size="56" title="Message to send" onkeypress="sendIfEnter(event)">
+    <hr class="line" style="top:12.08vw;left:43.38vw;height:0.073vw;width:37vw;background-color:#707070">
+    <button id="send" class="text2 button" type="text" style="top:9.81vw;left:82vw" title="Send message to Arduino" onclick="sendmsg()" />Send</button>
+    <div class="msgWindow" style="top:14.64vw;left:43.2vw"></div>
+    <div id="msgBox" class="msgBox" style="top:15.8vw;left:44.8vw"></div>
+    <button id="resetArduino" class="text1 button2" type="text" style="top:38.8vw;left:43.1vw" title="Reset connected Arduino board" onclick="resetUno()" />Reset Arduino</button>
+    <select id="LineEnding" class="dropDownMenu text2" style="top:38.21vw;left:67vw;width:13.5vw;font-size:1.12vw" title="Message ending characters">
+                    <option>No line ending</option>
+                    <option>Newline [\n]</option>
+                    <option>Carriage return [\r]</option>
+                    <option>Both NL&CR [\r\n]</option>
+        </select>
+    <select id="BandrateList" class="dropDownMenu text2" style="top:38.21vw;left:82vw;font-size:1.12vw" title="Transmission baudrate">
+                        <option>300</option>
+                        <option>1200</option>
+                        <option>2400</option>
+                        <option>4800</option>
+                        <option>9600</option>
+                        <option>14400</option>
+                        <option>19200</option>
+                        <option>28800</option>
+                        <option>38400</option>
+                        <option>57600</option>
+                        <option>74880</option>
+                        <option selected="selected">115200</option>
+                        <option>128000</option>
+                        <option>230400</option>
+                        <option>250000</option>
+                        <option>1000000</option>
+                        <option>2000000</option>
+        </select>
+    
+    <label class="text1" style="top:45.5vw;right:2.5vw;font-weight:400;font-size: 0.85vw">Version %s</label> 
+    </div>
+  <script>
+        var updateBaudrate = function (baudrate) {
+            var getBaudrate = new XMLHttpRequest();
+
+            getBaudrate.onload = function () {
+                document.getElementById("BandrateList").value = this.responseText;
+            };
+            var hostString = '/getbaudrate';
+            if (baudrate) parseInt(baudrate, 10);
+            if (baudrate) {
+                hostString += "?baudrate=" + baudrate;
+            }
+            getBaudrate.open('GET', hostString);
+            getBaudrate.send();
+        }
+
+        document.getElementById("BandrateList").onchange = function () {
+            updateBaudrate(this.value);
+        }
+
+        updateBaudrate();
+
+    var resetEsp = function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/log/resetEsp', false);
+            xhr.send();
+        };
+        var resetUno = function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/log/reset', false);
+            xhr.send();
+        };
+        var ip_addr = document.location.hostname;
+        var socket = new WebSocket('ws://' + ip_addr + ':81/', ['arduino']);
+        socket.onopen = function (event) {
+            document.getElementById("msgBox").innerHTML = "[LOG]Serial Monitor at " + document.location.hostname + "<br />";
+        };
+        socket.onmessage = function (event) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var rxdata = reader.result;
+        rxdata = rxdata.replace(/(?:\r\n|\r|\n)/g, '<br>');
+                document.getElementById("msgBox").innerHTML += rxdata;    
+            }
+            reader.readAsText(event.data);
+        };
+        socket.onclose = function (event) {
+            document.getElementById("msgBox").innerHTML += "<br />[LOG]Serial Monitor Disconnected<br />";
+        };
+        socket.onerror = function (event) {
+            document.getElementById("msgBox").innerHTML += "<br />[LOG]Serial Monitor Disconnected<br />";
+        };
+        var sendmsg = function () {
+            var text = document.getElementById("textToSend").value;
+            var line_ending_index = document.getElementById("LineEnding").selectedIndex;
+            if (!text) return;
+            switch (line_ending_index) {
+                case 1:
+                    text += '\n';
+                    break;
+                case 2:
+                    text += '\r';
+                    break;
+                case 3:
+                    text += "\n\r";
+            }
+            if (socket.readyState == 1) socket.send(text);
+            document.getElementById("textToSend").focus();
+            document.getElementById("textToSend").select();
+        };
+        var sendIfEnter = function (event) {
+            if (event.keyCode == 13) {
+                sendmsg();
+            }
+        };
+    </script>
+</body>
+</html>
