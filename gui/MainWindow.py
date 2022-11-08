@@ -39,6 +39,7 @@ class MainWindow(QMainWindow):
 
         width = QApplication.primaryScreen().size().width()
         
+        # set splitter sizes from left to right
         w_8 = int(width/8)
         w_5_8 = int(width*5/8)
         w_2_8 = int(width*2/8)
