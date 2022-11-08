@@ -38,7 +38,11 @@ class MainWindow(QMainWindow):
         self.ui.graphWidget.ci.layout.setSpacing(20)
 
         width = QApplication.primaryScreen().size().width()
-        self.ui.splitterHorizontal.setSizes([width/8, width*5/8, width*2/8])
+        
+        w_8 = int(width/8)
+        w_5_8 = int(width*5/8)
+        w_2_8 = int(width*2/8)
+        self.ui.splitterHorizontal.setSizes([w_8, w_5_8 ,w_2_8 ])
 
     def on_buttonClearLog_clicked(self):
         self.ui.teLog.clear()
