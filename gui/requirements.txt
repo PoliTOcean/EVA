@@ -6,3 +6,4 @@ pyqtgraph
 PySDL2
 pysdl2-dll
 opencv-python
+pyinstaller
