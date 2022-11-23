@@ -25,6 +25,8 @@ __CONFIG_COMPONENTS_KEY__ = "components"
 __CONFIG_MQTT_KEY__ = "mqtt"
 __CONFIG_JOYSTICK_KEY__ = "joystick"
 
+axes = {} # axes -> {'X': 0, 'Y': 0, 'YAW': 0, 'PITCH': 0, 'Z_DOWN': 0, 'Z_UP': 0}
+
 
 class QRovController(QObject):
     powerStateSignals = QStateSignals()
@@ -58,6 +60,10 @@ class QRovController(QObject):
                 config[__CONFIG_MQTT_KEY__])
             self.__joystick = self.__init_joystick(
                 config[__CONFIG_JOYSTICK_KEY__])
+
+            for axe in self.__joystick.commands['axes'].values():
+                axes[axe] = 0
+            
 #            self.__init_camera()
 
             self.__configured = True
@@ -135,8 +141,10 @@ class QRovController(QObject):
 
     @pyqtSlot(QJoystickAxis)
     def __on_axisChanged(self, axis: QJoystickAxis) -> None:
-        data = {self.__joystick.commands['axes'][axis.id]: axis.value}
-        self.__mqttClient.publish('axes/', json.dumps(data))
+        #data = {self.__joystick.commands['axes'][axis.id]: axis.value}
+        axes[self.__joystick.commands['axes'][axis.id]] = axis.value
+
+        self.__mqttClient.publish('axes/', json.dumps(axes))
 
     @pyqtSlot(QJoystickButton)
     def __on_buttonChanged(self, button: QJoystickButton) -> None:

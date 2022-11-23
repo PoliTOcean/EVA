@@ -1,6 +1,7 @@
 import json
 import sdl2
 import sdl2.ext
+import time
 
 import os
 
@@ -71,6 +72,7 @@ class QJoystick(QObject):
 
     def __update(self):
         for event in sdl2.ext.get_events():
+            
             if event.type == sdl2.SDL_JOYAXISMOTION:
                 self.signals.axisChanged.emit(QJoystickAxis(
                     self.__mapping['axes'][event.jaxis.axis], event.jaxis.value))
@@ -86,6 +88,11 @@ class QJoystick(QObject):
             elif event.type == sdl2.SDL_JOYDEVICEREMOVED:
                 self.__close()
                 self.signals.disconnected.emit()
+
+            # wait before read another event
+            time.sleep(0.1)
+            #clear the current events queue
+            sdl2.ext.get_events().clear()
 
     def __del__(self):
         self.__close()
