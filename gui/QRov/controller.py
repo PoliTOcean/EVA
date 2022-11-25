@@ -143,8 +143,8 @@ class QRovController(QObject):
     def __on_axisChanged(self, axis: QJoystickAxis) -> None:
         #data = {self.__joystick.commands['axes'][axis.id]: axis.value}
         axes[self.__joystick.commands['axes'][axis.id]] = axis.value
-
         self.__mqttClient.publish('axes/', json.dumps(axes))
+        
 
     @pyqtSlot(QJoystickButton)
     def __on_buttonChanged(self, button: QJoystickButton) -> None:

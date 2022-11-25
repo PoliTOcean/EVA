@@ -20,9 +20,9 @@
         "axes": [
             "LSB-X",
             "LSB-Y",
+            "LT",
             "RSB-X",
             "RSB-Y",
-            "LT",
             "RT"
         ]
     }

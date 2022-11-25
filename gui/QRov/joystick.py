@@ -44,7 +44,7 @@ class QJoystick(QObject):
 
         self.__timer = QTimer()
         self.__timer.timeout.connect(self.__update)
-        self.__timer.start(16)
+        self.__timer.start(10)
 
         self.__commands = commands
 
@@ -89,8 +89,9 @@ class QJoystick(QObject):
                 self.__close()
                 self.signals.disconnected.emit()
 
+            print(self.__mapping['axes'][event.jaxis.axis], event.jaxis.value)
             # wait before read another event
-            time.sleep(0.1)
+            time.sleep(0.05)
             #clear the current events queue
             sdl2.ext.get_events().clear()
 
