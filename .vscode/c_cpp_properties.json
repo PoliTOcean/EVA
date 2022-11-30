@@ -4,7 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/home/retr0/Desktop/IT/Politocean/EVA/nucleo/include/"
+                "/home/retr0/Desktop/IT/",
+                "${workspaceFolder}/nucleo/.pio/libdeps/nucleo_l432kc/Ethernet/src",
+                "${workspaceFolder}/nucleo/.pio/libdeps/nucleo_l432kc/Arduino_JSON/src"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",
