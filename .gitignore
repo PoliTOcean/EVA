@@ -2,3 +2,4 @@
 .vscode/
 .pio/
 .DS_Store
+env/
