@@ -1,36 +1,36 @@
 buttons:
   A:
-    onPress: "TOGGLE THRUSTERS"
-    onRelease:
+    onPress: "A onPress"
+    onRelease: "A onRelase"
   B:
-    onPress: "CLOSE NIPPER"
+    onPress: "B onPress"
     onRelease: "STOP NIPPER"
   X:
-    onPress: "OPEN NIPPER"
+    onPress: "X onPress"
     onRelease: "STOP NIPPER"
   Y:
-    onPress: "TOGGLE ARM"
+    onPress: "Y onPress"
     onRelease:
   Back:
-    onPress: "RESET"
+    onPress: "BACK onPress"
     onRelease:
   Guide:
-    onPress: "TOGGLE POWER"
+    onPress: "GUIDE onPress"
     onRelease:
   Start:
-    onPress:
+    onPress: "START onPress"
     onRelease:
   LS:
-    onPress:
+    onPress: "LS onPress"
     onRelease:
   RS:
-    onPress:
+    onPress: "RS onPress"
     onRelease:
   LB:
-    onPress: "DECREASE SPEED"
+    onPress: "LB onPress"
     onRelease:
   RB:
-    onPress: "INCREASE SPEED"
+    onPress: "RB onPress"
     onRelease:
   D-Pad-Up:
     onPress: "MOVE SHOULDER UP"

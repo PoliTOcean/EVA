@@ -152,6 +152,8 @@ class QRovController(QObject):
             'onPress'] if button.value else self.__joystick.commands['buttons'][button.id]['onRelease']
         if command:
             self.__mqttClient.publish('commands/', command)
+            print(self.__joystick.commands['buttons'][button.id][
+            'onPress'])
 
     @pyqtSlot(int)
     def __on_mqttStatusChanged(self, status: int) -> None:
