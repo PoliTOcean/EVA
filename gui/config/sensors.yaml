@@ -13,3 +13,11 @@
 - id: current
   name: Current
   units: ampere
+
+- id: ax
+  name: ax
+  units: ms2
+
+- id: ay
+  name: ay
+  units: ms2

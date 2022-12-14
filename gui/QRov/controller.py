@@ -4,6 +4,8 @@ from PyQt5.QtGui import QImage
 
 import yaml
 from yamlinclude import YamlIncludeConstructor
+from datetime import datetime
+import csv
 
 import os
 import sys
@@ -24,6 +26,9 @@ __CONFIG_RELAYS_KEY__ = "relays"
 __CONFIG_COMPONENTS_KEY__ = "components"
 __CONFIG_MQTT_KEY__ = "mqtt"
 __CONFIG_JOYSTICK_KEY__ = "joystick"
+
+
+
 
 axes = {} # axes -> {'X': 0, 'Y': 0, 'YAW': 0, 'PITCH': 0, 'Z_DOWN': 0, 'Z_UP': 0}
 
@@ -154,6 +159,7 @@ class QRovController(QObject):
             self.__mqttClient.publish('commands/', command)
             print(self.__joystick.commands['buttons'][button.id][
             'onPress'])
+        
 
     @pyqtSlot(int)
     def __on_mqttStatusChanged(self, status: int) -> None:
@@ -162,9 +168,14 @@ class QRovController(QObject):
                 "sensors/", self.__on_mqttSensorMessage)
             self.__mqttClient.subscribe(
                 "components/", self.__on_mqttComponentMessage)
+            self.csvfile = open('axis.csv', 'w', newline='')
+            fieldnames = ['time', 'ax', 'ay', 'az','gx','gy','gz','mx','my','mz','depth','current', 'voltage','temperature']
+            self.writer = csv.DictWriter(self.csvfile, fieldnames=fieldnames)
+            self.writer.writeheader()
         elif status == MQTTStatus.Disconected:
             self.__mqttClient.unsubscribe("sensors/")
             self.__mqttClient.unsubscribe("components/")
+            self.csvfile.close()
 
     @pyqtSlot(str)
     def __on_mqttComponentMessage(self, msg: str) -> None:
@@ -177,10 +188,12 @@ class QRovController(QObject):
     @pyqtSlot(str)
     def __on_mqttSensorMessage(self, msg: str) -> None:
         j: typing.Dict[str, float] = json.loads(msg)
-
+        
         for key, val in j.items():
             if key in self.__sensors:
                 self.__sensors[key].value = val
+        dt = datetime.now()
+        self.writer.writerow({"time" : dt} | j)
 
     @pyqtSlot(ComponentState)
     def __on_powerStateChanged(self, state: ComponentState) -> None:

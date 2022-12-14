@@ -45,9 +45,9 @@ buttons:
     onPress: "ROTATE WRIST CW"
     onRelease: "STOP WRIST"
 axes:
-  LSB-X: "X"
-  LSB-Y: "Y"
-  RSB-X: "YAW"
-  RSB-Y: "PITCH"
+  LSB-X: "Y"
+  LSB-Y: "X"
+  RSB-X: "SHOULDER"
+  RSB-Y: "WRIST"
   LT: "Z_DOWN"
   RT: "Z_UP"

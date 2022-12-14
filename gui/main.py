@@ -40,8 +40,9 @@ def main():
     mainWindow = MainWindow()
     mainWindow.show()
 
-    sys.exit(app.exec())
-
-
+    ret = app.exec() 
+    mainWindow.controller.csvfile.close()
+    sys.exit(ret)
+    
 if __name__ == '__main__':
     main()
