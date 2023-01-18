@@ -91,7 +91,7 @@ class QJoystick(QObject):
 
             #print(self.__mapping['axes'][event.jaxis.axis], event.jaxis.value)
             # wait before read another event
-            time.sleep(0.05)
+            time.sleep(0.03)
             #clear the current events queue
             sdl2.ext.get_events().clear()
 

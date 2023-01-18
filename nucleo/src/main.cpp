@@ -9,7 +9,7 @@
 
 // Macro used to define contants used in the code
 #define NUM_SERVO 8
-#define MQTT_TIMEOUT 50             // milliseconds
+#define MQTT_TIMEOUT 30             // milliseconds
 #define MQTT_CONNECT_RETRY_DELAY 15 // milliseconds
 #define ESC_DELAY 7000              // millisecons
 #define MIN_INPUT_READING -32678    // Minimum input reading value from the joystick
@@ -29,11 +29,11 @@ void MQTT_connect();
 // motors position definition
 typedef enum
 {
-  RDX,
-  FSX,
   FDX,
-  UPRSX,
   RSX,
+  RDX,
+  UPRSX,
+  FSX,
   UPFDX,
   UPFSX,
   UPRDX
@@ -123,18 +123,91 @@ void printAttitude(double ax, double ay, double az)//method to obtain the positi
   char packet[40];//packert for data
   float roll = 0;
   float pitch = 0;
-
-  pitch *= 180.0 / PI;
-  roll *= 180.0 / PI;
+  
+  roll = atan2(ay, az);
+  pitch = atan2(-ax, sqrt(ay * ay + az * az));
+  
   sprintf(packet,
           "{\"roll\":%s,\"pitch\":%s}",
-          String(roll = atan2(ay, az)).c_str(),
-          String(pitch = atan2(-ax, sqrt(ay * ay + az * az))).c_str());
+          String(roll *= 180.0 / PI).c_str(),
+          String(pitch *= 180.0 / PI).c_str());
   attitude.publish(packet);
 }
 
 void loop()
 {
+
+  while(1){
+
+        delay(5000);
+        
+        servo[UPFDX].writeMicroseconds(1300);
+        servo[UPRSX].writeMicroseconds(1700);
+        servo[UPRDX].writeMicroseconds(1700);
+        servo[UPFSX].writeMicroseconds(1700);
+        delay(3000);
+
+        servo[UPRDX].writeMicroseconds(1400);
+        servo[UPFSX].writeMicroseconds(1600);
+        servo[UPFDX].writeMicroseconds(1600);
+        servo[UPRSX].writeMicroseconds(1600);
+
+        servo[RDX].writeMicroseconds(1300);
+        delay(DELAY_PWM);
+        servo[RSX].writeMicroseconds(1300);
+        delay(DELAY_PWM);
+        servo[FDX].writeMicroseconds(1700);
+        delay(DELAY_PWM);
+        servo[FSX].writeMicroseconds(1300);
+        delay(DELAY_PWM);
+        delay(5000);
+        servo[FDX].writeMicroseconds(1500);
+        delay(DELAY_PWM);
+        servo[FSX].writeMicroseconds(1500);
+        delay(DELAY_PWM);
+        servo[RDX].writeMicroseconds(1500);
+        delay(DELAY_PWM);
+        servo[RSX].writeMicroseconds(1500);
+        delay(DELAY_PWM);
+        servo[UPRDX].writeMicroseconds(1500);
+        servo[UPFSX].writeMicroseconds(1500);
+        servo[UPFDX].writeMicroseconds(1500);
+        servo[UPRSX].writeMicroseconds(1500);
+
+        delay(10000);
+    /*
+    servo[UPFDX].writeMicroseconds(1300);
+        servo[UPRSX].writeMicroseconds(1700);
+        servo[UPRDX].writeMicroseconds(1700);
+        servo[UPFSX].writeMicroseconds(1700);
+        delay(4000);
+
+        servo[UPFDX].writeMicroseconds(1600);
+        servo[UPRSX].writeMicroseconds(1400);
+        servo[UPRDX].writeMicroseconds(1400);
+        servo[UPFSX].writeMicroseconds(1400);
+    */
+        
+      
+        /*
+        delay(7000);
+        servo[UPFDX].writeMicroseconds(1500);
+        servo[UPRSX].writeMicroseconds(1500);
+        servo[UPRDX].writeMicroseconds(1500);
+        servo[UPFSX].writeMicroseconds(1500);
+        servo[FDX].writeMicroseconds(1500);
+        delay(DELAY_PWM);
+        servo[FSX].writeMicroseconds(1500);
+        delay(DELAY_PWM);
+        servo[RDX].writeMicroseconds(1500);
+        delay(DELAY_PWM);
+        servo[RSX].writeMicroseconds(1500);
+        delay(DELAY_PWM);
+        delay(40000);
+        
+        */
+        
+  }
 
   MQTT_connect(); // connect to the mqtt server
   while ((subscription = mqtt.readSubscription(MQTT_TIMEOUT)))
@@ -158,7 +231,7 @@ void loop()
         }
         int checkPacket = (sensorsIn["ax"]);// temporary variable to check if the received packet contains the axes
             
-        if(checkPacket =! NULL){//check axis in packet
+        if((String)checkPacket != ""){//check axis in packet
           // parse the values recived into the allocated variable
           ax = (sensorsIn["ax"]);
           ay = (sensorsIn["ay"]);
@@ -198,8 +271,8 @@ void loop()
 
       //dynamic memory cleanup
       delete[] cmd;
-
-      // remap the recived values into a proper interval range, in order to process them
+    
+    // remap the recived values into a proper interval range, in order to process them
       Z_URemap = map(Z_U, MIN_INPUT_READING, MAX_INPUT_READING, SERVO_OFF, MAX_Z);
       Z_DRemap = map(Z_D, MIN_INPUT_READING, MAX_INPUT_READING, SERVO_OFF, MAX_Z);
       XRemap = map(X, MIN_INPUT_READING, MAX_INPUT_READING, MIN_MAPPED_VALUE, MAX_MAPPED_VALUE);
@@ -259,27 +332,30 @@ void loop()
       // z axes
       if (Z_URemap >= Z_DRemap)
       {
-        servo[UPFDX].writeMicroseconds(Z_URemap >= 1600 ? Z_URemap : SERVO_OFF);
+        servo[UPFDX].writeMicroseconds(Z_URemap >= 1650 ? Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPRSX].writeMicroseconds(Z_URemap >= 1600 ? 3000 - Z_URemap : SERVO_OFF);
+        servo[UPRSX].writeMicroseconds(Z_URemap >= 1650 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPRDX].writeMicroseconds(Z_URemap >= 1600 ? 3000 - Z_URemap : SERVO_OFF);
+        servo[UPRDX].writeMicroseconds(Z_URemap >= 1650 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPFSX].writeMicroseconds(Z_URemap >= 1600 ? 3000 - Z_URemap : SERVO_OFF);
+        servo[UPFSX].writeMicroseconds(Z_URemap >= 1650 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
       }
       else
       {
-        servo[UPRDX].writeMicroseconds(Z_DRemap >= 1600 ? Z_DRemap : SERVO_OFF);
+        servo[UPRDX].writeMicroseconds(Z_DRemap >= 1650 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPFSX].writeMicroseconds(Z_DRemap >= 1600 ? Z_DRemap : SERVO_OFF);
+        servo[UPFSX].writeMicroseconds(Z_DRemap >= 1650 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPFDX].writeMicroseconds(Z_DRemap >= 1600 ? 3000 - Z_DRemap : SERVO_OFF);
+        servo[UPFDX].writeMicroseconds(Z_DRemap >= 1650 ? 3000 - Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPRSX].writeMicroseconds(Z_DRemap >= 1600 ? Z_DRemap : SERVO_OFF);
+        servo[UPRSX].writeMicroseconds(Z_DRemap >= 1650 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
       }
+      
     }
+    
+      
   }
 }
 
