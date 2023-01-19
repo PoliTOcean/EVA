@@ -136,7 +136,7 @@ void printAttitude(double ax, double ay, double az)//method to obtain the positi
 
 void loop()
 {
-
+/*
   while(1){
 
         delay(5000);
@@ -175,7 +175,7 @@ void loop()
         servo[UPRSX].writeMicroseconds(1500);
 
         delay(10000);
-    /*
+    
     servo[UPFDX].writeMicroseconds(1300);
         servo[UPRSX].writeMicroseconds(1700);
         servo[UPRDX].writeMicroseconds(1700);
@@ -186,10 +186,10 @@ void loop()
         servo[UPRSX].writeMicroseconds(1400);
         servo[UPRDX].writeMicroseconds(1400);
         servo[UPFSX].writeMicroseconds(1400);
-    */
+    
         
       
-        /*
+        
         delay(7000);
         servo[UPFDX].writeMicroseconds(1500);
         servo[UPRSX].writeMicroseconds(1500);
@@ -205,9 +205,10 @@ void loop()
         delay(DELAY_PWM);
         delay(40000);
         
-        */
+        
         
   }
+*/
 
   MQTT_connect(); // connect to the mqtt server
   while ((subscription = mqtt.readSubscription(MQTT_TIMEOUT)))
@@ -216,7 +217,7 @@ void loop()
       if (subscription == &sensors)
       {
         dim = strlen((char *)sensors.lastread);     // read the lenght of the recived data
-        cmd = new char[dim + 1];                    // allocate a string to hold the read json string
+        char cmd[dim + 1];                    // allocate a string to hold the read json string
         memcpy(cmd, (char *)sensors.lastread, dim); // copy the json string into a variable
         cmd[dim] = '\0';
         sensorsIn = JSON.parse(cmd); // parse the json file
@@ -229,17 +230,15 @@ void loop()
           */
           continue;
         }
-        int checkPacket = (sensorsIn["ax"]);// temporary variable to check if the received packet contains the axes
+        //float checkPacket = sensorsIn["ax"];// temporary variable to check if the received packet contains the axes
             
-        if((String)checkPacket != ""){//check axis in packet
+        if(sensorsIn.hasOwnProperty("ax")){//check axis in packet
           // parse the values recived into the allocated variable
           ax = (sensorsIn["ax"]);
           ay = (sensorsIn["ay"]);
           az = (sensorsIn["az"]);
           printAttitude(ax, ay, az);
         }
-        //dynamic memory cleanup
-        delete[] cmd;
         //call the method to convert the imu data to degrees
         
       }
