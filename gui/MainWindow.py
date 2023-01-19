@@ -13,6 +13,10 @@ import numpy as np
 
 from time import strftime
 
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtWebEngineWidgets import *
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -29,7 +33,18 @@ class MainWindow(QMainWindow):
         self.addRelays()
         self.addDepthTape()
         self.addCompass()
-        self.addCameraView()
+
+        self.urls = ["http://www.google.com","https://github.com/PoliTOcean/"]
+        self.urlVal = 0
+        self.cameraNames = ["CAM1","CAM2"]
+        self.browser = QWebEngineView()
+        self.browser.setUrl(QUrl(self.urls[self.urlVal]))
+        self.ui.gridLayoutHUD.addWidget(self.browser, 1, 1, 4, 3)  
+
+        self.switchButton = QPushButton()
+        self.switchButton.setText(self.cameraNames[self.urlVal]) 
+        self.ui.gridLayoutHUD.addWidget(self.switchButton,1,3,1,1)
+        self.switchButton.clicked.connect(self.button_clicked)
 
         # Components
 
@@ -38,7 +53,7 @@ class MainWindow(QMainWindow):
         self.ui.graphWidget.ci.layout.setSpacing(20)
 
         width = QApplication.primaryScreen().size().width()
-        self.ui.splitterHorizontal.setSizes([width/8, width*5/8, width*2/8])
+        self.ui.splitterHorizontal.setSizes([int(width/8), int(width*5/8), int(width*2/8)])
 
     def on_buttonClearLog_clicked(self):
         self.ui.teLog.clear()
@@ -179,11 +194,10 @@ class MainWindow(QMainWindow):
         self.compass = QCompass()
         self.ui.gridLayoutHUD.addWidget(self.compass.container, 0, 0, 1, 4)
 
-    def addCameraView(self):
-        self.cameraView = QLabel()
-        self.cameraView.setAlignment(Qt.AlignCenter)
-        self.ui.gridLayoutHUD.addWidget(self.cameraView, 1, 1, 4, 3)
-        self.controller.cameraImageAcquired.connect(self.setCameraImage)
+    def button_clicked(self):
+        self.urlVal = (self.urlVal+1)%2
+        self.browser.setUrl(QUrl(self.urls[self.urlVal]))
+        self.switchButton.setText(self.cameraNames[self.urlVal]) 
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         pass
