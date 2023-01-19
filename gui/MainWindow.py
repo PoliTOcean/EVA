@@ -13,10 +13,8 @@ import numpy as np
 
 from time import strftime
 
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtWebEngineWidgets import *
+from PyQt5.QtWebEngine import QWebEngineView, QUrl
+from PyQt5.QtWidgets import QPushButton
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
