@@ -39,7 +39,7 @@ void MQTT_connect() {
   //Serial.print("Connecting to MQTT... ");
 
   while ((ret = mqtt.connect()) != 0) { // connect will return 0 for connected
-       Serial.println(mqtt.connectErrorString(ret));
+       //Serial.println(mqtt.connectErrorString(ret));
        //Serial.println("Retrying MQTT connection in 0.015 seconds...");
        mqtt.disconnect();
        delay(15);  // wait 5 seconds
@@ -106,7 +106,7 @@ void setup() {
     delay(5000);
   }
   sensor.setFluidDensity(1023); // kg/m^3 (freshwater, 1029 for seawater)
-  Serial.println("aa");
+  //Serial.println("aa");
 }
 
 void loop() {
@@ -124,7 +124,7 @@ void loop() {
   delay(500);
   
   sprintf(packet, 
-    "{\"ax\":%s,\"ay\":%s,\"az\":%s,\"gx\":%s,\"gy\":%s,\"gz\":%s,\"mx\":%s\"my\":%s,\"mz\":%s}",
+    "{\"ax\":%s,\"ay\":%s,\"az\":%s,\"gx\":%s,\"gy\":%s,\"gz\":%s,\"mx\":%s,\"my\":%s,\"mz\":%s}",
     String(imu.calcAccel(imu.ax)).c_str(),
     String(imu.calcAccel(imu.ay)).c_str(),
     String(imu.calcAccel(imu.az)).c_str(),
