@@ -1,10 +1,16 @@
+#include <LSM9DS1_Types.h>
+#include <LSM9DS1_Registers.h>
+#include <SparkFunLSM9DS1.h>
+
+
+#include <Adafruit_MQTT.h>
+#include <Adafruit_MQTT_Client.h>
+
+
 #include <Wire.h>
 #include "MS5837.h"
 #include <SPI.h>
 #include <Ethernet.h>
-#include "Adafruit_MQTT.h"
-#include "Adafruit_MQTT_Client.h"
-#include <SparkFunLSM9DS1.h>
 #include <Adafruit_BMP280.h>
 
 byte mac[] = {0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x02};
@@ -14,14 +20,14 @@ MS5837 sensor;    //Pressure sensor
 Adafruit_BMP280 bmp; // Temperature sensor
 
 EthernetClient client;
-char* AIO_SERVER   =   "10.0.0.254";
-uint16_t AIO_SERVERPORT = 1883;
-char* AIO_USERNAME  =  "atmega_imu";
+const char* AIO_SERVER   =   "10.0.0.254";
+const uint16_t AIO_SERVERPORT = 1883;
+const char* AIO_USERNAME  =  "atmega_imu";
 
 IPAddress ip_atmega(10,0,0,2);
-char packet[90];
-char pressure_packet[50];
-char temperature_packet[40];
+const char packet[90];
+const char pressure_packet[50];
+const char temperature_packet[40];
 
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME/*, AIO_KEY*/);
 Adafruit_MQTT_Publish sensors = Adafruit_MQTT_Publish(&mqtt, "sensors/");
@@ -39,7 +45,7 @@ void MQTT_connect() {
   //Serial.print("Connecting to MQTT... ");
 
   while ((ret = mqtt.connect()) != 0) { // connect will return 0 for connected
-       Serial.println(mqtt.connectErrorString(ret));
+       //Serial.println(mqtt.connectErrorString(ret));
        //Serial.println("Retrying MQTT connection in 0.015 seconds...");
        mqtt.disconnect();
        delay(15);  // wait 5 seconds
@@ -106,7 +112,7 @@ void setup() {
     delay(5000);
   }
   sensor.setFluidDensity(1023); // kg/m^3 (freshwater, 1029 for seawater)
-  Serial.println("aa");
+  //Serial.println("aa");
 }
 
 void loop() {
@@ -124,7 +130,7 @@ void loop() {
   delay(500);
   
   sprintf(packet, 
-    "{\"ax\":%s,\"ay\":%s,\"az\":%s,\"gx\":%s,\"gy\":%s,\"gz\":%s,\"mx\":%s\"my\":%s,\"mz\":%s}",
+    "{\"ax\":%s,\"ay\":%s,\"az\":%s,\"gx\":%s,\"gy\":%s,\"gz\":%s,\"mx\":%s,\"my\":%s,\"mz\":%s}",
     String(imu.calcAccel(imu.ax)).c_str(),
     String(imu.calcAccel(imu.ay)).c_str(),
     String(imu.calcAccel(imu.az)).c_str(),

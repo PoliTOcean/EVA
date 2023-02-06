@@ -3,3 +3,4 @@
 .pio/
 .DS_Store
 env/
+gui/axis.csv

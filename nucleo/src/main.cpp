@@ -331,7 +331,7 @@ void loop()
       // z axes
       if (Z_URemap >= Z_DRemap)
       {
-        servo[UPFDX].writeMicroseconds(Z_URemap >= 1650 ? Z_URemap : SERVO_OFF);
+        servo[UPFDX].writeMicroseconds(Z_URemap >= 1650 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
         servo[UPRSX].writeMicroseconds(Z_URemap >= 1650 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
@@ -346,7 +346,7 @@ void loop()
         delay(DELAY_PWM);
         servo[UPFSX].writeMicroseconds(Z_DRemap >= 1650 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPFDX].writeMicroseconds(Z_DRemap >= 1650 ? 3000 - Z_DRemap : SERVO_OFF);
+        servo[UPFDX].writeMicroseconds(Z_DRemap >= 1650 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
         servo[UPRSX].writeMicroseconds(Z_DRemap >= 1650 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
