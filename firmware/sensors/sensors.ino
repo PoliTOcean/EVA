@@ -25,9 +25,9 @@ const uint16_t AIO_SERVERPORT = 1883;
 const char* AIO_USERNAME  =  "atmega_imu";
 
 IPAddress ip_atmega(10,0,0,2);
-const char packet[90];
-const char pressure_packet[50];
-const char temperature_packet[40];
+char packet[90];
+char pressure_packet[50];
+char temperature_packet[40];
 
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME/*, AIO_KEY*/);
 Adafruit_MQTT_Publish sensors = Adafruit_MQTT_Publish(&mqtt, "sensors/");
