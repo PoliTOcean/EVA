@@ -1,10 +1,16 @@
+#include <LSM9DS1_Types.h>
+#include <LSM9DS1_Registers.h>
+#include <SparkFunLSM9DS1.h>
+
+
+#include <Adafruit_MQTT.h>
+#include <Adafruit_MQTT_Client.h>
+
+
 #include <Wire.h>
 #include "MS5837.h"
 #include <SPI.h>
 #include <Ethernet.h>
-#include "Adafruit_MQTT.h"
-#include "Adafruit_MQTT_Client.h"
-#include <SparkFunLSM9DS1.h>
 #include <Adafruit_BMP280.h>
 
 byte mac[] = {0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x02};
@@ -14,9 +20,9 @@ MS5837 sensor;    //Pressure sensor
 Adafruit_BMP280 bmp; // Temperature sensor
 
 EthernetClient client;
-char* AIO_SERVER   =   "10.0.0.254";
-uint16_t AIO_SERVERPORT = 1883;
-char* AIO_USERNAME  =  "atmega_imu";
+const char* AIO_SERVER   =   "10.0.0.254";
+const uint16_t AIO_SERVERPORT = 1883;
+const char* AIO_USERNAME  =  "atmega_imu";
 
 IPAddress ip_atmega(10,0,0,2);
 char packet[90];

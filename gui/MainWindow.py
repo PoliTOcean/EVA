@@ -34,12 +34,14 @@ class MainWindow(QMainWindow):
         self.addDepthTape()
         self.addCompass()
 
-        self.urls = ["http://www.google.com","https://github.com/PoliTOcean/"]
+        self.urls = ["https://google.com","https://10.0.0.254:8081"]
         self.urlVal = 0
         self.cameraNames = ["CAM1","CAM2"]
         self.browser = QWebEngineView()
         self.browser.setUrl(QUrl(self.urls[self.urlVal]))
         self.ui.gridLayoutHUD.addWidget(self.browser, 1, 1, 4, 3)  
+        self.activityMonitor.displayInfo("Browser Starting")
+        
 
         self.switchButton = QPushButton()
         self.switchButton.setText(self.cameraNames[self.urlVal]) 

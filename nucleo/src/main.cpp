@@ -65,7 +65,7 @@ int powVectorDXX[NUM_SERVO] = {1600, 1500, 1500, 1600, 1500, 1500, 1500, 1500};
 
 // servo related variables
 Servo servo[NUM_SERVO];
-unsigned char servoPin[NUM_SERVO] = {PA5, PA3, PA4, PA8, PA11, PA0, PA2, PB1};
+unsigned char servoPin[NUM_SERVO] = {PA6, PA3, PA4, PA8, PA11, PA0, PA2, PB1};
 
 // mac and ip address definition
 unsigned char mac[] = {0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x04};
@@ -105,7 +105,7 @@ void setup()
 
   Serial.begin(115200);
   int i;
-  Ethernet.init(D3);
+  Ethernet.init(A4);
   for (i = 0; i < NUM_SERVO; i++)
   {
     servo[i].attach(servoPin[i]);
@@ -331,7 +331,7 @@ void loop()
       // z axes
       if (Z_URemap >= Z_DRemap)
       {
-        servo[UPFDX].writeMicroseconds(Z_URemap >= 1650 ? Z_URemap : SERVO_OFF);
+        servo[UPFDX].writeMicroseconds(Z_URemap >= 1650 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
         servo[UPRSX].writeMicroseconds(Z_URemap >= 1650 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
@@ -346,7 +346,7 @@ void loop()
         delay(DELAY_PWM);
         servo[UPFSX].writeMicroseconds(Z_DRemap >= 1650 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPFDX].writeMicroseconds(Z_DRemap >= 1650 ? 3000 - Z_DRemap : SERVO_OFF);
+        servo[UPFDX].writeMicroseconds(Z_DRemap >= 1650 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
         servo[UPRSX].writeMicroseconds(Z_DRemap >= 1650 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
