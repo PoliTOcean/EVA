@@ -183,7 +183,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Monterey ROV Controller"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "PolitOcean ROV Controller"))
         self.label_11.setText(_translate("MainWindow", "Time:"))
         self.label_13.setText(_translate("MainWindow", "Dive time:"))
         self.groupBoxServoSliders.setTitle(_translate("MainWindow", "Servos"))

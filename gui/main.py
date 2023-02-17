@@ -12,7 +12,7 @@ import custom_types
 
 def main():
     app = QApplication(sys.argv)
-    app.setApplicationName("Monterey")
+    app.setApplicationName("GUI")
     app.setApplicationVersion("1.0")
     app.setOrganizationName("PoliTOcean")
 
