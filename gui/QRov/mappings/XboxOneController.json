@@ -5,13 +5,13 @@
             "B",
             "X",
             "Y",
-            "Back",
-            "Guide",
-            "Start",
-            "LS",
-            "RS",
             "LB",
             "RB",
+            "Back",
+            "Start",
+            "GUIDE",
+            "LS",
+            "RS",
             "D-Pad-Up",
             "D-Pad-Down",
             "D-Pad-Left",
@@ -20,9 +20,9 @@
         "axes": [
             "LSB-X",
             "LSB-Y",
+            "LT",
             "RSB-X",
             "RSB-Y",
-            "LT",
             "RT"
         ]
     }

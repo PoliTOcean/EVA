@@ -1,0 +1,53 @@
+buttons:
+  A:
+    onPress: "A onPress"
+    onRelease: "A onRelase"
+  B:
+    onPress: "B onPress"
+    onRelease: "STOP NIPPER"
+  X:
+    onPress: "X onPress"
+    onRelease: "STOP NIPPER"
+  Y:
+    onPress: "Y onPress"
+    onRelease:
+  Back:
+    onPress: "BACK onPress"
+    onRelease:
+  Guide:
+    onPress: "GUIDE onPress"
+    onRelease:
+  Start:
+    onPress: "START onPress"
+    onRelease:
+  LS:
+    onPress: "LS onPress"
+    onRelease:
+  RS:
+    onPress: "RS onPress"
+    onRelease:
+  LB:
+    onPress: "LB onPress"
+    onRelease:
+  RB:
+    onPress: "RB onPress"
+    onRelease:
+  D-Pad-Up:
+    onPress: "MOVE SHOULDER UP"
+    onRelease: "STOP SHOULDER"
+  D-Pad-Down:
+    onPress: "MOVE SHOULDER DOWN"
+    onRelease: "STOP SHOULDER"
+  D-Pad-Left:
+    onPress: "ROTATE WRIST CCW"
+    onRelease: "STOP WRIST"
+  D-Pad-Right:
+    onPress: "ROTATE WRIST CW"
+    onRelease: "STOP WRIST"
+axes:
+  LSB-X: "PITCH"
+  LSB-Y: "YAW"
+  RSB-X: "SHOULDER"
+  RSB-Y: "WRIST"
+  LT: "Z_DOWN"
+  RT: "Z_UP"
