@@ -21,7 +21,7 @@
 #include <DynamixelShield.h>
 #include <Dynamixel2Arduino.h>
 #include <Ethernet.h>
-#include <Arduino_JSON.h>
+#include <string.h>
 #include "Adafruit_MQTT_Client.h"
 
 #define MQTT_TIMEOUT 30             // milliseconds
@@ -45,7 +45,8 @@ bool up = false;
 bool down = false;
 bool lastMoviment = false;
 int dim;
-JSONVar commandsIn;
+
+int postion = 0;
 
 unsigned char mac[] = {0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x06};
 IPAddress addr(10, 0, 0, 6);
@@ -54,7 +55,7 @@ Adafruit_MQTT_Subscribe *subscription;
 Adafruit_MQTT_Client mqtt(&ethClient, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME);
 Adafruit_MQTT_Subscribe commands = Adafruit_MQTT_Subscribe(&mqtt, "commands/");
 
-arm_direction;
+arm_direction direction;
 
 // definition of the function to connect/reconnect to the mqtt server
 void MQTT_connect();
@@ -83,20 +84,26 @@ void loop() {
 
   MQTT_connect();
   while((subscription = mqtt.readSubscription(MQTT_TIMEOUT))){
+
     dim = strlen((char *)commands.lastread); // read the lenght of the recived data
     char cmd[dim + 1]; // allocate a string to hold the read json string
     memcpy(cmd, (char *)commands.lastread, dim); // copy the json string into a variable
     cmd[dim] = '\0';
-    commandsIn = JSON.parse(cmd); // parse the json file
 
-    if (JSON.typeof(commandsIn) == "undefined")
-    { // check whether the command is correct
-      continue;
+    if(strcmp(cmd,"SHOULDER_UP")){
+      direction = UP;
+    }
+    else if(strcmp(cmd,"SHOULDER_DOWN")){
+      direction = DOWN;
+    }
+    else if(strcmp(cmd,"STOP_SHOULDER")){
+      direction = STOP;
     }
 
-
-
   }
+
+  postion += (direction*5);
+  dxl.setGoalPosition(1, postion);  
   
 }
 

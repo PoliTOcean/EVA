@@ -33,11 +33,11 @@ buttons:
     onPress: "RB onPress"
     onRelease:
   D-Pad-Up:
-    onPress: "MOVE SHOULDER UP"
-    onRelease: "STOP SHOULDER"
+    onPress: "SHOULDER_UP"
+    onRelease: "STOP_SHOULDER"
   D-Pad-Down:
-    onPress: "MOVE SHOULDER DOWN"
-    onRelease: "STOP SHOULDER"
+    onPress: "SHOULDER_DOWN"
+    onRelease: "STOP_SHOULDER"
   D-Pad-Left:
     onPress: "ROTATE WRIST CCW"
     onRelease: "STOP WRIST"
