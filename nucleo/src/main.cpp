@@ -14,8 +14,8 @@
 #define ESC_DELAY 7000              // millisecons
 #define MIN_INPUT_READING -32678    // Minimum input reading value from the joystick
 #define MAX_INPUT_READING 32678     // Maximum input reading value from the joystick
-#define MIN_MAPPED_VALUE 1700       // Minium value to which the joystick reading is mapped
-#define MAX_MAPPED_VALUE 1300       // Maximum value to which the joystick reading is mapped
+#define MIN_MAPPED_VALUE 1900       // Minium value to which the joystick reading is mapped
+#define MAX_MAPPED_VALUE 1100       // Maximum value to which the joystick reading is mapped
 #define MAX_Z 1700
 #define SERVO_OFF 1500 // Value to write in order to stop the servo
 #define AIO_SERVER "10.0.0.254"
@@ -55,7 +55,6 @@ See the ROV picture for a proper understanding of the motors mapping
 */
 
 #if DEBUG_JOYSTICK_INPUTS
-//                              RDX   FSX   FDX  UPRSX   RSX  UPFDX UPFSX UPRDX
 int powVectorSTOP[NUM_SERVO] = {1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500};
 int powVectorForwardY[NUM_SERVO] = {1700, 1500, 1500, 1500, 1700, 1500, 1500, 1500};
 int powVectorReverseY[NUM_SERVO] = {1500, 1700, 1700, 1500, 1500, 1500, 1500, 1500};
@@ -136,80 +135,6 @@ void printAttitude(double ax, double ay, double az)//method to obtain the positi
 
 void loop()
 {
-/*
-  while(1){
-
-        delay(5000);
-        
-        servo[UPFDX].writeMicroseconds(1300);
-        servo[UPRSX].writeMicroseconds(1700);
-        servo[UPRDX].writeMicroseconds(1700);
-        servo[UPFSX].writeMicroseconds(1700);
-        delay(3000);
-
-        servo[UPRDX].writeMicroseconds(1400);
-        servo[UPFSX].writeMicroseconds(1600);
-        servo[UPFDX].writeMicroseconds(1600);
-        servo[UPRSX].writeMicroseconds(1600);
-
-        servo[RDX].writeMicroseconds(1300);
-        delay(DELAY_PWM);
-        servo[RSX].writeMicroseconds(1300);
-        delay(DELAY_PWM);
-        servo[FDX].writeMicroseconds(1700);
-        delay(DELAY_PWM);
-        servo[FSX].writeMicroseconds(1300);
-        delay(DELAY_PWM);
-        delay(5000);
-        servo[FDX].writeMicroseconds(1500);
-        delay(DELAY_PWM);
-        servo[FSX].writeMicroseconds(1500);
-        delay(DELAY_PWM);
-        servo[RDX].writeMicroseconds(1500);
-        delay(DELAY_PWM);
-        servo[RSX].writeMicroseconds(1500);
-        delay(DELAY_PWM);
-        servo[UPRDX].writeMicroseconds(1500);
-        servo[UPFSX].writeMicroseconds(1500);
-        servo[UPFDX].writeMicroseconds(1500);
-        servo[UPRSX].writeMicroseconds(1500);
-
-        delay(10000);
-    
-    servo[UPFDX].writeMicroseconds(1300);
-        servo[UPRSX].writeMicroseconds(1700);
-        servo[UPRDX].writeMicroseconds(1700);
-        servo[UPFSX].writeMicroseconds(1700);
-        delay(4000);
-
-        servo[UPFDX].writeMicroseconds(1600);
-        servo[UPRSX].writeMicroseconds(1400);
-        servo[UPRDX].writeMicroseconds(1400);
-        servo[UPFSX].writeMicroseconds(1400);
-    
-        
-      
-        
-        delay(7000);
-        servo[UPFDX].writeMicroseconds(1500);
-        servo[UPRSX].writeMicroseconds(1500);
-        servo[UPRDX].writeMicroseconds(1500);
-        servo[UPFSX].writeMicroseconds(1500);
-        servo[FDX].writeMicroseconds(1500);
-        delay(DELAY_PWM);
-        servo[FSX].writeMicroseconds(1500);
-        delay(DELAY_PWM);
-        servo[RDX].writeMicroseconds(1500);
-        delay(DELAY_PWM);
-        servo[RSX].writeMicroseconds(1500);
-        delay(DELAY_PWM);
-        delay(40000);
-        
-        
-        
-  }
-*/
-
   MQTT_connect(); // connect to the mqtt server
   while ((subscription = mqtt.readSubscription(MQTT_TIMEOUT)))
   {
@@ -224,10 +149,6 @@ void loop()
 
         if (JSON.typeof(sensorsIn) == "undefined")
         { // check whether the command is correct
-          /*
-          Serial.println("Parsing input failed!");
-          return;
-          */
           continue;
         }
         //float checkPacket = sensorsIn["ax"];// temporary variable to check if the received packet contains the axes
@@ -252,10 +173,6 @@ void loop()
 
       if (JSON.typeof(commandsIn) == "undefined")
       { // check whether the command is correct
-        /*
-        Serial.println("Parsing input failed!");
-        return;
-        */
         continue;
       }
 
@@ -285,9 +202,9 @@ void loop()
       xp = abs(XRemap - SERVO_OFF) / (MIN_MAPPED_VALUE - MAX_MAPPED_VALUE);
       yp = abs(YRemap - SERVO_OFF) / (MIN_MAPPED_VALUE - MAX_MAPPED_VALUE);
 
-      valx1 = XRemap * (xp + 0.5 - yp);
+      valx1 = (3000 - XRemap) * (xp + 0.5 - yp);
       valy1 = YRemap * (yp + 0.5 - xp);
-      valx2 = (3000 - XRemap) * (xp + 0.5 - yp);
+      valx2 = XRemap * (xp + 0.5 - yp);
       valy2 = (3000 - YRemap) * (yp + 0.5 - xp);
 
       // plan zone - diag
