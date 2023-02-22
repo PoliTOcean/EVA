@@ -4,7 +4,7 @@
 </p>
 
 ## Componetnts
-The firmware for a specific component (ATMega only) can be find in [this](firmware/) directory, and the firmware of the nucleo in [this](nucleo/) directory.
+The firmware for a specific component can be find in [this](firmware/) directory.
 
 ### IP Mapping
 

@@ -1,97 +1,127 @@
-#include <SPI.h>
+/*******************************************************************************
+* Copyright 2016 ROBOTIS CO., LTD.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*******************************************************************************/
+
+/*
+* Please refer to each DYNAMIXEL eManual(http://emanual.robotis.com/docs/en/dxl/) for more information regarding Torque.
+*/
+
+#include <DynamixelShield.h>
+#include <Dynamixel2Arduino.h>
 #include <Ethernet.h>
-#include "Adafruit_MQTT.h"
+#include <string.h>
 #include "Adafruit_MQTT_Client.h"
-#define STEPS 400
-#define pin_step 4
-#define pin_dir 5
-#define motorInterfaceType 1
 
-#define AIO_SERVER      "10.0.0.254"
-#define AIO_SERVERPORT  1883
-#define AIO_USERNAME    "atmega_arm"
+#define MQTT_TIMEOUT 30             // milliseconds
+#define MQTT_CONNECT_RETRY_DELAY 15 // milliseconds
+#define AIO_SERVER "10.0.0.254"
+#define AIO_SERVERPORT 1883
+#define AIO_USERNAME "arm_board"
 
-// Create a new instance of the AccelStepper class:
-byte mac[] = {0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x06};
-EthernetClient client;
-//PubSubClient mqttClient(ethClient);
-IPAddress ip_arm(10,0,0,6);
+typedef enum{DOWN = -1, STOP = 0, UP = 1} arm_direction;
 
-Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME/*, AIO_KEY*/);
-Adafruit_MQTT_Subscribe opennipper = Adafruit_MQTT_Subscribe(&mqtt, "commands/");
+const uint8_t DXL_ID = 1;
+const float DXL_PROTOCOL_VERSION = 1.0;
 
-// Function to connect and reconnect as necessary to the MQTT server.
-// Should be called in the loop function and it will take care if connecting.
-void MQTT_connect() {
-  int8_t ret;
+DynamixelShield dxl;
 
-  // Stop if already connected.
-  if (mqtt.connected()) {
-    return;
-  }
+//This namespace is required to use Control table item names
+using namespace ControlTableItem;
+#define pinUP  9
+#define pinDOWN  8
+bool up = false;
+bool down = false;
+bool lastMoviment = false;
+int dim;
 
-  Serial.print("Connecting to MQTT... ");
+int postion = 0;
 
-  while ((ret = mqtt.connect()) != 0) { // connect will return 0 for connected
-       Serial.println(mqtt.connectErrorString(ret));
-       Serial.println("Retrying MQTT connection in 0.015 seconds...");
-       mqtt.disconnect();
-       delay(15);  // wait 5 seconds
-  }
-  Serial.println("MQTT Connected!");
-}
+unsigned char mac[] = {0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x06};
+IPAddress addr(10, 0, 0, 6);
+EthernetClient ethClient;
+Adafruit_MQTT_Subscribe *subscription;
+Adafruit_MQTT_Client mqtt(&ethClient, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME);
+Adafruit_MQTT_Subscribe commands = Adafruit_MQTT_Subscribe(&mqtt, "commands/");
+
+arm_direction direction;
+
+// definition of the function to connect/reconnect to the mqtt server
+void MQTT_connect();
 
 void setup() {
   // put your setup code here, to run once:
-  //servo.attach(6);
-  Ethernet.init(53); // SCSn pin
-  Serial.begin(9600);
-  while (!Serial)
-  {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
-  pinMode(49, OUTPUT);
-  pinMode(6, OUTPUT);
-  // Set the maximum speed in steps per second:
-  //stepper.setMaxSpeed(1000);
-  pinMode(A0, OUTPUT);
-  digitalWrite(A0, HIGH);  //disable stepper
+  pinMode(pinUP, INPUT);
+  pinMode(pinDOWN, INPUT);
+  // Set Port baudrate to 57600bps. This has to match with DYNAMIXEL baudrate.
+  dxl.begin(57600);
+  // Set Port Protocol Version. This has to match with DYNAMIXEL protocol version.
+  dxl.setPortProtocolVersion(DXL_PROTOCOL_VERSION);
+  // Get DYNAMIXEL information
+  dxl.ping(DXL_ID);
+  dxl.setOperatingMode(1, OP_EXTENDED_POSITION);
+  dxl.writeControlTableItem(CW_ANGLE_LIMIT, 1, 4095);
+  dxl.writeControlTableItem(CCW_ANGLE_LIMIT, 1, 4095);
 
-  // start the Ethernet connection:
-  Ethernet.begin(mac, ip_arm);
-  delay(1000);
-  
-  mqtt.subscribe(&opennipper);
+  Ethernet.init(53);
+  Ethernet.begin(mac, addr);
+  mqtt.subscribe(&commands);
+   
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  
-  MQTT_connect();
 
-  Adafruit_MQTT_Subscribe *subscription;
-  while ((subscription = mqtt.readSubscription(15))) {
-    if (subscription == &opennipper) {
-      int dim = strlen((char *)opennipper.lastread);
-      char cmd[dim+1];
-      memcpy(cmd, (char *)opennipper.lastread, dim);
-      cmd[dim]='\0';
-      Serial.println(cmd);
-      if(String(cmd) == "OPEN NIPPER"){
-        digitalWrite(49, HIGH);
-        analogWrite(6, 127);
-      }
-      else if(String(cmd) == "STOP NIPPER"){
-        analogWrite(6, 0);
-      }
-      else if(String(cmd) == "CLOSE NIPPER"){
-        digitalWrite(49, LOW);   //set direction for actuator
-        analogWrite(6, 127);    //move actuator
-      }
-      break;
-     }
-     
+  MQTT_connect();
+  while((subscription = mqtt.readSubscription(MQTT_TIMEOUT))){
+
+    dim = strlen((char *)commands.lastread); // read the lenght of the recived data
+    char cmd[dim + 1]; // allocate a string to hold the read json string
+    memcpy(cmd, (char *)commands.lastread, dim); // copy the json string into a variable
+    cmd[dim] = '\0';
+
+    if(strcmp(cmd,"SHOULDER_UP")){
+      direction = UP;
+    }
+    else if(strcmp(cmd,"SHOULDER_DOWN")){
+      direction = DOWN;
+    }
+    else if(strcmp(cmd,"STOP_SHOULDER")){
+      direction = STOP;
+    }
+
   }
 
-  delay(15);
+  postion += (direction*5);
+  dxl.setGoalPosition(1, postion);  
+  
+}
+
+// the following function is used in order to connect to mqtt server or reconnect to it
+// in case the connection is lost:
+// hence the function is called at the beginning of each iteration of the loop function
+void MQTT_connect()
+{
+  // Stop if already connected.
+  if (mqtt.connected())
+  {
+    return;
+  }
+
+  while (mqtt.connect() != 0)
+  {
+    // connect will return 0 for connected
+    mqtt.disconnect();
+    delay(MQTT_CONNECT_RETRY_DELAY);
+  }
 }
