@@ -46,7 +46,7 @@ bool down = false;
 bool lastMoviment = false;
 int dim;
 
-int postion = 0;
+int position = 0;
 
 unsigned char mac[] = {0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x06};
 IPAddress addr(10, 0, 0, 6);
@@ -55,7 +55,7 @@ Adafruit_MQTT_Subscribe *subscription;
 Adafruit_MQTT_Client mqtt(&ethClient, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME);
 Adafruit_MQTT_Subscribe commands = Adafruit_MQTT_Subscribe(&mqtt, "commands/");
 
-arm_direction direction;
+arm_direction direction = STOP;
 
 // definition of the function to connect/reconnect to the mqtt server
 void MQTT_connect();
@@ -71,8 +71,8 @@ void setup() {
   // Get DYNAMIXEL information
   dxl.ping(DXL_ID);
   dxl.setOperatingMode(1, OP_EXTENDED_POSITION);
-  dxl.writeControlTableItem(CW_ANGLE_LIMIT, 1, 4095);
-  dxl.writeControlTableItem(CCW_ANGLE_LIMIT, 1, 4095);
+  dxl.writeControlTableItem(CW_ANGLE_LIMIT, DXL_ID, 4095);
+  dxl.writeControlTableItem(CCW_ANGLE_LIMIT, DXL_ID, 4095);
 
   Ethernet.init(53);
   Ethernet.begin(mac, addr);
@@ -90,20 +90,22 @@ void loop() {
     memcpy(cmd, (char *)commands.lastread, dim); // copy the json string into a variable
     cmd[dim] = '\0';
 
-    if(strcmp(cmd,"SHOULDER_UP")){
+    if(strcmp(cmd,"SHOULDER_UP")==0){
       direction = UP;
     }
-    else if(strcmp(cmd,"SHOULDER_DOWN")){
+    else if(strcmp(cmd,"SHOULDER_DOWN")==0){
       direction = DOWN;
     }
-    else if(strcmp(cmd,"STOP_SHOULDER")){
+    else if(strcmp(cmd,"STOP_SHOULDER")==0){
       direction = STOP;
     }
 
   }
-
-  postion += (direction*5);
-  dxl.setGoalPosition(1, postion);  
+  if(direction!=STOP){
+      position += (direction*20);
+      dxl.setGoalPosition(DXL_ID, position);
+  }
+    
   
 }
 
