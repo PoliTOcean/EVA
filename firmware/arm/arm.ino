@@ -22,6 +22,8 @@
 #include <Dynamixel2Arduino.h>
 #include <Ethernet.h>
 #include <string.h>
+#include <Servo.h>
+#include <Stepper.h>
 #include "Adafruit_MQTT_Client.h"
 
 #define MQTT_TIMEOUT 30             // milliseconds
@@ -31,6 +33,7 @@
 #define AIO_USERNAME "arm_board"
 
 typedef enum{DOWN = -1, STOP = 0, UP = 1} arm_direction;
+typedef enum{CCW = -1, STOP_W = 0, CW = 1} wrist_rotation;
 
 const uint8_t DXL_ID = 1;
 const float DXL_PROTOCOL_VERSION = 1.0;
@@ -41,12 +44,15 @@ DynamixelShield dxl;
 using namespace ControlTableItem;
 #define pinUP  9
 #define pinDOWN  8
+#define pinDIR_NIPPER 48
+#define pinPWM_NIPPER 10
 bool up = false;
 bool down = false;
 bool lastMoviment = false;
 int dim;
 
 int position = 0;
+int rotation_wrist = 0;
 
 unsigned char mac[] = {0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x06};
 IPAddress addr(10, 0, 0, 6);
@@ -56,6 +62,7 @@ Adafruit_MQTT_Client mqtt(&ethClient, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME);
 Adafruit_MQTT_Subscribe commands = Adafruit_MQTT_Subscribe(&mqtt, "commands/");
 
 arm_direction direction = STOP;
+wrist_rotation rotation = STOP_W;
 
 // definition of the function to connect/reconnect to the mqtt server
 void MQTT_connect();
@@ -64,6 +71,7 @@ void setup() {
   // put your setup code here, to run once:
   pinMode(pinUP, INPUT);
   pinMode(pinDOWN, INPUT);
+  pinMode(pinDIR_NIPPER, OUTPUT);
   // Set Port baudrate to 57600bps. This has to match with DYNAMIXEL baudrate.
   dxl.begin(57600);
   // Set Port Protocol Version. This has to match with DYNAMIXEL protocol version.
@@ -99,11 +107,36 @@ void loop() {
     else if(strcmp(cmd,"STOP_SHOULDER")==0){
       direction = STOP;
     }
+    if(strcmp(cmd, "ROTATE WRIST CCW")==0){
+      rotation = CCW;
+    }
+    else if(strcmp(cmd, "ROTATE WRIST CW")==0){
+      rotation = CW;
+    }
+    else if (strcmp(cmd, "STOP WRIST")==0){
+      rotation = STOP_W;
+    }
+    if (strcmp(cmd, "OPEN NIPPER")==0){
+      
+      digitalWrite(pinDIR_NIPPER, HIGH);
+      //analogWrite(pinPWM_NIPPER, 127);
+    }
+    else if(strcmp(cmd, "STOP NIPPER")==0) {
+      //analogWrite(pinPWM_NIPPER, 0);
+    }
+    else if (strcmp(cmd, "CLOSE NIPPER")==0){
+      digitalWrite(pinDIR_NIPPER, LOW);   //set direction for actuator
+      //analogWrite(pinPWM_NIPPER, 127);    //move actuator
+    }
 
   }
   if(direction!=STOP){
       position += (direction*20);
       dxl.setGoalPosition(DXL_ID, position);
+  }
+  if(rotation!=STOP){
+      rotation_wrist += (rotation*20);
+      
   }
     
   
