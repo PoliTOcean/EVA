@@ -1,16 +1,16 @@
 buttons:
   A:
-    onPress: "A onPress"
-    onRelease: "A onRelase"
+    onPress: "ROTATE WRIST CCW"
+    onRelease: "STOP WRIST"
   B:
-    onPress: "B onPress"
+    onPress: "OPEN NIPPER"
     onRelease: "STOP NIPPER"
   X:
-    onPress: "X onPress"
+    onPress: "CLOSE NIPPER"
     onRelease: "STOP NIPPER"
   Y:
-    onPress: "Y onPress"
-    onRelease:
+    onPress: "ROTATE WRIST CW"
+    onRelease: "STOP WRIST"
   Back:
     onPress: "BACK onPress"
     onRelease:
@@ -24,14 +24,14 @@ buttons:
     onPress: "LS onPress"
     onRelease:
   RS:
-    onPress: "RS onPress"
-    onRelease:
+    onPress: "STOP_SHOULDER"
+    onRelease: "STOP_SHOULDER"
   LB:
-    onPress: "LB onPress"
-    onRelease:
+    onPress: "SHOULDER_UP"
+    onRelease: "STOP_SHOULDER"
   RB:
-    onPress: "RB onPress"
-    onRelease:
+    onPress: "SHOULDER_DOWN"
+    onRelease: "STOP_SHOULDER"
   D-Pad-Up:
     onPress: "SHOULDER_UP"
     onRelease: "STOP_SHOULDER"
