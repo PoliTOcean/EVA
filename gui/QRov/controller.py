@@ -108,7 +108,7 @@ class QRovController(QObject):
 
     # def __init_camera(self):
     #     self.cameraThread = VideoThread()
-    #     self.cameraThread.change_pixmap_signal.connect(self.__on_cameraImageAcquired)
+    #     self.cameraThread.ch+ange_pixmap_signal.connect(self.__on_cameraImageAcquired)
     #     self.cameraThread.start()
 
     @property
@@ -159,6 +159,8 @@ class QRovController(QObject):
             self.__mqttClient.publish('commands/', command)
             print(self.__joystick.commands['buttons'][button.id][
             'onPress'])
+            print(self.__joystick.commands['buttons'][button.id][
+            'onRelease'])
         
 
     @pyqtSlot(int)
