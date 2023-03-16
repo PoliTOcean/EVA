@@ -18,7 +18,6 @@
 * Please refer to each DYNAMIXEL eManual(http://emanual.robotis.com/docs/en/dxl/) for more information regarding Torque.
 */
 
-#include <DynamixelShield.h>
 #include <Dynamixel2Arduino.h>
 #include <Ethernet.h>
 #include <string.h>
@@ -36,21 +35,21 @@ typedef enum{CCW = -1, STOP_W = 0, CW = 1} wrist_rotation;
 const uint8_t DXL_ID = 1;
 const float DXL_PROTOCOL_VERSION = 1.0;
 
-DynamixelShield dxl;
+Dynamixel2Arduino dxl;
 
 //This namespace is required to use Control table item names
 using namespace ControlTableItem;
-#define pinUP  9
-#define pinDOWN  8
-#define pinDIR_NIPPER 48
+#define pinUP  32
+#define pinDOWN  1
+#define pinDIR_NIPPER 11
 #define pinPWM_NIPPER 10
 #define STEPS 20
 //Direction pin
-#define X_DIR 5
+#define X_DIR 9
 //Step pin
 #define X_STP  2
 //enable pin (active low)
-#define EN 49
+#define EN 23
 
 
 bool up = false;
@@ -92,7 +91,7 @@ void setup() {
   pinMode(EN, OUTPUT);
   digitalWrite(EN, HIGH);
 
-  Ethernet.init(53);
+  Ethernet.init(14);
   Ethernet.begin(mac, addr);
   mqtt.subscribe(&commands);
    
