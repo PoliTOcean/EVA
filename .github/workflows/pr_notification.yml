@@ -19,7 +19,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Runs the telegram notify action to send a notification
       - name: Telegram Notify
@@ -29,7 +29,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            A new PR is raised [View all PR's](https://github.com/${{ github.repository }}/pulls)
+            A new PR is raised. [View all PR's](https://github.com/${{ github.repository }}/pulls)
             Repository: *${{ github.repository }}*
-            Branch: *${{ github.base_ref }}*
+            Target branch: *${{ github.base_ref }}*, ${{ github.ref_name }}
             Owner: *${{ github.repository_owner }}*
