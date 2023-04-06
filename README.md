@@ -13,8 +13,9 @@ The firmware for a specific component can be find in [this](firmware/) directory
 * atmega_camera_lights: 10.0.0.4
 * atmega_power: 10.0.0.5
 * atmega_arm: 10.0.0.6
-* stazione di terra: 10.0.0.252
-* mqtt broker (jetson): 10.0.0.254
+* mqtt broker (jetson nano): 10.0.0.254
+* jetson xavier agx: 10.0.0.253
+* raspberry pi 4 (control station): 10.0.0.252
 
 ### MAC Mapping
 
