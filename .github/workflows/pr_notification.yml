@@ -29,7 +29,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            A new PR is raised [View all PR's](https://github.com/<user>/<repo>/pulls)
+            A new PR is raised [View all PR's](https://github.com/${{ github.repository }}/pulls)
             Repository: *${{ github.repository }}*
-            Branch: *${{ github.ref }}*
+            Branch: *${{ github.base_ref }}*
             Owner: *${{ github.repository_owner }}*
