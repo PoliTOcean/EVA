@@ -31,5 +31,5 @@ jobs:
           message: |
             A new PR is raised. [View all PR's](https://github.com/${{ github.repository }}/pulls)
             Repository: *${{ github.repository }}*
-            Target branch: *${{ github.base_ref }}*, ${{ github.ref_name }}
+            Target Branch: *${{ github.base_ref }}*
             Owner: *${{ github.repository_owner }}*
