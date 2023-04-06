@@ -30,3 +30,6 @@ jobs:
           format: markdown
           message: |
             A new PR is raised [View all PR's](https://github.com/<user>/<repo>/pulls)
+            Repository: *${{ github.repository }}*
+            Branch: *${{ github.ref }}*
+            Owner: *${{ github.repository_owner }}*
