@@ -4,7 +4,7 @@ clc
 
 %% EQUATION PARAMETERS
 m = 16.6;               % [kg] mass of the ROV (EVA)
-g = 9.81;               % [m/s^2] gravity acceleration
+g = 9.81;               %w [m/s^2] gravity acceleration
 
 x_g = 0;                % [m] CoM x displacement w.r.t. Body Frame
 y_g = 0;                % [m] CoM y displacement w.r.t. Body Frame

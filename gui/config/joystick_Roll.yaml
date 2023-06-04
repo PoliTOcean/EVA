@@ -12,13 +12,13 @@ buttons:
     onPress: "Y onPress"
     onRelease:
   Back:
-    onPress: "BACK onPress"
+    onPress: "TORQUE_OFF"
     onRelease:
   Guide:
     onPress: "GUIDE onPress"
-    onRelease:
+    onRelease: "GUIDE_RELesw"
   Start:
-    onPress: "START onPress"
+    onPress: "TORQUE_ON"
     onRelease:
   LS:
     onPress: "LS onPress"

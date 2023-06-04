@@ -7,9 +7,9 @@
  *
  * Code generation for model "sim_ROV_v0_R2018b".
  *
- * Model version              : 1.435
+ * Model version              : 10.0
  * Simulink Coder version : 9.9 (R2023a) 19-Nov-2022
- * C++ source code generated on : Fri Apr 21 14:16:52 2023
+ * C++ source code generated on : Wed May 10 11:42:16 2023
  *
  * Target selection: grt.tlc
  * Note: GRT includes extra infrastructure and instrumentation for prototyping
@@ -59,7 +59,7 @@ extern "C"
         LittleEndian,
         BigEndian
       } machByteOrder
-{
+      {
         (*((uint8_T *) &one) == 1U) ? LittleEndian : BigEndian
       };
       switch (machByteOrder) {
@@ -124,7 +124,7 @@ extern "C"
         LittleEndian,
         BigEndian
       } machByteOrder
-{
+      {
         (*((uint8_T *) &one) == 1U) ? LittleEndian : BigEndian
       };
       switch (machByteOrder) {

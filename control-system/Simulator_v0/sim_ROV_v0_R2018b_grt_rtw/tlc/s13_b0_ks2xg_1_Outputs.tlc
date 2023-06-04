@@ -1,0 +1,92 @@
+%implements s13_b0_ks2xg_1_Outputs "C"
+
+%function Outputs(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+b_dsp_FIRFilter_0_sim_ROV_v0__T *obj_0;
+b_dspcodegen_FIRFilter_sim_RO_T *obj;
+real_T zNext;
+%closefile localVarDecl
+%<SLibGenerateExtModeOutput(system)>
+/* {S!d496}MATLABSystem: '<S30>/Lowpass Filter3' */
+obj = localDW->obj.FilterObj;
+if (obj->isInitialized != 1) {
+    obj->isSetupComplete = false;
+    obj->isInitialized = 1;
+    obj->isSetupComplete = true;
+    /* System object Initialization function: dsp.FIRFilter */
+    obj->cSFunObject.W0_states[0] = obj->cSFunObject.P0_InitialStates;
+    obj->cSFunObject.W0_states[1] = obj->cSFunObject.P0_InitialStates;
+    obj->cSFunObject.W0_states[2] = obj->cSFunObject.P0_InitialStates;
+}
+obj_0 = &obj->cSFunObject;
+/* System object Outputs function: dsp.FIRFilter */
+zNext = rtu_0;
+for ( int32_T k{0}; k < 1; k++) {
+    real_T zCurr;
+    real_T zCurr_0;
+    real_T zCurr_1;
+    real_T zCurr_2;
+    /* load input sample */
+    /* shift state */
+    zCurr = zNext;
+    zNext = obj_0->W0_states[0];
+    obj_0->W0_states[0] = zCurr;
+    /* compute one tap */
+    zCurr_0 = obj_0->P1_Coefficients[0] * zCurr;
+    /* shift state */
+    zCurr = zNext;
+    zNext = obj_0->W0_states[1];
+    obj_0->W0_states[1] = zCurr;
+    /* compute one tap */
+    zCurr_1 = obj_0->P1_Coefficients[1] * zCurr;
+    /* shift state */
+    zCurr = zNext;
+    zNext = obj_0->W0_states[2];
+    obj_0->W0_states[2] = zCurr;
+    /* compute one tap */
+    zCurr_2 = obj_0->P1_Coefficients[2] * zCurr;
+    /* compute last tap */
+    zCurr = obj_0->P1_Coefficients[3] * zNext;
+    /* store output sample */
+    zNext = ((zCurr_0 + zCurr_1) + zCurr_2) + zCurr;
+}
+/* {S!d498}MATLABSystem: '<S30>/Lowpass Filter3' */
+localB->LowpassFilter3 = zNext;
+%closefile cfgTxt
+%<cfgTxt>
+%assign rtmArgSys = ::CompiledModel.System[::CompiledModel.System[::CompiledModel.RTWCGModules.RTWCGModule[1].CGSystemIdx].NonInlinedParentSystemIdx]
+%if SysFcnArgNeeded("Output", rtmArgSys.Interface.RTMArgDef, rtmArgSys.CurrentTID, FcnSysModuleIsRateGrouping(rtmArgSys, "Output"))
+%<SLibCG_AccessArg(1, 1, 0)>
+%endif
+%if SLibCG_ArgAccessed(1, 1, 0)
+%<SLibAccessArg(rtmArgSys.Interface.RTMArgDef, "Output", rtmArgSys.CurrentTID, FcnSysModuleIsRateGrouping(rtmArgSys, "Output"))>
+%endif
+%if (IsModelReferenceBaseSys(rtmArgSys) && (IsModelRefScalableBuild() || GenerateClassInterface)) ||...
+(GenerateClassInterface && SLibIsMultiInstanceServer(rtmArgSys))
+%<SLibCG_UndoAccessArg(1, 1, 0)>
+%endif
+%<LibSetSystemField(system, "CachedOutputLocalVars", localVarDecl)>
+%endfunction
+%function OutputsFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void sim_ROV_v0_R2018_LowpassFilter3(\
+%assign comma = ""
+%if SLibCG_ArgAccessed(1, 1, 0)
+%<comma>%<::tSimStructType> * const %<::tSimStruct>\
+%assign comma = ", "
+%<SLibUpdateSymbolForFunction("sim_ROV_v0_R2018_LowpassFilter3", SLibGetFcnDefinitionRTMSymbolName(), TLC_FALSE)>\
+%endif
+%<comma>real_T rtu_0\
+%assign comma = ", "
+%<comma>B_LowpassFilter3_sim_ROV_v0_R_T *localB\
+%assign comma = ", "
+%<comma>DW_LowpassFilter3_sim_ROV_v0__T *localDW\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(1, 1, fcnProtoType)>
+%endfunction

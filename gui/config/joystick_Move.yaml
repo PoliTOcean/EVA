@@ -12,13 +12,13 @@ buttons:
     onPress: "ROTATE WRIST CW"
     onRelease: "STOP WRIST"
   Back:
-    onPress: "BACK onPress"
+    onPress: "TORQUE_OFF"
     onRelease:
-  Guide:
-    onPress: "GUIDE onPress"
+  GUIDE:
+    onPress: "START_CALIBRATION"
     onRelease:
   Start:
-    onPress: "START onPress"
+    onPress: "TORQUE_ON"
     onRelease:
   LS:
     onPress: "LS onPress"
@@ -27,10 +27,10 @@ buttons:
     onPress: "STOP_SHOULDER"
     onRelease: "STOP_SHOULDER"
   LB:
-    onPress: "SHOULDER_UP"
+    onPress: "SHOULDER_DOQN"
     onRelease: "STOP_SHOULDER"
   RB:
-    onPress: "SHOULDER_DOWN"
+    onPress: "SHOULDER_UP"
     onRelease: "STOP_SHOULDER"
   D-Pad-Up:
     onPress: "SHOULDER_UP"
@@ -45,8 +45,8 @@ buttons:
     onPress: "ROTATE WRIST CW"
     onRelease: "STOP WRIST"
 axes:
-  LSB-X: "Y"
-  LSB-Y: "X"
+  LSB-X: "X"
+  LSB-Y: "Y"
   RSB-X: "SHOULDER"
   RSB-Y: "WRIST"
   LT: "Z_DOWN"

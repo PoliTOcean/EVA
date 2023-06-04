@@ -5,6 +5,10 @@
 #include <Arduino_JSON.h>
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
+#include "MS5837.h"
+#include <Wire.h>
+
+MS5837 sensor;
 
 // Macro used to define contants used in the code
 #define NUM_SERVO 8
@@ -84,6 +88,7 @@ float xp,
 float valx1, valy1;
 float valx2, valy2;
 double ax, ay, az;
+float dp, at, tp;
 // json parsing related variables
 int dim;
 char *cmd;
@@ -94,14 +99,14 @@ JSONVar sensorsIn;
 EthernetClient ethClient;
 Adafruit_MQTT_Subscribe *subscription;
 Adafruit_MQTT_Client mqtt(&ethClient, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME);
-Adafruit_MQTT_Subscribe sensors = Adafruit_MQTT_Subscribe(&mqtt, "sensors/");
+Adafruit_MQTT_Publish sensors = Adafruit_MQTT_Publish(&mqtt, "sensor_nucelo/");
 Adafruit_MQTT_Subscribe motors = Adafruit_MQTT_Subscribe(&mqtt, "axes/");
-Adafruit_MQTT_Publish attitude = Adafruit_MQTT_Publish(&mqtt, "attitude/");
 
 void setup()
 {
-
-  Serial.begin(115200);
+ 
+  Wire.begin();
+  Serial.begin(9600);
   int i;
   Ethernet.init(A4);
   for (i = 0; i < NUM_SERVO; i++)
@@ -112,24 +117,9 @@ void setup()
   Ethernet.begin(mac, addr); // start the Ethernet connection
   delay(ESC_DELAY);          // delay to allow the ESC to recognize the stopped signal
   mqtt.subscribe(&motors);   // subscribe to the mqtt topic "axes/"
-  mqtt.subscribe(&sensors);  // subscribe to the mqtt topic "sensors/"
+ 
+  sensor.setFluidDensity(997);
   Serial.println("Fine setup");
-}
-
-void printAttitude(double ax, double ay, double az) // method to obtain the position in radians
-{
-  char packet[40]; // packert for data
-  float roll = 0;
-  float pitch = 0;
-
-  roll = atan2(ay, az);
-  pitch = atan2(-ax, sqrt(ay * ay + az * az));
-
-  sprintf(packet,
-          "{\"roll\":%s,\"pitch\":%s}",
-          String(roll *= 180.0 / PI).c_str(),
-          String(pitch *= 180.0 / PI).c_str());
-  attitude.publish(packet);
 }
 
 void loop()
@@ -137,31 +127,12 @@ void loop()
   MQTT_connect(); // connect to the mqtt server
   while ((subscription = mqtt.readSubscription(MQTT_TIMEOUT)))
   {
-    // condition for reading the sensors on the topic /sensors
-    if (subscription == &sensors)
-    {
-      dim = strlen((char *)sensors.lastread);     // read the lenght of the recived data
-      char cmd[dim + 1];                          // allocate a string to hold the read json string
-      memcpy(cmd, (char *)sensors.lastread, dim); // copy the json string into a variable
-      cmd[dim] = '\0';
-      sensorsIn = JSON.parse(cmd); // parse the json file
+    /*sensor.read();
+    dp = sensor.depth();
+    tp = sensor.temperature();
+    */
 
-      if (JSON.typeof(sensorsIn) == "undefined")
-      { // check whether the command is correct
-        continue;
-      }
-      // float checkPacket = sensorsIn["ax"];// temporary variable to check if the received packet contains the axes
 
-      if (sensorsIn.hasOwnProperty("ax"))
-      { // check axis in packet
-        // parse the values recived into the allocated variable
-        ax = (sensorsIn["ax"]);
-        ay = (sensorsIn["ay"]);
-        az = (sensorsIn["az"]);
-        printAttitude(ax, ay, az);
-      }
-      // call the method to convert the imu data to degrees
-    }
     if (subscription == &motors)
     {
       dim = strlen((char *)motors.lastread);     // read the lenght of the recived data

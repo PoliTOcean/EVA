@@ -1,0 +1,82 @@
+%implements s13_b0_ks2xg_Functions "C"
+
+%function rt_urand_Upu32_Yd_f_pw_snf_Fcn0(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+uint32_T hi;
+uint32_T lo;
+/* Uniform random number generator (random number between 0 and 1)
+
+#define IA      16807                      magic multiplier = 7^5
+#define IM      2147483647                 modulus = 2^31-1
+#define IQ      127773                     IM div IA
+#define IR      2836                       IM modulo IA
+#define S       4.656612875245797e-10      reciprocal of 2^31-1
+test = IA * (seed %<"\% IQ) - IR * (seed/IQ)\
+seed = test < 0 ? (test + IM) : test\
+return (seed*S)\
+"> */
+lo = *u % 127773U * 16807U;
+hi = *u / 127773U * 2836U;
+if (lo < hi) {
+    *u = 2147483647U - (hi - lo);
+} else {
+    *u = lo - hi;
+}
+return static_cast<real_T>(*u) * 4.6566128752457969E-10;
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+extern real_T rt_urand_Upu32_Yd_f_pw_snf(\
+%assign comma = ""
+%<comma>uint32_T *u\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(2, 0, fcnProtoType)>
+%return fcnBuff
+%endfunction
+
+%function rt_nrand_Upu32_Yd_f_pw_snf_Fcn1(block) void
+%assign fcnBuff = ""
+%openfile fcnBuff
+%assign cfgTxt = ""
+%openfile cfgTxt
+real_T si;
+real_T sr;
+real_T y;
+%assign _modelSS = ""
+
+%if SLibCG_FcnCallArgAccessed(2,1,1,0)
+%<SLibCG_AccessArg(2 ,1, 0)>
+%endif
+
+%if SLibCG_FcnCallArgAccessed(2,1,0,0)
+%<SLibCG_AccessArg(2 ,1, 0)>
+%endif
+
+/* Normal (Gaussian) random number generator */
+do {
+    sr = 2.0 * %<(SLibCGCallSubFcn("rt_urand_Upu32_Yd_f_pw_snf", ["u"], 2, 1, 0))> - 1.0;
+    si = 2.0 * %<(SLibCGCallSubFcn("rt_urand_Upu32_Yd_f_pw_snf", ["u"], 2, 1, 1))> - 1.0;
+    si = sr * sr + si * si;
+} while (si > 1.0);
+y = std::sqrt(-2.0 * std::log(si) / si) * sr;
+return y;
+%closefile cfgTxt
+%<cfgTxt>
+%closefile fcnBuff
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+extern real_T rt_nrand_Upu32_Yd_f_pw_snf(\
+%assign comma = ""
+%<comma>uint32_T *u\
+%assign comma = ", "
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(2, 1, fcnProtoType)>
+%return fcnBuff
+%endfunction
+
