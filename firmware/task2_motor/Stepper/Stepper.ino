@@ -1,103 +1,64 @@
-#define dirPin 2               // Direction PIN
-#define stepPin 3              // Step PIN
+#define dirPin 2               // Direction PIN - VERDE
+#define stepPin 7              // Step PIN - BIANCO
 #define stepsPerRevolution 400 // Number of Steps for a Total Round
-#define totalRound 227         // Number of Rounds to drain
+#define totalRound 130         // Number of Rounds to drain
 #define forwardPin 4           // Status of the command
 #define backwardPin 5
-#define Enable 6
-int presentTotalRound = 0; // Variable in which is stored the actual number of round
+#define Enable 6           // BLU
+int presentTotalRound = 0; // Variable itcn which is stored the actual number of round
 bool suca = false;
 bool sputa = false;
 bool moveON = false;
-bool fineCorsaSuca = false;
-bool fineCorsaSputa = false;
 
 void setup()
 {
   // Declare pins as output:
+  Serial.begin(9600);
   pinMode(stepPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
   pinMode(forwardPin, INPUT);
   pinMode(backwardPin, INPUT);
-  Serial.begin(9600);
 }
 void loop()
 {
   sputa = digitalRead(forwardPin);
   suca = digitalRead(backwardPin);
-  if (suca && !sputa)
+  if (suca)
   {
+    if (digitalRead(Enable) == HIGH)
+      digitalWrite(Enable, LOW);
+    Serial.println("suca on");
+    moveON = true;
+    presentTotalRound++;
     digitalWrite(dirPin, LOW);
-    digitalWrite(Enable, LOW);
-    moveON = true;
-    if (fineCorsaSuca)
-    {
-      fineCorsaSuca = false;
-    }
-    sucaFun();
   }
-  else if (sputa && !suca)
+  else if (sputa)
   {
+    if (digitalRead(Enable) == HIGH)
+      digitalWrite(Enable, LOW);
+    Serial.println("sputa on");
     digitalWrite(dirPin, HIGH);
-    digitalWrite(Enable, LOW);
     moveON = true;
-    if (fineCorsaSputa)
-    {
-      fineCorsaSputa = false;
-    }
-    sputaFun();
+    presentTotalRound--;
   }
-  else if ((sputa && suca) || (!sputa && !suca))
+  else
   {
-    digitalWrite(Enable, HIGH); // Stepper has !Enable
+
     moveON = false;
+    digitalWrite(Enable, HIGH);
   }
-  if (presentTotalRound <= totalRound && presentTotalRound >= 0 && moveON)
+  if (moveON)
   {
-    // These four lines result in 1 step with the minimum possible of delay:
-    if (suca)
-      if (presentTotalRound == totalRound)
-      {
-        fineCorsaSuca = true;
-      }
-      else
-      {
-        presentTotalRound++;
-        fineCorsaSuca = false;
-        fineCorsaSputa = false;
-      }
-    else if (sputa)
+    if (presentTotalRound <= totalRound && presentTotalRound >= 0)
     {
-      if (presentTotalRound == 0)
+      Serial.println(presentTotalRound);
+      for (int i = 0; i < 400; i++)
       {
-        fineCorsaSputa = true;
-      }
-      else
-      {
-        presentTotalRound--;
-        fineCorsaSputa = false;
-        fineCorsaSuca = false;
+        digitalWrite(stepPin, HIGH);
+        delayMicroseconds(400);
+        digitalWrite(stepPin, LOW);
+        delayMicroseconds(400);
       }
     }
   }
 }
-
-  void sucaFun(){
-    for (int i = 0; i <= stepsPerRevolution; i++)
-    {
-      digitalWrite(stepPin, HIGH);
-      delayMicroseconds(400);
-      digitalWrite(stepPin, LOW);
-      delayMicroseconds(400);
-    }
-  }
-
-  void sputaFun(){
-    for (int i = 0; i <= stepsPerRevolution; i++)
-    {
-      digitalWrite(stepPin, HIGH);
-      delayMicroseconds(400);
-      digitalWrite(stepPin, LOW);
-      delayMicroseconds(400);
-    }
-  }

@@ -12,28 +12,32 @@ motorStatus = 0
 # LOOK AT THE SCHEME IN THE FOLDER
 
 
-def GPIO_Controll(cmd, client):  # Dedicated method for setting state on pins
+def GPIO_Controll(cmd, client):  
+    # Dedicated method for setting state on pins
+
     CurrValue = GPIO.LOW  # convenience variable
-    if cmd == "ledON":  # condition to check the command
-        CurrValue = GPIO.HIGH  # alter the dummy variable to with the desired state
-        # I print an alert to notify you of the alteration of the pin status
-        print("Outputting {} to pin {}".format(CurrValue, LedPinOut))
-        # set the pin related to the command and set it with the desired status
-        GPIO.output(LedPinOut, CurrValue)
-        # I publish on the "Status/" topic the new status of the pin
-        client.publish("status/Led", CurrValue)
-    elif cmd == "ledOFF":
-        CurrValue = GPIO.LOW  # alter the dummy variable to with the desired state
-        # I print an alert to notify you of the alteration of the pin status
-        print("Outputting {} to pin {}".format(CurrValue, LedPinOut))
-        # set the pin related to the command and set it with the desired status
-        GPIO.output(LedPinOut, CurrValue)
-        # I publish on the "Status/" topic the new status of the pin
-        client.publish("status/Led", CurrValue)
+    if cmd == "changeLed":
+        if(CurrValue == GPIO.LOW):  # condition to check the command
+            CurrValue = GPIO.HIGH  # alter the dummy variable to with the desired state
+            # I print an alert to notify you of the alteration of the pin status
+            print("Outputting {} to pin {}".format(CurrValue, LedPinOut))
+            # set the pin related to the command and set it with the desired status
+            GPIO.output(LedPinOut, CurrValue)
+            # I publish on the "Status/" topic the new status of the pin
+            client.publish("status/Led", CurrValue)
+    elif(CurrValue == GPIO.HIGH):
+            CurrValue = GPIO.LOW  # alter the dummy variable to with the desired state
+            # I print an alert to notify you of the alteration of the pin status
+            print("Outputting {} to pin {}".format(CurrValue, LedPinOut))
+            # set the pin related to the command and set it with the desired status
+            GPIO.output(LedPinOut, CurrValue)
+            # I publish on the "Status/" topic the new status of the pin
+            client.publish("status/Led", CurrValue)
+
 
     if cmd == "changeMotor":
-        global
-        motorStatus = motorStatus + 1
+        global motorStatus
+        motorStatus =  motorStatus + 1
 
         if motorStatus == 4:
             motorStatus = 0

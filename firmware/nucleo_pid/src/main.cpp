@@ -5,7 +5,11 @@
 #include <Arduino_JSON.h>
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
-#include "MS5837.h"
+#include "control_allocation.h"
+#include "joystick_mapper.h"
+#include "lookuptable.h"
+#include "pid.h"
+#include "reference_change.h"
 
 // Macro used to define contants used in the code
 #define NUM_SERVO 8
@@ -23,8 +27,22 @@
 #define AIO_USERNAME "nucleo-L432CK"
 #define DELAY_PWM 0
 
+#define kp 89.0
+#define ki 0.25
+#define kd 0.2
+
+#define MAX_FORCE 80.0
+#define MIN_FORCE 1.0
+#define MIN_DISTANCE 0.001
+
+#define MAX_SPEED 1.0
+#define dt 0.03
+
+#define map_pwm(X) X == 1500 ? 0.0 : ((X / (1900.0 + 1100.0)) * dt * MAX_SPEED * (X >= 1500 ? 1.0 : -1.0))
+
 // definition of the function to connect/reconnect to the mqtt server
 void MQTT_connect();
+void pid_control();
 
 // motors position definition
 typedef enum
@@ -84,11 +102,11 @@ float xp,
     yp;
 float valx1, valy1;
 float valx2, valy2;
-double ax, ay, az;
-float dp, at, tp;
-// json parsing related variables
-int dim;
+double depth, lastDepth = 0.0;
+    // json parsing related variables
+    int dim;
 char *cmd;
+bool pid_on = false;
 JSONVar commandsIn;
 JSONVar sensorsIn;
 
@@ -96,12 +114,14 @@ JSONVar sensorsIn;
 EthernetClient ethClient;
 Adafruit_MQTT_Subscribe *subscription;
 Adafruit_MQTT_Client mqtt(&ethClient, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME);
-Adafruit_MQTT_Publish sensors = Adafruit_MQTT_Publish(&mqtt, "sensor_nucelo/");
+Adafruit_MQTT_Subscribe sensors = Adafruit_MQTT_Subscribe(&mqtt, "sensors/");
 Adafruit_MQTT_Subscribe motors = Adafruit_MQTT_Subscribe(&mqtt, "axes/");
+
+PID pid = PID(0.03, MAX_FORCE, MIN_DISTANCE, kp, kd, ki);
 
 void setup()
 {
- 
+
   Serial.begin(9600);
   int i;
   Ethernet.init(A4);
@@ -113,7 +133,8 @@ void setup()
   Ethernet.begin(mac, addr); // start the Ethernet connection
   delay(ESC_DELAY);          // delay to allow the ESC to recognize the stopped signal
   mqtt.subscribe(&motors);   // subscribe to the mqtt topic "axes/"
-
+  mqtt.subscribe(&sensors);  // subscribe to the mqtt topic "sensors/"
+  Serial.println("Fine setup");
 }
 
 void loop()
@@ -121,11 +142,25 @@ void loop()
   MQTT_connect(); // connect to the mqtt server
   while ((subscription = mqtt.readSubscription(MQTT_TIMEOUT)))
   {
-    /*sensor.read();
-    dp = sensor.depth();
-    tp = sensor.temperature();
-    */
+    if (subscription == &sensors)
+    {
+      dim = strlen((char *)sensors.lastread);     // read the lenght of the recived data
+      char cmd[dim + 1];                          // allocate a string to hold the read json string
+      memcpy(cmd, (char *)sensors.lastread, dim); // copy the json string into a variable
+      cmd[dim] = '\0';
+      sensorsIn = JSON.parse(cmd); // parse the json file
 
+      if (JSON.typeof(sensorsIn) == "undefined")
+      { // check whether the command is correct
+        continue;
+      }
+
+      if (sensorsIn.hasOwnProperty("depth"))
+      {
+        // parse the values recived into the allocated variable
+        depth = (sensorsIn["depth"]);
+      }
+    }
 
     if (subscription == &motors)
     {
@@ -177,6 +212,7 @@ void loop()
       if ((YRemap2 > (XRemap2 * 0.846) && YRemap2 < (XRemap2 * 1.182)) ||
           (YRemap2 > (XRemap2 * 1.182) && YRemap2 < (XRemap2 * 0.846)))
       {
+        pid_on = true;
         servo[FDX].writeMicroseconds(SERVO_OFF);
         delay(DELAY_PWM);
         servo[FSX].writeMicroseconds((int)(valy2 + valx2));
@@ -188,6 +224,7 @@ void loop()
       else if (YRemap2 > (XRemap2 * 0.846 * (-1)) && YRemap2 < (XRemap2 * 1.182 * (-1)) ||
                (YRemap2 > (XRemap2 * 1.182 * (-1)) && YRemap2 < (XRemap2 * 0.846 * (-1))))
       {
+        pid_on = true;
         servo[FDX].writeMicroseconds((int)(valy1 + valx2));
         delay(DELAY_PWM);
         servo[FSX].writeMicroseconds(SERVO_OFF);
@@ -199,6 +236,7 @@ void loop()
       }
       else
       {
+        pid_on = true;
         servo[FDX].writeMicroseconds((int)(valy1 + valx2));
         delay(DELAY_PWM);
         servo[FSX].writeMicroseconds((int)(valy2 + valx2));
@@ -208,30 +246,35 @@ void loop()
         servo[RSX].writeMicroseconds((int)(valy2 + valx2));
         delay(DELAY_PWM);
       }
-
+      pid_control();
       // z axes
       if (Z_URemap >= Z_DRemap)
       {
-        servo[UPFDX].writeMicroseconds(Z_URemap >= 1510 ? 3000 - Z_URemap : SERVO_OFF);
+        pid_on = false;
+        servo[UPFDX].writeMicroseconds(Z_URemap >= 1550 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPRSX].writeMicroseconds(Z_URemap >= 1510 ? 3000 - Z_URemap : SERVO_OFF);
+        servo[UPRSX].writeMicroseconds(Z_URemap >= 1550 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPRDX].writeMicroseconds(Z_URemap >= 1510 ? 3000 - Z_URemap : SERVO_OFF);
+        servo[UPRDX].writeMicroseconds(Z_URemap >= 1550 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPFSX].writeMicroseconds(Z_URemap >= 1510 ? 3000 - Z_URemap : SERVO_OFF);
+        servo[UPFSX].writeMicroseconds(Z_URemap >= 1550 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
+        lastDepth = depth;
       }
       else
       {
-        servo[UPRDX].writeMicroseconds(Z_DRemap >= 1510 ? Z_DRemap : SERVO_OFF);
+        pid_on = false;
+        servo[UPRDX].writeMicroseconds(Z_DRemap >= 1550 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPFSX].writeMicroseconds(Z_DRemap >= 1510 ? Z_DRemap : SERVO_OFF);
+        servo[UPFSX].writeMicroseconds(Z_DRemap >= 1550 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPFDX].writeMicroseconds(Z_DRemap >= 1510 ? Z_DRemap : SERVO_OFF);
+        servo[UPFDX].writeMicroseconds(Z_DRemap >= 1550 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
-        servo[UPRSX].writeMicroseconds(Z_DRemap >= 1510 ? Z_DRemap : SERVO_OFF);
+        servo[UPRSX].writeMicroseconds(Z_DRemap >= 1550 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
+        lastDepth = depth;
       }
+      pid_control();
     }
   }
 }
@@ -254,5 +297,23 @@ void MQTT_connect()
     // connect will return 0 for connected
     mqtt.disconnect();
     delay(MQTT_CONNECT_RETRY_DELAY);
+  }
+}
+
+void pid_control(){
+  double force = pid.calculate(lastDepth, depth);
+  double kgf = map_to_kgf(force, MIN_FORCE);
+  int pwm = lookup_pwm(kgf);
+  double var = map_pwm(pwm);
+  if (pid_on)
+  {
+    servo[UPFDX].writeMicroseconds(pwm);
+    delay(DELAY_PWM);
+    servo[UPRSX].writeMicroseconds(pwm);
+    delay(DELAY_PWM);
+    servo[UPRDX].writeMicroseconds(pwm);
+    delay(DELAY_PWM);
+    servo[UPFSX].writeMicroseconds(pwm);
+    delay(DELAY_PWM);
   }
 }

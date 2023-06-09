@@ -5,7 +5,7 @@
 #define forwardPin 4           // Command status - The stepper goes counterclockwise
 #define backwardPin 5          // Command status - The stepper goes clockwise
 #define Enable 6               // Enable PIN (!! ENABLE = 1 ENABLES THE TORQUE !!)
-int presentTotalRound = 0;     // Variable in which is stored the actual number of round
+   int presentTotalRound = 0;   // Variable in which is stored the actual number of round
 bool suca = false;             // It is true if the syringe drain the liquid
 bool sputa = false;            // It is true if the syringe drop out the liquid
 bool moveON = false;           // It is true on the IDLE state
@@ -13,6 +13,7 @@ bool FineCorsa = false;        // It is true if presentTotalRound is 0 either 27
 
 void setup()
 {
+ 
     // Declare pins as output:
     pinMode(stepPin, OUTPUT);
     pinMode(dirPin, OUTPUT);
