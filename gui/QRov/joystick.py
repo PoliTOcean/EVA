@@ -90,9 +90,9 @@ class QJoystick(QObject):
                 self.__close()
                 self.signals.disconnected.emit()
 
-            #print(self.__mapping['axes'][event.jaxis.axis], event.jaxis.value)
+            print(self.__mapping['axes'][event.jaxis.axis], event.jaxis.value)
             # wait before read another event
-            time.sleep(0.03)
+            #time.sleep(0.03)
             #clear the current events queue
             sdl2.ext.get_events().clear()
 

@@ -27,10 +27,17 @@ buttons:
     onPress: "STOP_SHOULDER"
     onRelease: "STOP_SHOULDER"
   LB:
+<<<<<<< HEAD
     onPress: "SHOULDER_DOQN"
     onRelease: "STOP_SHOULDER"
   RB:
     onPress: "SHOULDER_UP"
+=======
+    onPress: "SHOULDER_UP"
+    onRelease: "STOP_SHOULDER"
+  RB:
+    onPress: "SHOULDER_DOWN"
+>>>>>>> 9eb3944bcadbd018991376e7bdbda1a963a29749
     onRelease: "STOP_SHOULDER"
   D-Pad-Up:
     onPress: "SHOULDER_UP"

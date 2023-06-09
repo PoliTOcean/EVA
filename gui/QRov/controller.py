@@ -19,6 +19,9 @@ from .joystick import QJoystick, QJoystickAxis, QJoystickButton
 from .signals import QStateSignals, QLoggingSignals
 from QRov import component
 
+from threading import Thread
+import time
+
 
 __CONFIG_FILENAME__ = "config.yaml"
 __CONFIG_SENSORS_KEY__ = "sensors"
@@ -29,8 +32,12 @@ __CONFIG_JOYSTICK_KEY__ = "joystick"
 
 
 
-
+thread = None
 axes = {} # axes -> {'X': 0, 'Y': 0, 'YAW': 0, 'PITCH': 0, 'Z_DOWN': 0, 'Z_UP': 0}
+
+def _send_packet_thread(mqtt_client, packet):
+        time.sleep(0.03)
+        mqtt_client.publish('axes/', json.dumps(packet))
 
 
 class QRovController(QObject):
@@ -147,9 +154,17 @@ class QRovController(QObject):
     @pyqtSlot(QJoystickAxis)
     def __on_axisChanged(self, axis: QJoystickAxis) -> None:
         #data = {self.__joystick.commands['axes'][axis.id]: axis.value}
+        global thread
         axes[self.__joystick.commands['axes'][axis.id]] = axis.value
-        self.__mqttClient.publish('axes/', json.dumps(axes))
-        
+        if thread is None:
+            thread = Thread(target = _send_packet_thread, args = (self.__mqttClient, axes))
+            thread.start()
+            pass
+
+        if thread is not thread.is_alive():
+            thread = Thread(target = _send_packet_thread, args = (self.__mqttClient, axes))
+            thread.start()
+        #self.__mqttClient.publish('axes/', json.dumps(axes))
 
     @pyqtSlot(QJoystickButton)
     def __on_buttonChanged(self, button: QJoystickButton) -> None:
