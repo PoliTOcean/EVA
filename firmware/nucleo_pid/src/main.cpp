@@ -27,9 +27,9 @@
 #define AIO_USERNAME "nucleo-L432CK"
 #define DELAY_PWM 0
 
-#define kp 89.0
-#define ki 0.25
-#define kd 0.2
+#define kp 95.0
+#define ki 5
+#define kd 0.5
 
 #define MAX_FORCE 80.0
 #define MIN_FORCE 1.0
@@ -102,11 +102,12 @@ float xp,
     yp;
 float valx1, valy1;
 float valx2, valy2;
-double depth, lastDepth = 0.0;
-    // json parsing related variables
-    int dim;
+double depth;
+double setPoint = 0.55;
+// json parsing related variables
+int dim;
 char *cmd;
-bool pid_on = false;
+bool pid_on = true;
 JSONVar commandsIn;
 JSONVar sensorsIn;
 
@@ -116,13 +117,14 @@ Adafruit_MQTT_Subscribe *subscription;
 Adafruit_MQTT_Client mqtt(&ethClient, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME);
 Adafruit_MQTT_Subscribe sensors = Adafruit_MQTT_Subscribe(&mqtt, "sensors/");
 Adafruit_MQTT_Subscribe motors = Adafruit_MQTT_Subscribe(&mqtt, "axes/");
+Adafruit_MQTT_Publish debug = Adafruit_MQTT_Publish(&mqtt, "debug/");
 
 PID pid = PID(0.03, MAX_FORCE, MIN_DISTANCE, kp, kd, ki);
 
 void setup()
 {
 
-  Serial.begin(9600);
+  Serial.begin(9600); // NON ELIMINARE
   int i;
   Ethernet.init(A4);
   for (i = 0; i < NUM_SERVO; i++)
@@ -159,11 +161,14 @@ void loop()
       {
         // parse the values recived into the allocated variable
         depth = (sensorsIn["depth"]);
+        depth = abs(depth);
+        
       }
     }
 
     if (subscription == &motors)
     {
+      // pid_control();
       dim = strlen((char *)motors.lastread);     // read the lenght of the recived data
       cmd = new char[dim + 1];                   // allocate a string to hold the read json string
       memcpy(cmd, (char *)motors.lastread, dim); // copy the json string into a variable
@@ -212,7 +217,12 @@ void loop()
       if ((YRemap2 > (XRemap2 * 0.846) && YRemap2 < (XRemap2 * 1.182)) ||
           (YRemap2 > (XRemap2 * 1.182) && YRemap2 < (XRemap2 * 0.846)))
       {
-        pid_on = true;
+        if (depth < 0.3)
+        {
+          pid_on = false;
+        }else{
+          pid_on = true;
+        }
         servo[FDX].writeMicroseconds(SERVO_OFF);
         delay(DELAY_PWM);
         servo[FSX].writeMicroseconds((int)(valy2 + valx2));
@@ -224,7 +234,14 @@ void loop()
       else if (YRemap2 > (XRemap2 * 0.846 * (-1)) && YRemap2 < (XRemap2 * 1.182 * (-1)) ||
                (YRemap2 > (XRemap2 * 1.182 * (-1)) && YRemap2 < (XRemap2 * 0.846 * (-1))))
       {
-        pid_on = true;
+        if (depth < 0.3)
+        {
+          pid_on = false;
+        }
+        else
+        {
+          pid_on = true;
+        }
         servo[FDX].writeMicroseconds((int)(valy1 + valx2));
         delay(DELAY_PWM);
         servo[FSX].writeMicroseconds(SERVO_OFF);
@@ -236,7 +253,14 @@ void loop()
       }
       else
       {
-        pid_on = true;
+        if (depth < 0.3)
+        {
+          pid_on = false;
+        }
+        else
+        {
+          pid_on = true;
+        }
         servo[FDX].writeMicroseconds((int)(valy1 + valx2));
         delay(DELAY_PWM);
         servo[FSX].writeMicroseconds((int)(valy2 + valx2));
@@ -246,11 +270,9 @@ void loop()
         servo[RSX].writeMicroseconds((int)(valy2 + valx2));
         delay(DELAY_PWM);
       }
-      pid_control();
       // z axes
       if (Z_URemap >= Z_DRemap)
       {
-        pid_on = false;
         servo[UPFDX].writeMicroseconds(Z_URemap >= 1550 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
         servo[UPRSX].writeMicroseconds(Z_URemap >= 1550 ? 3000 - Z_URemap : SERVO_OFF);
@@ -259,11 +281,15 @@ void loop()
         delay(DELAY_PWM);
         servo[UPFSX].writeMicroseconds(Z_URemap >= 1550 ? 3000 - Z_URemap : SERVO_OFF);
         delay(DELAY_PWM);
-        lastDepth = depth;
+        if (Z_URemap >= 1550)
+        {
+          setPoint = depth;
+          pid_on = false;
+        }
       }
       else
       {
-        pid_on = false;
+
         servo[UPRDX].writeMicroseconds(Z_DRemap >= 1550 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
         servo[UPFSX].writeMicroseconds(Z_DRemap >= 1550 ? Z_DRemap : SERVO_OFF);
@@ -272,11 +298,16 @@ void loop()
         delay(DELAY_PWM);
         servo[UPRSX].writeMicroseconds(Z_DRemap >= 1550 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
-        lastDepth = depth;
+        if (Z_DRemap >= 1550)
+        {
+          setPoint = depth;
+          pid_on = false;
+        }
       }
-      pid_control();
     }
+//    pid_control();
   }
+  pid_control();
 }
 
 // the following function is used in order to connect to mqtt server or reconnect to it
@@ -300,20 +331,26 @@ void MQTT_connect()
   }
 }
 
-void pid_control(){
-  double force = pid.calculate(lastDepth, depth);
-  double kgf = map_to_kgf(force, MIN_FORCE);
-  int pwm = lookup_pwm(kgf);
-  double var = map_pwm(pwm);
-  if (pid_on)
+void pid_control()
+{
+  char packet[80];
+  if (pid_on == true)
   {
+    double force = pid.calculate(setPoint, depth);
+    double kgf = map_to_kgf(force, MIN_FORCE);
+    int pwm = lookup_pwm(kgf);
+    double var = map_pwm(pwm);
     servo[UPFDX].writeMicroseconds(pwm);
-    delay(DELAY_PWM);
     servo[UPRSX].writeMicroseconds(pwm);
-    delay(DELAY_PWM);
     servo[UPRDX].writeMicroseconds(pwm);
-    delay(DELAY_PWM);
     servo[UPFSX].writeMicroseconds(pwm);
-    delay(DELAY_PWM);
+    sprintf(packet,
+            "{\"setPoint\":%s,\"pwm\":%s,\"depth\":%s,\"Z_Uremap\":%s,\"Z_DRemap\":%s}",
+            String(setPoint).c_str(),
+            String(pwm).c_str(),
+            String(depth).c_str(),
+            String(Z_URemap).c_str(),
+            String(Z_DRemap).c_str());
+    debug.publish(packet);
   }
 }
