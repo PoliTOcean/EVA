@@ -27,9 +27,11 @@
 #define AIO_USERNAME "nucleo-L432CK"
 #define DELAY_PWM 0
 
-#define kp 95.0
-#define ki 5
-#define kd 0.5
+/*
+#define kp 150.0
+#define ki 10
+#define kd 2
+*/
 
 #define MAX_FORCE 80.0
 #define MIN_FORCE 1.0
@@ -72,7 +74,7 @@ See the ROV picture for a proper understanding of the motors mapping
 
 */
 
-#if DEBUG_JOYSTICK_INPUTS
+#if pidMqtt_JOYSTICK_INPUTS
 int powVectorSTOP[NUM_SERVO] = {1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500};
 int powVectorForwardY[NUM_SERVO] = {1700, 1500, 1500, 1500, 1700, 1500, 1500, 1500};
 int powVectorReverseY[NUM_SERVO] = {1500, 1700, 1700, 1500, 1500, 1500, 1500, 1500};
@@ -94,8 +96,13 @@ int Z_URemap;
 int Z_DRemap;
 int YRemap;
 int XRemap;
+int Kp =150.0;
+int  Ki =10;
+int Kd =2;
+
 float YRemap2;
 float XRemap2;
+
 // int YRemap2;
 // int XRemap2;
 float xp,
@@ -110,6 +117,7 @@ char *cmd;
 bool pid_on = true;
 JSONVar commandsIn;
 JSONVar sensorsIn;
+JSONVar parametersIn;
 
 // mqtt and communication related variables
 EthernetClient ethClient;
@@ -117,9 +125,10 @@ Adafruit_MQTT_Subscribe *subscription;
 Adafruit_MQTT_Client mqtt(&ethClient, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME);
 Adafruit_MQTT_Subscribe sensors = Adafruit_MQTT_Subscribe(&mqtt, "sensors/");
 Adafruit_MQTT_Subscribe motors = Adafruit_MQTT_Subscribe(&mqtt, "axes/");
-Adafruit_MQTT_Publish debug = Adafruit_MQTT_Publish(&mqtt, "debug/");
+//Adafruit_MQTT_Subscribe parameters = Adafruit_MQTT_Subscribe(&mqtt, "parameters/");
+Adafruit_MQTT_Publish pidMqtt = Adafruit_MQTT_Publish(&mqtt, "pid/");
 
-PID pid = PID(0.03, MAX_FORCE, MIN_DISTANCE, kp, kd, ki);
+PID pid = PID(0.03, MAX_FORCE, MIN_DISTANCE, Kp, Kd, Ki);
 
 void setup()
 {
@@ -136,6 +145,7 @@ void setup()
   delay(ESC_DELAY);          // delay to allow the ESC to recognize the stopped signal
   mqtt.subscribe(&motors);   // subscribe to the mqtt topic "axes/"
   mqtt.subscribe(&sensors);  // subscribe to the mqtt topic "sensors/"
+  //mqtt.subscribe(&parameters);
   Serial.println("Fine setup");
 }
 
@@ -162,9 +172,33 @@ void loop()
         // parse the values recived into the allocated variable
         depth = (sensorsIn["depth"]);
         depth = abs(depth);
-        
       }
     }
+    /*
+    if (subscription == &parameters)
+    {
+      dim = strlen((char *)parameters.lastread);     // read the lenght of the recived data
+      char cmd[dim + 1];                          // allocate a string to hold the read json string
+      memcpy(cmd, (char *)parameters.lastread, dim); // copy the json string into a variable
+      cmd[dim] = '\0';
+      parametersIn = JSON.parse(cmd); // parse the json file
+
+      if (JSON.typeof(parametersIn) == "undefined")
+      { // check whether the command is correct
+        continue;
+      }
+
+      if (parametersIn.hasOwnProperty("Kp"))
+      {
+        // parse the values recived into the allocated variable
+        Kp = ((int)parametersIn["Kp"]);
+        Ki = ((int)parametersIn["Ki"]);
+        Kd = ((int)parametersIn["Kd"]);
+        delete &pid;
+        PID pid = PID(0.03, MAX_FORCE, MIN_DISTANCE, Kp, Kd, Ki);
+      }
+    }
+    */
 
     if (subscription == &motors)
     {
@@ -220,7 +254,9 @@ void loop()
         if (depth < 0.3)
         {
           pid_on = false;
-        }else{
+        }
+        else
+        {
           pid_on = true;
         }
         servo[FDX].writeMicroseconds(SERVO_OFF);
@@ -304,9 +340,8 @@ void loop()
           pid_on = false;
         }
       }
+      }
     }
-//    pid_control();
-  }
   pid_control();
 }
 
@@ -345,12 +380,13 @@ void pid_control()
     servo[UPRDX].writeMicroseconds(pwm);
     servo[UPFSX].writeMicroseconds(pwm);
     sprintf(packet,
-            "{\"setPoint\":%s,\"pwm\":%s,\"depth\":%s,\"Z_Uremap\":%s,\"Z_DRemap\":%s}",
+            "{\"setPoint\":%s,\"pwm\":%s,\"Force(N)\":%s,\"depth\":%s,\"Z_Uremap\":%s,\"Z_DRemap\":%s}",
             String(setPoint).c_str(),
             String(pwm).c_str(),
+            String(force).c_str(),
             String(depth).c_str(),
             String(Z_URemap).c_str(),
             String(Z_DRemap).c_str());
-    debug.publish(packet);
+    pidMqtt.publish(packet);
   }
 }

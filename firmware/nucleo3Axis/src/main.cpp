@@ -189,7 +189,6 @@ void loop()
         printAttitude(ax, ay, az);
       }
       // call the method to convert the imu data to degrees
-      pid_control();
     }
     pid_control();
   }
