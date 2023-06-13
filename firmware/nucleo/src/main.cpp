@@ -5,18 +5,18 @@
 #include <Arduino_JSON.h>
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
-
+#include "MS5837.h"
 
 // Macro used to define contants used in the code
 #define NUM_SERVO 8
-#define MQTT_TIMEOUT 30             // milliseconds
+#define MQTT_TIMEOUT 10             // milliseconds
 #define MQTT_CONNECT_RETRY_DELAY 15 // milliseconds
 #define ESC_DELAY 7000              // millisecons
 #define MIN_INPUT_READING -32678    // Minimum input reading value from the joystick
 #define MAX_INPUT_READING 32678     // Maximum input reading value from the joystick
-#define MIN_MAPPED_VALUE 1900       // Minium value to which the joystick reading is mapped
-#define MAX_MAPPED_VALUE 1100       // Maximum value to which the joystick reading is mapped
-#define MAX_Z 1700
+#define MIN_MAPPED_VALUE 1760       // Minium value to which the joystick reading is mapped
+#define MAX_MAPPED_VALUE 1200       // Maximum value to which the joystick reading is mapped
+#define MAX_Z 1750
 #define SERVO_OFF 1500 // Value to write in order to stop the servo
 #define AIO_SERVER "10.0.0.254"
 #define AIO_SERVERPORT 1883
@@ -85,6 +85,7 @@ float xp,
 float valx1, valy1;
 float valx2, valy2;
 double ax, ay, az;
+float dp, at, tp;
 // json parsing related variables
 int dim;
 char *cmd;
@@ -95,14 +96,13 @@ JSONVar sensorsIn;
 EthernetClient ethClient;
 Adafruit_MQTT_Subscribe *subscription;
 Adafruit_MQTT_Client mqtt(&ethClient, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME);
-Adafruit_MQTT_Subscribe sensors = Adafruit_MQTT_Subscribe(&mqtt, "sensors/");
+Adafruit_MQTT_Publish sensors = Adafruit_MQTT_Publish(&mqtt, "sensor_nucelo/");
 Adafruit_MQTT_Subscribe motors = Adafruit_MQTT_Subscribe(&mqtt, "axes/");
-Adafruit_MQTT_Publish attitude = Adafruit_MQTT_Publish(&mqtt, "attitude/");
 
 void setup()
 {
-
-  Serial.begin(115200);
+ 
+  Serial.begin(9600);
   int i;
   Ethernet.init(A4);
   for (i = 0; i < NUM_SERVO; i++)
@@ -113,24 +113,7 @@ void setup()
   Ethernet.begin(mac, addr); // start the Ethernet connection
   delay(ESC_DELAY);          // delay to allow the ESC to recognize the stopped signal
   mqtt.subscribe(&motors);   // subscribe to the mqtt topic "axes/"
-  mqtt.subscribe(&sensors);  // subscribe to the mqtt topic "sensors/"
-  Serial.println("Fine setup");
-}
 
-void printAttitude(double ax, double ay, double az)//method to obtain the position in radians
-{
-  char packet[40];//packert for data
-  float roll = 0;
-  float pitch = 0;
-  
-  roll = atan2(ay, az);
-  pitch = atan2(-ax, sqrt(ay * ay + az * az));
-  
-  sprintf(packet,
-          "{\"roll\":%s,\"pitch\":%s}",
-          String(roll *= 180.0 / PI).c_str(),
-          String(pitch *= 180.0 / PI).c_str());
-  attitude.publish(packet);
 }
 
 void loop()
@@ -138,31 +121,12 @@ void loop()
   MQTT_connect(); // connect to the mqtt server
   while ((subscription = mqtt.readSubscription(MQTT_TIMEOUT)))
   {
-     //condition for reading the sensors on the topic /sensors
-      if (subscription == &sensors)
-      {
-        dim = strlen((char *)sensors.lastread);     // read the lenght of the recived data
-        char cmd[dim + 1];                    // allocate a string to hold the read json string
-        memcpy(cmd, (char *)sensors.lastread, dim); // copy the json string into a variable
-        cmd[dim] = '\0';
-        sensorsIn = JSON.parse(cmd); // parse the json file
+    /*sensor.read();
+    dp = sensor.depth();
+    tp = sensor.temperature();
+    */
 
-        if (JSON.typeof(sensorsIn) == "undefined")
-        { // check whether the command is correct
-          continue;
-        }
-        //float checkPacket = sensorsIn["ax"];// temporary variable to check if the received packet contains the axes
-            
-        if(sensorsIn.hasOwnProperty("ax")){//check axis in packet
-          // parse the values recived into the allocated variable
-          ax = (sensorsIn["ax"]);
-          ay = (sensorsIn["ay"]);
-          az = (sensorsIn["az"]);
-          printAttitude(ax, ay, az);
-        }
-        //call the method to convert the imu data to degrees
-        
-      }
+
     if (subscription == &motors)
     {
       dim = strlen((char *)motors.lastread);     // read the lenght of the recived data
@@ -185,10 +149,10 @@ void loop()
       Y = ((int)commandsIn["Y"]);
       X = ((int)commandsIn["X"]);
 
-      //dynamic memory cleanup
+      // dynamic memory cleanup
       delete[] cmd;
-    
-    // remap the recived values into a proper interval range, in order to process them
+
+      // remap the recived values into a proper interval range, in order to process them
       Z_URemap = map(Z_U, MIN_INPUT_READING, MAX_INPUT_READING, SERVO_OFF, MAX_Z);
       Z_DRemap = map(Z_D, MIN_INPUT_READING, MAX_INPUT_READING, SERVO_OFF, MAX_Z);
       XRemap = map(X, MIN_INPUT_READING, MAX_INPUT_READING, MIN_MAPPED_VALUE, MAX_MAPPED_VALUE);
@@ -268,10 +232,7 @@ void loop()
         servo[UPRSX].writeMicroseconds(Z_DRemap >= 1510 ? Z_DRemap : SERVO_OFF);
         delay(DELAY_PWM);
       }
-      
     }
-    
-      
   }
 }
 

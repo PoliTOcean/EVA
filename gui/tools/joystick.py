@@ -13,8 +13,12 @@ if __name__ == "__main__":
 				print(event.jbutton.button, event.jbutton.state)
 			elif event.type == sdl2.SDL_JOYBUTTONUP:
 				print(event.jbutton.button, event.jbutton.state)
+			#elif event.type == sdl2.SDL_JOYHATMOTION:
+			#	print(event.jhat.hat, event.jhat.value)
 			elif event.type == sdl2.SDL_JOYDEVICEADDED:
 				joystick = sdl2.SDL_JoystickOpen(0)
 			elif event.type == sdl2.SDL_JOYDEVICEREMOVED:
 				sdl2.SDL_JoystickClose(joystick)
+
+
 

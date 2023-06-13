@@ -1,0 +1,53 @@
+%implements s13_b0_ks2xg_Update "C"
+
+%function Update(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+real_T (*lastU)[6];
+int32_T i;
+%closefile localVarDecl
+if (%<(SLibCGIRIsSampleHit(2, 9))>) {
+    /* {S!d868}Update for RandomNumber: '<S51>/White Noise' */
+    sim_ROV_v0_R2018b_DW.NextOutput[0] = %<(SLibCGCallSubFcn("rt_nrand_Upu32_Yd_f_pw_snf", ["&sim_ROV_v0_R2018b_DW.RandSeed[0]"], 2, 5, 3))> * sim_ROV_v0_R2018b_P.WhiteNoise_StdDev + sim_ROV_v0_R2018b_P.WhiteNoise_Mean;
+    sim_ROV_v0_R2018b_DW.NextOutput[1] = %<(SLibCGCallSubFcn("rt_nrand_Upu32_Yd_f_pw_snf", ["&sim_ROV_v0_R2018b_DW.RandSeed[1]"], 2, 5, 4))> * sim_ROV_v0_R2018b_P.WhiteNoise_StdDev + sim_ROV_v0_R2018b_P.WhiteNoise_Mean;
+    sim_ROV_v0_R2018b_DW.NextOutput[2] = %<(SLibCGCallSubFcn("rt_nrand_Upu32_Yd_f_pw_snf", ["&sim_ROV_v0_R2018b_DW.RandSeed[2]"], 2, 5, 5))> * sim_ROV_v0_R2018b_P.WhiteNoise_StdDev + sim_ROV_v0_R2018b_P.WhiteNoise_Mean;
+}
+/* {S!d870}Update for Derivative: '<S19>/Derivative' */
+if (sim_ROV_v0_R2018b_DW.TimeStampA == %<LibGetMathConstant(LibRealNonFinite("inf"), FcnGetDataTypeIdFromName("double"))>) {
+    sim_ROV_v0_R2018b_DW.TimeStampA = %<(SLibCG_SE(LibGetT()))>;
+    lastU = &sim_ROV_v0_R2018b_DW.LastUAtTimeA;
+} else if (sim_ROV_v0_R2018b_DW.TimeStampB == %<LibGetMathConstant(LibRealNonFinite("inf"), FcnGetDataTypeIdFromName("double"))>) {
+    sim_ROV_v0_R2018b_DW.TimeStampB = %<(SLibCG_SE(LibGetT()))>;
+    lastU = &sim_ROV_v0_R2018b_DW.LastUAtTimeB;
+} else if (sim_ROV_v0_R2018b_DW.TimeStampA < sim_ROV_v0_R2018b_DW.TimeStampB) {
+    sim_ROV_v0_R2018b_DW.TimeStampA = %<(SLibCG_SE(LibGetT()))>;
+    lastU = &sim_ROV_v0_R2018b_DW.LastUAtTimeA;
+} else {
+    sim_ROV_v0_R2018b_DW.TimeStampB = %<(SLibCG_SE(LibGetT()))>;
+    lastU = &sim_ROV_v0_R2018b_DW.LastUAtTimeB;
+}
+for (i = 0; i < 6; i++) {
+    (*lastU)[i] = sim_ROV_v0_R2018b_B.eta_dot[i];
+}
+/* {E!d870}End of Update for Derivative: '<S19>/Derivative' */
+if (%<(SLibCGIRIsSampleHit(2, 9))>) {
+    /* {S!d872}Update for RandomNumber: '<S37>/White Noise' */
+    sim_ROV_v0_R2018b_DW.NextOutput_p[0] = %<(SLibCGCallSubFcn("rt_nrand_Upu32_Yd_f_pw_snf", ["&sim_ROV_v0_R2018b_DW.RandSeed_l[0]"], 2, 5, 0))> * sim_ROV_v0_R2018b_P.WhiteNoise_StdDev_j + sim_ROV_v0_R2018b_P.WhiteNoise_Mean_g;
+    sim_ROV_v0_R2018b_DW.NextOutput_p[1] = %<(SLibCGCallSubFcn("rt_nrand_Upu32_Yd_f_pw_snf", ["&sim_ROV_v0_R2018b_DW.RandSeed_l[1]"], 2, 5, 1))> * sim_ROV_v0_R2018b_P.WhiteNoise_StdDev_j + sim_ROV_v0_R2018b_P.WhiteNoise_Mean_g;
+    sim_ROV_v0_R2018b_DW.NextOutput_p[2] = %<(SLibCGCallSubFcn("rt_nrand_Upu32_Yd_f_pw_snf", ["&sim_ROV_v0_R2018b_DW.RandSeed_l[2]"], 2, 5, 2))> * sim_ROV_v0_R2018b_P.WhiteNoise_StdDev_j + sim_ROV_v0_R2018b_P.WhiteNoise_Mean_g;
+}
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedUpdateLocalVars", localVarDecl)>
+%endfunction
+%function UpdateFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Update(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(2, 5, fcnProtoType)>
+%endfunction

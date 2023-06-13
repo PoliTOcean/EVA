@@ -5,44 +5,54 @@ import paho.mqtt.client as mqtt  # import the libraries for MQTT Client
 # LOOK AT THE SCHEME IN THE FOLDER
 LedPinOut = 16  # LOOK AT THE SCHEME IN THE FOLDER
 syringePinOut = 17  # LOOK AT THE SCHEME IN THE FOLDER
+syringeSuca = 18
+syringeSputa = 23
+syringeStatus = 0
+motorStatus = 0
 # LOOK AT THE SCHEME IN THE FOLDER
 
 
-def GPIO_Controll(cmd, client):  # Dedicated method for setting state on pins
-    CurrValue = GPIO.LOW  # convenience variable
-    if cmd == "ledON":  # condition to check the command
-        CurrValue = GPIO.HIGH  # alter the dummy variable to with the desired state
-        # I print an alert to notify you of the alteration of the pin status
-        print("Outputting {} to pin {}".format(CurrValue, LedPinOut))
-        # set the pin related to the command and set it with the desired status
-        GPIO.output(LedPinOut, CurrValue)
-        # I publish on the "Status/" topic the new status of the pin
-        client.publish("status/Led", CurrValue)
-    elif cmd == "ledOFF":
-        CurrValue = GPIO.LOW  # alter the dummy variable to with the desired state
-        # I print an alert to notify you of the alteration of the pin status
-        print("Outputting {} to pin {}".format(CurrValue, LedPinOut))
-        # set the pin related to the command and set it with the desired status
-        GPIO.output(LedPinOut, CurrValue)
-        # I publish on the "Status/" topic the new status of the pin
-        client.publish("status/Led", CurrValue)
+def GPIO_Controll(cmd, client):  
+    # Dedicated method for setting state on pins
 
-    if cmd == "MotorON":
-        CurrValue = GPIO.HIGH  # alter the dummy variable to with the desired state
-        # I print an alert to notify you of the alteration of the pin status
-        print("Outputting {} to pin {}".format(CurrValue, LedPinOut))
-        # set the pin related to the command and set it with the desired status
-        GPIO.output(LedPinOut, CurrValue)
+    CurrValue = GPIO.LOW  # convenience variable
+    if cmd == "changeLed":
+        if(CurrValue == GPIO.LOW):  # condition to check the command
+            CurrValue = GPIO.HIGH  # alter the dummy variable to with the desired state
+            # I print an alert to notify you of the alteration of the pin status
+            print("Outputting {} to pin {}".format(CurrValue, LedPinOut))
+            # set the pin related to the command and set it with the desired status
+            GPIO.output(LedPinOut, CurrValue)
+            # I publish on the "Status/" topic the new status of the pin
+            client.publish("status/Led", CurrValue)
+    elif(CurrValue == GPIO.HIGH):
+            CurrValue = GPIO.LOW  # alter the dummy variable to with the desired state
+            # I print an alert to notify you of the alteration of the pin status
+            print("Outputting {} to pin {}".format(CurrValue, LedPinOut))
+            # set the pin related to the command and set it with the desired status
+            GPIO.output(LedPinOut, CurrValue)
+            # I publish on the "Status/" topic the new status of the pin
+            client.publish("status/Led", CurrValue)
+
+
+    if cmd == "changeMotor":
+        global motorStatus
+        motorStatus =  motorStatus + 1
+
+        if motorStatus == 4:
+            motorStatus = 0
+        if motorStatus == 0 or motorStatus == 2:
+            GPIO.output(syringeSputa,  GPIO.LOW)
+            GPIO.output(syringeSuca,  GPIO.LOW)
+        elif motorStatus == 1:
+           GPIO.output(syringeSuca, GPIO.HIGH)
+        elif motorStatus == 3:
+            GPIO.output(syringeSputa, GPIO.HIGH)
+        # I print an alert to notify y/*ou of the alteration of the pin status
+        print("Outputting {} to pin {}".format(motorStatus, syringeSputa))
         # I publish on the "Status/" topic the new status of the pin
-        client.publish("status/Motor", CurrValue)
-    elif cmd == "MotorOFF":
-        CurrValue = GPIO.LOW  # alter the dummy variable to with the desired state
-        # I print an alert to notify you of the alteration of the pin status
-        print("Outputting {} to pin {}".format(CurrValue, LedPinOut))
-        # set the pin related to the command and set it with the desired status
-        GPIO.output(LedPinOut, CurrValue)
-        # I publish on the "Status/" topic the new status of the pin
-        client.publish("status/Motor", CurrValue)
+        client.publish("status/Motor", motorStatus)
+
 
 
 def on_connect(mqttc, obj, flags, rc):
@@ -99,6 +109,8 @@ def main():
         # setupping LedPinOut for Outyput signal
         GPIO.setup(LedPinOut, GPIO.OUT, initial=GPIO.LOW)
         GPIO.setup(syringePinOut, GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(syringeSputa,GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(syringeSuca, GPIO.OUT, initial=GPIO.LOW)
         print("GPIO Initialized successfully")
     except:
         print("GPIO Error")

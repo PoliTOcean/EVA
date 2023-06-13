@@ -82,6 +82,7 @@ class QJoystick(QObject):
             elif event.type == sdl2.SDL_JOYBUTTONUP:
                 self.signals.buttonChanged.emit(QJoystickButton(
                     self.__mapping['buttons'][event.jbutton.button], event.jbutton.state))
+                    
             elif event.type == sdl2.SDL_JOYDEVICEADDED:
                 self.__open()
                 self.signals.connected.emit()

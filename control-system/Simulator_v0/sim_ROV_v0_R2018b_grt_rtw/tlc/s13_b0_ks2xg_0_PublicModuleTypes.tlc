@@ -1,0 +1,45 @@
+%implements s13_b0_ks2xg_0_PublicModuleTypes "C"
+
+%function PublicModuleTypes(block) Output
+
+#ifndef struct_b_dsp_FIRFilter_0_sim_ROV_v0__T
+#define struct_b_dsp_FIRFilter_0_sim_ROV_v0__T
+struct b_dsp_FIRFilter_0_sim_ROV_v0__T
+{
+    int32_T S0_isInitialized;
+    real_T W0_states[3];
+    real_T P0_InitialStates;
+    real_T P1_Coefficients[4];
+};
+#endif /* struct_b_dsp_FIRFilter_0_sim_ROV_v0__T */
+#ifndef struct_b_dspcodegen_FIRFilter_sim_RO_T
+#define struct_b_dspcodegen_FIRFilter_sim_RO_T
+struct b_dspcodegen_FIRFilter_sim_RO_T
+{
+    boolean_T matlabCodegenIsDeleted;
+    int32_T isInitialized;
+    boolean_T isSetupComplete;
+    b_dsp_FIRFilter_0_sim_ROV_v0__T cSFunObject;
+};
+#endif /* struct_b_dspcodegen_FIRFilter_sim_RO_T */
+#ifndef struct_cell_wrap_sim_ROV_v0_R2018b_T
+#define struct_cell_wrap_sim_ROV_v0_R2018b_T
+struct cell_wrap_sim_ROV_v0_R2018b_T
+{
+    uint32_T f1[8];
+};
+#endif /* struct_cell_wrap_sim_ROV_v0_R2018b_T */
+#ifndef struct_dsp_simulink_LowpassFilter_si_T
+#define struct_dsp_simulink_LowpassFilter_si_T
+struct dsp_simulink_LowpassFilter_si_T
+{
+    boolean_T matlabCodegenIsDeleted;
+    int32_T isInitialized;
+    boolean_T isSetupComplete;
+    cell_wrap_sim_ROV_v0_R2018b_T inputVarSize;
+    int32_T NumChannels;
+    b_dspcodegen_FIRFilter_sim_RO_T *FilterObj;
+    b_dspcodegen_FIRFilter_sim_RO_T _pobj0;
+};
+#endif /* struct_dsp_simulink_LowpassFilter_si_T */
+%endfunction

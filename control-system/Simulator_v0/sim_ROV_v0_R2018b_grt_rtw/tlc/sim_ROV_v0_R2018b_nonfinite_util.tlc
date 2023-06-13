@@ -1,0 +1,5 @@
+%function CGIRBlockRegisterNonfiniteFunctions() void
+%assign ::NonFinitesGenerated = TLC_FALSE
+%endfunction
+
+

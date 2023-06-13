@@ -11,6 +11,10 @@ class QRelay(QObject):
         self.button = QPushButton()
         self.button.setText(self.name)
         self.button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        if self.button.isChecked():
+            print("pressed");
+        else:
+            print("not pressed")
 
     def __repr__(self) -> str:
         return f"{self.name}: Enabled" if self.enabled else f"{self.name}: Disabled"
