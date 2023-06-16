@@ -190,21 +190,22 @@ void DynamixelPolitocean::begin(unsigned long baud = 57600)
     sc16is740->begin(baud);
 }
 
-char DynamixelPolitocean::checksum(char* instrpacket, char dim)
+unsigned char DynamixelPolitocean::checksum(unsigned char* instrpacket, int dim)
 {
     int sum = 0;
-    char ret = 0;
+    unsigned char ret = 0;
     for (int i = 2;i < dim;i++)
     {
-        sum += instrpacket[i];
+        sum += (int) instrpacket[i];
     }
     //EXTRACT ONLY THE 8 LSBS
-    ret = (char)sum;
-    ret = ~ret;
-    return ret;
+    ret = (unsigned char)sum;
+
+    return ~ret;
 }
 
-bool DynamixelPolitocean::readStatusPacket(unsigned char exp_bytes)
+    
+unsigned char DynamixelPolitocean::readStatusPacket(unsigned char exp_bytes)
 {
 
     //SPECIFY NUMBER OF BYTES YOU WANT TO RETURN
@@ -222,25 +223,31 @@ bool DynamixelPolitocean::readStatusPacket(unsigned char exp_bytes)
             status_packet[rxindex] = sc16is740->read();
             rxindex++;
         }
-        if (millis() - time > 100)
+        else if((millis() - time) > 500)
         {
-            return 1;       //timeout elapsed
+            return 0x80;       //timeout elapsed
         }
     }
+    /*Serial.println("received packet");
+    for (int i = 0;i < 10; i++)
+    {
+        Serial.print(status_packet[i], HEX);
+        Serial.print(" ");
+    }
+    Serial.println();*/
     if (status_packet[4] != 0)
     {
         //error detected
-        return 2;
+        return status_packet[4];
     }
 
     return 0;
 }
 
-bool DynamixelPolitocean::setGoalPosition(int position)
+unsigned char DynamixelPolitocean::setGoalPosition(int position)
 {
     //INSTRUCTION PACKET COMPOSITION
     //instr_packet = (char*)malloc(9 * sizeof(int));       //allocating vector for the GOALPOSITION instruction
-
 
     //HEADERS and ID already present into the INSTRUCTION PACKET
 
@@ -263,7 +270,7 @@ bool DynamixelPolitocean::setGoalPosition(int position)
     //READY TO SEND
     sc16is740->write(instr_packet, 9);        //SEND 9 ELEMENTS
 
-    return readStatusPacket(6);       //return 0 if correct , 1 otherwise
+    return readStatusPacket(6);       //return 0 if correct
 
 }
 
@@ -278,7 +285,7 @@ void DynamixelPolitocean::writearray(char* data, unsigned int dim)
 }
 
 
-bool DynamixelPolitocean::TorqueOn()
+unsigned char DynamixelPolitocean::TorqueOn()
 {
     //INSERTING THE LENGTH OF INSTRUCTION
     instr_packet[3] = 0x04;        //INSTR + P1 + P2 + CHKSM
@@ -301,7 +308,7 @@ bool DynamixelPolitocean::TorqueOn()
     return readStatusPacket(6);       //return 0 if correct , 1 otherwise
 }
 
-bool DynamixelPolitocean::TorqueOff()
+unsigned char DynamixelPolitocean::TorqueOff()
 {
     //INSERTING THE LENGTH OF INSTRUCTION
     instr_packet[3] = 0x04;        //INSTR + P1 + P2 + CHKSM
@@ -324,7 +331,7 @@ bool DynamixelPolitocean::TorqueOff()
     return readStatusPacket(6);       //return 0 if correct , 1 otherwise
 }
 
-bool DynamixelPolitocean::LedOn()
+unsigned char DynamixelPolitocean::LedOn()
 {
     //INSERTING THE LENGTH OF INSTRUCTION
     instr_packet[3] = 0x04;        //INSTR + P1 + P2 + CHKSM
@@ -348,7 +355,7 @@ bool DynamixelPolitocean::LedOn()
 }
 
 
-bool DynamixelPolitocean::LedOff()
+unsigned char DynamixelPolitocean::LedOff()
 {
     //INSERTING THE LENGTH OF INSTRUCTION
     instr_packet[3] = 0x04;        //INSTR + P1 + P2 + CHKSM
@@ -425,7 +432,7 @@ int DynamixelPolitocean::readVoltage()
     }
 }
 
-bool DynamixelPolitocean::setCCWAngleLimit(int limit)
+unsigned char DynamixelPolitocean::setCCWAngleLimit(unsigned int limit)
 {
     //INSERTING THE LENGTH OF INSTRUCTION
     instr_packet[3] = 0x05;        //INSTR + P1 + P2 + CHKSM
@@ -437,10 +444,10 @@ bool DynamixelPolitocean::setCCWAngleLimit(int limit)
     instr_packet[5] = 0x08;
 
     //INSERTING P2 = 8 LSB of the LIMIT
-    instr_packet[6] = (char)limit;
+    instr_packet[6] = (unsigned char)limit;
 
     //INSERTING P3 = 8 MSB of the LIMIT
-    instr_packet[7] = (char)(limit >> 8);
+    instr_packet[7] = (unsigned char)(limit >> 8);
 
     //INSERTING CHECKSUM = ~(ID + LENGTH + INSTR + P1 + P2 + P3) ONLY 8 LSBs
     instr_packet[8] = (this)->checksum(instr_packet, 8);
@@ -451,7 +458,7 @@ bool DynamixelPolitocean::setCCWAngleLimit(int limit)
     return readStatusPacket(6);       //return 0 if correct , 1 otherwise
 }
 
-bool DynamixelPolitocean::setCWAngleLimit(int limit)
+unsigned char DynamixelPolitocean::setCWAngleLimit(unsigned int limit)
 {
     //INSERTING THE LENGTH OF INSTRUCTION
     instr_packet[3] = 0x05;        //INSTR + P1 + P2 + CHKSM
@@ -463,10 +470,10 @@ bool DynamixelPolitocean::setCWAngleLimit(int limit)
     instr_packet[5] = 0x06;
 
     //INSERTING P2 = 8 LSB of the LIMIT
-    instr_packet[6] = (char)limit;
+    instr_packet[6] = (unsigned char)limit;
 
     //INSERTING P3 = 8 MSB of the LIMIT
-    instr_packet[7] = (char)(limit >> 8);
+    instr_packet[7] = (unsigned char)(limit >> 8);
 
     //INSERTING CHECKSUM = ~(ID + LENGTH + INSTR + P1 + P2 + P3) ONLY 8 LSBs
     instr_packet[8] = (this)->checksum(instr_packet, 8);
@@ -477,7 +484,69 @@ bool DynamixelPolitocean::setCWAngleLimit(int limit)
     return readStatusPacket(6);       //return 0 if correct , 1 otherwise
 }
 
-bool DynamixelPolitocean::setVelocity(unsigned int velocity)
+unsigned int DynamixelPolitocean::getCWAngleLimit()
+{
+    int ret = 0;
+    //INSERTING THE LENGTH OF INSTRUCTION
+    instr_packet[3] = 0x04;        //INSTR + P1 + P2 + CHKSM
+
+    //INSERTING THE INSTRUCTION - READ (0x02)
+    instr_packet[4] = 0x02;
+
+    //INSERTING P1 - CW REGISTER in control table = 0x06
+    instr_packet[5] = 0x06;
+
+    //INSERTING P2 = LENGTH OF DATA = 2 : 12 BITS VALUE
+    instr_packet[6] = 0x02;
+
+    //INSERTING CHECKSUM = ~(ID + LENGTH + INSTR + P1 + P2 ) ONLY 8 LSBs
+    instr_packet[7] = (this)->checksum(instr_packet, 7);
+
+    //READY TO SEND
+    sc16is740->write(instr_packet, 8);        //SEND 8 ELEMENTS
+
+    if (readStatusPacket(8) == 0)            //return 0 if correct , 1 otherwise
+    {
+        //read element at index 5
+        ret = status_packet[6];         //MSB of CURRENT POSITION
+        ret = ret << 8;                 //SHIFT OF 8 POSITIONS LEFT
+        ret += status_packet[5];        //LSB OF CURRENT POSITION
+        return ret;
+    }
+}
+
+unsigned int DynamixelPolitocean::getCCWAngleLimit()
+{
+    int ret = 0;
+    //INSERTING THE LENGTH OF INSTRUCTION
+    instr_packet[3] = 0x04;        //INSTR + P1 + P2 + CHKSM
+
+    //INSERTING THE INSTRUCTION - READ (0x02)
+    instr_packet[4] = 0x02;
+
+    //INSERTING P1 - CCW REGISTER in control table = 0x06
+    instr_packet[5] = 0x08;
+
+    //INSERTING P2 = LENGTH OF DATA = 2 : 12 BITS VALUE
+    instr_packet[6] = 0x02;
+
+    //INSERTING CHECKSUM = ~(ID + LENGTH + INSTR + P1 + P2 ) ONLY 8 LSBs
+    instr_packet[7] = (this)->checksum(instr_packet, 7);
+
+    //READY TO SEND
+    sc16is740->write(instr_packet, 8);        //SEND 8 ELEMENTS
+
+    if (readStatusPacket(8) == 0)            //return 0 if correct , 1 otherwise
+    {
+        //read element at index 5
+        ret = status_packet[6];         //MSB of CURRENT POSITION
+        ret = ret << 8;                 //SHIFT OF 8 POSITIONS LEFT
+        ret += status_packet[5];        //LSB OF CURRENT POSITION
+        return ret;
+    }
+}
+
+unsigned char DynamixelPolitocean::setVelocity(unsigned int velocity)
 {
 
    //HEADERS and ID already present into the INSTRUCTION PACKET
@@ -493,8 +562,8 @@ bool DynamixelPolitocean::setVelocity(unsigned int velocity)
 
     //INSERTING P2 and P3 - 2 bytes value (LSB FIRST) of VELOCITY
     //VELOCITY REGISTER IS ON 10 BITS ONLY
-    instr_packet[6] = (char)velocity;                             //8 LSBs of the value
-    instr_packet[7] = (char)((velocity >> 8) & 0x03);           //2 MSBs of the value
+    instr_packet[6] = (uint8_t)velocity;                             //8 LSBs of the value
+    instr_packet[7] = (uint8_t)((velocity >> 8) & 0x03);           //2 MSBs of the value
 
 
     //INSERTING CHECKSUM = ~(ID + LENGTH + INSTR + P1 + P2 + P3) ONLY 8 LSBs
@@ -502,12 +571,19 @@ bool DynamixelPolitocean::setVelocity(unsigned int velocity)
 
     //READY TO SEND
     sc16is740->write(instr_packet, 9);        //SEND 9 ELEMENTS
+    /*Serial.println("sending packet");
+    for (int i = 0;i < 9; i++)
+    {
+        Serial.print(instr_packet[i], HEX);
+        Serial.print(" ");
+    }
+    Serial.println();*/
 
     return readStatusPacket(6);       //return 0 if correct , 1 otherwise
 
 }
 
-bool DynamixelPolitocean::setVelocityWheelMode(unsigned int velocity, unsigned char dir)
+unsigned char DynamixelPolitocean::setVelocityWheelMode(unsigned int velocity, unsigned char dir)
 {
 
    //HEADERS and ID already present into the INSTRUCTION PACKET
@@ -559,7 +635,7 @@ bool DynamixelPolitocean::setOperatingMode(unsigned char mode)
     
     case 2:
         //joint mode
-        setCWAngleLimit(1);
+        setCWAngleLimit(0);
         setCCWAngleLimit(4095);
         flag = true;
         break;
@@ -592,9 +668,9 @@ int DynamixelPolitocean::getPosition()
     if (readStatusPacket(8) == 0)            //return 0 if correct , 1 otherwise
     {
         //read element at index 5
-        ret = status_packet[6];
-        ret = ret << 8;
-        ret += status_packet[5];
+        ret = status_packet[6];         //MSB of CURRENT POSITION
+        ret = ret << 8;                 //SHIFT OF 8 POSITIONS LEFT
+        ret += status_packet[5];        //LSB OF CURRENT POSITION
         return ret;
     }
 }
@@ -630,7 +706,7 @@ int DynamixelPolitocean::getOffset()
     }
 }
 
-bool DynamixelPolitocean::setOffset(int offset)
+unsigned char DynamixelPolitocean::setOffset(int offset)
 {
     //HEADERS and ID already present into the INSTRUCTION PACKET
 
@@ -643,8 +719,8 @@ bool DynamixelPolitocean::setOffset(int offset)
     //INSERTING P1 - OFFSET ADDRESS in control table = 0x14 = 20
     instr_packet[5] = 0x14;
 
-    //INSERTING P2 and P3 - 2 bytes value (LSB FIRST) of VELOCITY
-    //VELOCITY REGISTER IS ON 10 BITS ONLY
+    //INSERTING P2 and P3 - 2 bytes value (LSB FIRST) of OFFSET
+    //OFFSET REGISTER IS ON 10 BITS ONLY
     instr_packet[6] = offset;                             //8 LSBs of the value
     instr_packet[7] = (offset >> 8);           //2 MSBs of the value
 
@@ -658,7 +734,7 @@ bool DynamixelPolitocean::setOffset(int offset)
     return readStatusPacket(6);       //return 0 if correct , 1 otherwise
 }
 
-int DynamixelPolitocean::getSpeed()
+int DynamixelPolitocean::getVelocity()
 {
     int ret = 0;
     //INSERTING THE LENGTH OF INSTRUCTION
@@ -667,8 +743,8 @@ int DynamixelPolitocean::getSpeed()
     //INSERTING THE INSTRUCTION - READ (0x02)
     instr_packet[4] = 0x02;
 
-    //INSERTING P1 - VELOCITY REGISTER in control table = 0x26
-    instr_packet[5] = 0x26;
+    //INSERTING P1 - VELOCITY REGISTER in control table = 0x20
+    instr_packet[5] = 0x20;
 
     //INSERTING P2 = LENGTH OF DATA = 2 : 11 BITS VALUE
     instr_packet[6] = 0x02;
@@ -678,7 +754,13 @@ int DynamixelPolitocean::getSpeed()
 
     //READY TO SEND
     sc16is740->write(instr_packet, 8);        //SEND 8 ELEMENTS
-
+    /*Serial.println("sending packet");
+    for (int i = 0;i < 8; i++)
+    {
+        Serial.print(instr_packet[i], HEX);
+        Serial.print(" ");
+    }
+    Serial.println();*/
     if (readStatusPacket(8) == 0)            //return 0 if correct , 1 otherwise
     {
         //read element at index 5
@@ -690,10 +772,47 @@ int DynamixelPolitocean::getSpeed()
 
 }
 
+int DynamixelPolitocean::getPresentVelocity()
+{
+    int ret = 0;
+    //INSERTING THE LENGTH OF INSTRUCTION
+    instr_packet[3] = 0x04;        //INSTR + P1 + P2 + CHKSM
+
+    //INSERTING THE INSTRUCTION - READ (0x02)
+    instr_packet[4] = 0x02;
+
+    //INSERTING P1 - PRESENT VELOCITY REGISTER in control table = 0x26 = 38
+    instr_packet[5] = 0x26;
+
+    //INSERTING P2 = LENGTH OF DATA = 2 : 11 BITS VALUE
+    instr_packet[6] = 0x02;
+
+    //INSERTING CHECKSUM = ~(ID + LENGTH + INSTR + P1 + P2 ) ONLY 8 LSBs
+    instr_packet[7] = (this)->checksum(instr_packet, 7);
+
+    //READY TO SEND
+    sc16is740->write(instr_packet, 8);        //SEND 8 ELEMENTS
+    Serial.println("sending packet");
+    for (int i = 0;i < 8; i++)
+    {
+        Serial.print(instr_packet[i], HEX);
+        Serial.print(" ");
+    }
+    Serial.println();
+    if (readStatusPacket(8) == 0)            //return 0 if correct , 1 otherwise
+    {
+        //read element at index 5
+        ret = status_packet[6] & 0x07;
+        ret = ret << 8;
+        ret += status_packet[5];
+        return ret;
+    }
+}
+
 
 char DynamixelPolitocean::getDirection()
 {
-    return ((getSpeed() & 0x400) >> 10);
+    return ((getVelocity() & 0x400) >> 10);
 
 }
 
@@ -721,15 +840,127 @@ float DynamixelPolitocean::getCurrent()
 
     if (readStatusPacket(8) == 0)            //return 0 if correct , 1 otherwise
     {
-        ret = status_packet[6];
-        ret = ret << 8;
-        ret += status_packet[5];
-        return ret;
         //read element at index 5
         current = ((float)((status_packet[6] & 0x0F) << 8) + (float)(status_packet[5]));     //EXTRACION OF 12 BITS FROM 2 BYTES
         current = (0.0045 * (current - 2048));                                    //mapping function of the current
         return current;                                                         //current in AMPERE
     }
 
+}
+
+int DynamixelPolitocean::getFirmware()
+{
+    int ret = 0;
+    //INSERTING THE LENGTH OF INSTRUCTION
+    instr_packet[3] = 0x04;        //INSTR + P1 + P2 + CHKSM
+
+    //INSERTING THE INSTRUCTION - READ (0x02)
+    instr_packet[4] = 0x02;
+
+    //INSERTING P1 - FIRMWARE REGISTER in control table = 0x2 = 2
+    instr_packet[5] = 0x02;
+
+    //INSERTING P2 = LENGTH OF DATA = 2
+    instr_packet[6] = 0x02;
+
+    //INSERTING CHECKSUM = ~(ID + LENGTH + INSTR + P1 + P2 ) ONLY 8 LSBs
+    instr_packet[7] = (this)->checksum(instr_packet, 7);
+
+    //READY TO SEND
+    sc16is740->write(instr_packet, 8);        //SEND 8 ELEMENTS
+
+    if (readStatusPacket(8) == 0)            //return 0 if correct , 1 otherwise
+    {
+        ret = status_packet[6];
+        ret = ret << 8;
+        ret += status_packet[5];
+        return ret;
+    }
+}
+
+unsigned char DynamixelPolitocean::setMaxTorque(unsigned short maxtorque)
+{
+    //HEADERS and ID already present into the INSTRUCTION PACKET
+
+   //INSERTING THE LENGTH OF INSTRUCTION
+    instr_packet[3] = 0x05;        //INSTR + P1 + P2 + CHKSM
+
+    //INSERTING THE INSTRUCTION - WRITE (0x03)
+    instr_packet[4] = 0x03;
+
+    //INSERTING P1 - MAX TORQUE ADDRESS in control table = 0x0E = 14 
+    instr_packet[5] = 0x0E;
+
+    //INSERTING P2 and P3 - 2 bytes value (LSB FIRST) of MAX TORQUE
+    //MAX TORQUE REGISTER IS ON 10 BITS ONLY
+    instr_packet[6] = maxtorque;                             //8 LSBs of the value
+    instr_packet[7] = (maxtorque >> 8);           //2 MSBs of the value
+
+
+    //INSERTING CHECKSUM = ~(ID + LENGTH + INSTR + P1 + P2 + P3)
+    instr_packet[8] = (this)->checksum(instr_packet, 8);
+
+    //READY TO SEND
+    sc16is740->write(instr_packet, 9);        //SEND 9 ELEMENTS
+
+    return readStatusPacket(6);       //return 0 if correct , 1 otherwise
+}
+
+unsigned int DynamixelPolitocean::getTorqueLimit()
+{
+    int ret = 0;
+    //INSERTING THE LENGTH OF INSTRUCTION
+    instr_packet[3] = 0x04;        //INSTR + P1 + P2 + CHKSM
+
+    //INSERTING THE INSTRUCTION - READ (0x02)
+    instr_packet[4] = 0x02;
+
+    //INSERTING P1 - TORQUE LIMIT REGISTER in control table = 0x22 = 34
+    instr_packet[5] = 0x22;
+
+    //INSERTING P2 = LENGTH OF DATA = 2
+    instr_packet[6] = 0x02;
+
+    //INSERTING CHECKSUM = ~(ID + LENGTH + INSTR + P1 + P2 ) ONLY 8 LSBs
+    instr_packet[7] = (this)->checksum(instr_packet, 7);
+
+    //READY TO SEND
+    sc16is740->write(instr_packet, 8);        //SEND 8 ELEMENTS
+
+    if (readStatusPacket(8) == 0)            //return 0 if correct , 1 otherwise
+    {
+        ret = status_packet[6];
+        ret = ret << 8;
+        ret += status_packet[5];
+        return ret;
+    }
+}
+
+unsigned char DynamixelPolitocean::setTorqueLimit(unsigned short maxvalue)
+{
+    //HEADERS and ID already present into the INSTRUCTION PACKET
+
+   //INSERTING THE LENGTH OF INSTRUCTION
+    instr_packet[3] = 0x05;        //INSTR + P1 + P2 + CHKSM
+
+    //INSERTING THE INSTRUCTION - WRITE (0x03)
+    instr_packet[4] = 0x03;
+
+    //INSERTING P1 - TORQUE LIMIT ADDRESS in control table = 0x22 = 34
+    instr_packet[5] = 34;
+
+    //INSERTING P2 and P3 - 2 bytes value (LSB FIRST) of MAX TORQUE
+    //MAX TORQUE REGISTER IS ON 10 BITS ONLY
+    instr_packet[6] = maxvalue;                             //8 LSBs of the value
+    instr_packet[7] = (maxvalue >> 8);           //2 MSBs of the value
+
+
+    //INSERTING CHECKSUM = ~(ID + LENGTH + INSTR + P1 + P2 + P3)
+    instr_packet[8] = (this)->checksum(instr_packet, 8);
+
+    //READY TO SEND
+    sc16is740->write(instr_packet, 9);        //SEND 9 ELEMENTS
+
+    return readStatusPacket(6);       //return 0 if correct , 1 otherwise
 }
 

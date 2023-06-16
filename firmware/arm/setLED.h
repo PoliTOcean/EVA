@@ -10,11 +10,38 @@
 
 #define NS_TO_CYCLES(n) ( (n) / NS_PER_CYCLE )
 
+enum color{RED, GREEN, BLUE, YELLOW, ORANGE, CIANO, MAGENTA, GRAY, WHITE};
+
 void sendBit(bool bitVal);
 void sendByte(char _byte);
 void setLED(char red, char green, char blue);
+void setLED(color color);
 
 
+void setLED(color color)
+{
+    switch (color)
+    {
+        case RED : setLED(255,0,0);
+        break;
+        case GREEN : setLED(0,255,0);
+        break;
+        case BLUE : setLED(0,0,255);
+        break;
+        case YELLOW : setLED(255,255,0);
+        break;
+        case ORANGE : setLED(255,69,0);
+        break;
+        case CIANO : setLED(0,255,255);
+        break;
+        case MAGENTA : setLED(255,0,255);
+        break;
+        case GRAY : setLED(128,128,128);
+        break;
+        case WHITE : setLED(255,255,255);
+        break;
+    }
+}
 void setLED(char red, char green, char blue)
 {
     sendByte(green);          // Neopixel wants colors in green then red then blue order
@@ -30,8 +57,6 @@ void sendByte(char _byte) {
         _byte <<= 1;                                    // and then shift left so bit 6 moves into 7, 5 moves into 6, etc
     }
 }
-
-
 void sendBit(bool bitVal) {
 
     if (bitVal) {        // 0 bit

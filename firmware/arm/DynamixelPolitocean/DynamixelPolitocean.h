@@ -6,12 +6,12 @@
 enum OperatingMode {
     WHEEL = 0,
     MULTITURN = 1,
-    JOINT = 2,
+    JOINT = 2
 };
 
 enum Direction {
     CCW = 0,
-    CW = 1,
+    CW = 1
 };
 
 
@@ -51,38 +51,43 @@ class DynamixelPolitocean
 {
 public:
 
-    //NEED TO DEBUG
-    //TORQUEON
     DynamixelPolitocean(TwoWire& I2C_port, const int I2C_add, unsigned char DXL_ID = 1, unsigned long freq = 16000000);
     ~DynamixelPolitocean();
 
     void writebyte(char data);
     void writearray(char* buf, unsigned int dim);
     void begin(unsigned long baud = 57600);
-    bool setGoalPosition(int position);
-    bool TorqueOn();
-    bool TorqueOff();
-    bool LedOn();
-    bool LedOff();
+    unsigned char setGoalPosition(int position);
+    unsigned char TorqueOn();
+    unsigned char TorqueOff();
+    unsigned char LedOn();
+    unsigned char LedOff();
     int readTemperature();
     int readVoltage();
-    bool setCCWAngleLimit(int limit);
-    bool setCWAngleLimit(int limit);
-    bool setVelocity(unsigned int velocity);
-    bool setVelocityWheelMode(unsigned int velocity, unsigned char dir);
+    unsigned char setCCWAngleLimit(unsigned int limit);
+    unsigned char setCWAngleLimit(unsigned int limit);
+    unsigned int getCWAngleLimit();
+    unsigned int getCCWAngleLimit();
+    unsigned char setVelocity(unsigned int velocity);
+    unsigned char setVelocityWheelMode(unsigned int velocity, unsigned char dir);
     bool setOperatingMode(unsigned char mode);
     int getPosition();
     int getOffset();
-    bool setOffset(int offset);
-    int getSpeed();
+    unsigned char setOffset(int offset);
+    int getVelocity();
+    int getPresentVelocity();
     float getCurrent();
+    int getFirmware();
+    unsigned char setMaxTorque(unsigned short maxtorque);
+    unsigned int getTorqueLimit();
+    unsigned char setTorqueLimit(unsigned short maxvalue);
 
 private:
 
 
     unsigned char id;        //id of the Dynamixel Motor
-    bool readStatusPacket(unsigned char exp_bytes);
-    char checksum(char* instrpacket, char dim);
+    unsigned char readStatusPacket(unsigned char exp_bytes);
+    unsigned char checksum(unsigned char* instrpacket, int dim);
     char getDirection();
     unsigned char instr_packet[10];            //TO SEND
     unsigned char status_packet[10];        //TO RECEIVE
