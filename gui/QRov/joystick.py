@@ -82,6 +82,28 @@ class QJoystick(QObject):
             elif event.type == sdl2.SDL_JOYBUTTONUP:
                 self.signals.buttonChanged.emit(QJoystickButton(
                     self.__mapping['buttons'][event.jbutton.button], event.jbutton.state))
+            
+            elif event.type == sdl2.SDL_JOYHATMOTION:
+                if event.jhat.value == 0:
+                    self.signals.buttonChanged.emit(QJoystickButton(
+                        self.__mapping['joyhat'][self.__last_pressed], 0))
+                elif event.jhat.value == 1:
+                    self.signals.buttonChanged.emit(QJoystickButton(
+                        self.__mapping['joyhat'][0], 1))
+                    self.__last_pressed = 0
+                elif event.jhat.value == 4:
+                    self.signals.buttonChanged.emit(QJoystickButton(
+                        self.__mapping['joyhat'][1], 1))
+                    self.__last_pressed = 1
+                elif event.jhat.value == 8:
+                    self.signals.buttonChanged.emit(QJoystickButton(
+                        self.__mapping['joyhat'][2], 1))
+                    self.__last_pressed = 2
+                elif event.jhat.value == 2:
+                    self.signals.buttonChanged.emit(QJoystickButton(
+                        self.__mapping['joyhat'][3], 1))
+                    self.__last_pressed = 3
+
             elif event.type == sdl2.SDL_JOYDEVICEADDED:
                 self.__open()
                 self.signals.connected.emit()

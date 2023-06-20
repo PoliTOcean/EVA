@@ -1,53 +1,66 @@
 buttons:
   A:
-    onPress: "ROTATE WRIST CCW"
-    onRelease: "STOP WRIST"
-  B:
     onPress: "OPEN NIPPER"
     onRelease: "STOP NIPPER"
+  B:
+    onPress: "ROTATE WRIST CCW"
+    onRelease: "STOP WRIST"
   X:
-    onPress: "CLOSE NIPPER"
-    onRelease: "STOP NIPPER"
-  Y:
     onPress: "ROTATE WRIST CW"
     onRelease: "STOP WRIST"
+  Y:
+    onPress: "CLOSE NIPPER"
+    onRelease: "STOP NIPPER"
   Back:
-    onPress: "BACK onPress"
+    onPress: "TORQUE_OFF"
     onRelease:
   Guide:
     onPress: "GUIDE onPress"
     onRelease:
   Start:
-    onPress: "START onPress"
+    onPress: "TORQUE_ON"
     onRelease:
   LS:
-    onPress: "LS onPress"
+    onPress: "changeLed"
     onRelease:
   RS:
-    onPress: "STOP_SHOULDER"
-    onRelease: "STOP_SHOULDER"
+    onPress: "changeMotor"
+    onRelease:
   LB:
-    onPress: "SHOULDER_UP"
+    onPress: "SHOULDER_DOWN"
     onRelease: "STOP_SHOULDER"
   RB:
-    onPress: "SHOULDER_DOWN"
-    onRelease: "STOP_SHOULDER"
-  D-Pad-Up:
     onPress: "SHOULDER_UP"
     onRelease: "STOP_SHOULDER"
+  D-Pad-Up:
+    onPress: "DPAD_UP_PRESS"
+    onRelease: "DPAD_UP_RELEASE"
   D-Pad-Down:
-    onPress: "SHOULDER_DOWN"
-    onRelease: "STOP_SHOULDER"
+    onPress: "DPAD_DOWN_PRESS"
+    onRelease: "DPAD_DOWN_RELEASE"
   D-Pad-Left:
-    onPress: "ROTATE WRIST CCW"
-    onRelease: "STOP WRIST"
+    onPress: "DPAD_LEFT_PRESS"
+    onRelease: "DPAD_LEFT_RELEASE"
   D-Pad-Right:
-    onPress: "ROTATE WRIST CW"
-    onRelease: "STOP WRIST"
+    onPress: "DPAD_RIGHT_PRESS"
+    onRelease: "DPAD_RIGHT_RELEASE"
 axes:
-  LSB-X: "Y"
-  LSB-Y: "X"
+  LSB-X: "X"
+  LSB-Y: "Y"
   RSB-X: "SHOULDER"
   RSB-Y: "WRIST"
   LT: "Z_DOWN"
   RT: "Z_UP"
+joyhat:  
+  D-Pad-Up:
+    onPress: "DPAD_UP_PRESS"
+    onRelease: "DPAD_UP_RELEASE"
+  D-Pad-Down:
+    onPress: "DPAD_DOWN_PRESS"
+    onRelease: "DPAD_DOWN_RELEASE"
+  D-Pad-Left:
+    onPress: "DPAD_LEFT_PRESS"
+    onRelease: "DPAD_LEFT_RELEASE"
+  D-Pad-Right:
+    onPress: "DPAD_RIGHT_PRESS"
+    onRelease: "DPAD_RIGHT_RELEASE"

@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
         self.addDepthTape()
         self.addCompass()
 
-        self.urls = ["https://google.com","http://10.0.0.254:8080"]
+        self.urls = ["http://10.0.0.254:8082","http://10.0.0.254:8080"]
         self.urlVal = 0
         self.cameraNames = ["CAM1","CAM2"]
         self.browser = QWebEngineView()

@@ -1,0 +1,11 @@
+[Unit]
+Description=PoliTOcean GPIO stuff for task 2
+
+
+[Service]
+ExecStart=/usr/bin/python3 /home/prova/firmware/GPIOMqtt.py
+ExecStop=/usr/bin/pkill -15 -f GPIOMqtt.py
+Restart=Always
+
+[Install]
+WantedBy=default.target

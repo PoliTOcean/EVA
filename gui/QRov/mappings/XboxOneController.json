@@ -24,6 +24,13 @@
             "RSB-X",
             "RSB-Y",
             "RT"
-        ]
+        ],
+	"joyhat": [
+		"D-Pad-Up",
+		"D-Pad-Down",
+		"D-Pad-Left",
+		"D-Pad-Right"
+
+	]
     }
 }
