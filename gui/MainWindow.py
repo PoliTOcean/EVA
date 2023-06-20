@@ -41,7 +41,7 @@ class MainWindow(QMainWindow):
         self.browser.setUrl(QUrl(self.urls[self.urlVal]))
         self.ui.gridLayoutHUD.addWidget(self.browser, 1, 1, 4, 3)  
         self.activityMonitor.displayInfo("Browser Starting")
-        
+
 
         self.switchButton = QPushButton()
         self.switchButton.setText(self.cameraNames[self.urlVal]) 
@@ -185,6 +185,8 @@ class MainWindow(QMainWindow):
         if len(self.controller.relays) > 0:
             for relay in self.controller.relays:
                 self.ui.groupBoxRelayButtons.layout().addWidget(relay.button)
+                if self.ui.groupBoxRelayButtons.isChecked():
+                    print("pressed")
 
     def addDepthTape(self):
         self.depthTape = QDepthTape(maxDepth=10)

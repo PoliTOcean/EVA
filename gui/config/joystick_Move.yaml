@@ -14,8 +14,8 @@ buttons:
   Back:
     onPress: "TORQUE_OFF"
     onRelease:
-  Guide:
-    onPress: "GUIDE onPress"
+  GUIDE:
+    onPress: "START_CALIBRATION"
     onRelease:
   Start:
     onPress: "TORQUE_ON"

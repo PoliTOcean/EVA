@@ -1,0 +1,991 @@
+%implements s13_b0_ks2xg_Outputs "C"
+
+%function Outputs(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+real_T rtb_T200TransferFunction1_0[36];
+real_T tmp_6[36];
+real_T tmp_7[12];
+real_T tmp_0[9];
+real_T tmp_1[9];
+real_T tmp_2[9];
+real_T tmp_3[9];
+real_T tmp_4[9];
+real_T tmp_5[9];
+real_T rtb_uDLookupTable[8];
+real_T a[6];
+real_T tmp[6];
+real_T (*lastU)[6];
+real_T rtb_Sum4[3];
+real_T rtb_Sum4_j[3];
+real_T F_g_tmp;
+real_T rtb_T200TransferFunction1;
+real_T rtb_T200TransferFunction2;
+real_T rtb_WhiteNoise_idx_0;
+real_T rtb_WhiteNoise_idx_1;
+real_T rtb_WhiteNoise_idx_2;
+real_T rtb_jxi;
+real_T rtb_jxi_tmp;
+real_T rtb_kxi;
+int32_T i;
+int32_T i_0;
+int32_T tmp_8;
+%closefile localVarDecl
+%assign _modelSS = ""
+
+%assign tlcOutputsFcnOfS9B21 = OpaqueTLCBlockFcn("Outputs", 9, 21, 2, 4, 0)
+%assign tlcOutputsFcnOfS9B24 = OpaqueTLCBlockFcn("Outputs", 9, 24, 2, 4, 1)
+%assign tlcOutputsFcnOfS9B25 = OpaqueTLCBlockFcn("Outputs", 9, 25, 2, 4, 2)
+%assign tlcOutputsFcnOfS9B32 = OpaqueTLCBlockFcn("Outputs", 9, 32, 2, 4, 3)
+%assign tlcOutputsFcnOfS9B33 = OpaqueTLCBlockFcn("Outputs", 9, 33, 2, 4, 4)
+%assign tlcOutputsFcnOfS9B34 = OpaqueTLCBlockFcn("Outputs", 9, 34, 2, 4, 5)
+%assign tlcOutputsFcnOfS9B35 = OpaqueTLCBlockFcn("Outputs", 9, 35, 2, 4, 6)
+%<SLibGenerateExtModeOutput(system)>
+/* {S!d632}Integrator: '<S30>/Integrator6' */
+sim_ROV_v0_R2018b_B.Integrator6 = sim_ROV_v0_R2018b_X.Integrator6_CSTATE;
+/* {S!d634}Integrator: '<S30>/Integrator7' */
+sim_ROV_v0_R2018b_B.Integrator7 = sim_ROV_v0_R2018b_X.Integrator7_CSTATE;
+/* {S!d636}Integrator: '<S30>/Integrator8' */
+sim_ROV_v0_R2018b_B.Integrator8 = sim_ROV_v0_R2018b_X.Integrator8_CSTATE;
+/* {S!d638}Integrator: '<S30>/Integrator' */
+sim_ROV_v0_R2018b_B.Integrator = sim_ROV_v0_R2018b_X.Integrator_CSTATE;
+/* {S!d640}Integrator: '<S30>/Integrator1' */
+sim_ROV_v0_R2018b_B.Integrator1 = sim_ROV_v0_R2018b_X.Integrator1_CSTATE;
+/* {S!d642}Integrator: '<S30>/Integrator2' */
+sim_ROV_v0_R2018b_B.Integrator2 = sim_ROV_v0_R2018b_X.Integrator2_CSTATE;
+/* {S!d644}Integrator: '<S30>/Integrator3' */
+sim_ROV_v0_R2018b_B.Integrator3 = sim_ROV_v0_R2018b_X.Integrator3_CSTATE;
+/* {S!d646}Integrator: '<S30>/Integrator4' */
+sim_ROV_v0_R2018b_B.Integrator4 = sim_ROV_v0_R2018b_X.Integrator4_CSTATE;
+/* {S!d648}Integrator: '<S30>/Integrator5' */
+sim_ROV_v0_R2018b_B.Integrator5 = sim_ROV_v0_R2018b_X.Integrator5_CSTATE;
+/* {S!d650}Gain: '<S16>/lbf → N' incorporates:
+ *  TransferFcn: '<S20>/T200 Transfer Function 1'
+ *  TransferFcn: '<S20>/T200 Transfer Function 2'
+ *  TransferFcn: '<S20>/T200 Transfer Function 3'
+ *  TransferFcn: '<S20>/T200 Transfer Function 4'
+ *  TransferFcn: '<S20>/T200 Transfer Function 5'
+ *  TransferFcn: '<S20>/T200 Transfer Function 6'
+ *  TransferFcn: '<S20>/T200 Transfer Function 7'
+ *  TransferFcn: '<S20>/T200 Transfer Function 8'
+ */
+sim_ROV_v0_R2018b_B.ThrustN[0] = (((sim_ROV_v0_R2018b_P.T200TransferFunction1_C[0] * sim_ROV_v0_R2018b_X.T200TransferFunction1_CSTATE[0] + sim_ROV_v0_R2018b_P.T200TransferFunction1_C[1] * sim_ROV_v0_R2018b_X.T200TransferFunction1_CSTATE[1]) + sim_ROV_v0_R2018b_P.T200TransferFunction1_C[2] * sim_ROV_v0_R2018b_X.T200TransferFunction1_CSTATE[2]) + sim_ROV_v0_R2018b_P.T200TransferFunction1_C[3] * sim_ROV_v0_R2018b_X.T200TransferFunction1_CSTATE[3]) * sim_ROV_v0_R2018b_P.lbfN_Gain;
+sim_ROV_v0_R2018b_B.ThrustN[1] = (((sim_ROV_v0_R2018b_P.T200TransferFunction2_C[0] * sim_ROV_v0_R2018b_X.T200TransferFunction2_CSTATE[0] + sim_ROV_v0_R2018b_P.T200TransferFunction2_C[1] * sim_ROV_v0_R2018b_X.T200TransferFunction2_CSTATE[1]) + sim_ROV_v0_R2018b_P.T200TransferFunction2_C[2] * sim_ROV_v0_R2018b_X.T200TransferFunction2_CSTATE[2]) + sim_ROV_v0_R2018b_P.T200TransferFunction2_C[3] * sim_ROV_v0_R2018b_X.T200TransferFunction2_CSTATE[3]) * sim_ROV_v0_R2018b_P.lbfN_Gain;
+sim_ROV_v0_R2018b_B.ThrustN[2] = (((sim_ROV_v0_R2018b_P.T200TransferFunction3_C[0] * sim_ROV_v0_R2018b_X.T200TransferFunction3_CSTATE[0] + sim_ROV_v0_R2018b_P.T200TransferFunction3_C[1] * sim_ROV_v0_R2018b_X.T200TransferFunction3_CSTATE[1]) + sim_ROV_v0_R2018b_P.T200TransferFunction3_C[2] * sim_ROV_v0_R2018b_X.T200TransferFunction3_CSTATE[2]) + sim_ROV_v0_R2018b_P.T200TransferFunction3_C[3] * sim_ROV_v0_R2018b_X.T200TransferFunction3_CSTATE[3]) * sim_ROV_v0_R2018b_P.lbfN_Gain;
+sim_ROV_v0_R2018b_B.ThrustN[3] = (((sim_ROV_v0_R2018b_P.T200TransferFunction4_C[0] * sim_ROV_v0_R2018b_X.T200TransferFunction4_CSTATE[0] + sim_ROV_v0_R2018b_P.T200TransferFunction4_C[1] * sim_ROV_v0_R2018b_X.T200TransferFunction4_CSTATE[1]) + sim_ROV_v0_R2018b_P.T200TransferFunction4_C[2] * sim_ROV_v0_R2018b_X.T200TransferFunction4_CSTATE[2]) + sim_ROV_v0_R2018b_P.T200TransferFunction4_C[3] * sim_ROV_v0_R2018b_X.T200TransferFunction4_CSTATE[3]) * sim_ROV_v0_R2018b_P.lbfN_Gain;
+sim_ROV_v0_R2018b_B.ThrustN[4] = (((sim_ROV_v0_R2018b_P.T200TransferFunction5_C[0] * sim_ROV_v0_R2018b_X.T200TransferFunction5_CSTATE[0] + sim_ROV_v0_R2018b_P.T200TransferFunction5_C[1] * sim_ROV_v0_R2018b_X.T200TransferFunction5_CSTATE[1]) + sim_ROV_v0_R2018b_P.T200TransferFunction5_C[2] * sim_ROV_v0_R2018b_X.T200TransferFunction5_CSTATE[2]) + sim_ROV_v0_R2018b_P.T200TransferFunction5_C[3] * sim_ROV_v0_R2018b_X.T200TransferFunction5_CSTATE[3]) * sim_ROV_v0_R2018b_P.lbfN_Gain;
+sim_ROV_v0_R2018b_B.ThrustN[5] = (((sim_ROV_v0_R2018b_P.T200TransferFunction6_C[0] * sim_ROV_v0_R2018b_X.T200TransferFunction6_CSTATE[0] + sim_ROV_v0_R2018b_P.T200TransferFunction6_C[1] * sim_ROV_v0_R2018b_X.T200TransferFunction6_CSTATE[1]) + sim_ROV_v0_R2018b_P.T200TransferFunction6_C[2] * sim_ROV_v0_R2018b_X.T200TransferFunction6_CSTATE[2]) + sim_ROV_v0_R2018b_P.T200TransferFunction6_C[3] * sim_ROV_v0_R2018b_X.T200TransferFunction6_CSTATE[3]) * sim_ROV_v0_R2018b_P.lbfN_Gain;
+sim_ROV_v0_R2018b_B.ThrustN[6] = (((sim_ROV_v0_R2018b_P.T200TransferFunction7_C[0] * sim_ROV_v0_R2018b_X.T200TransferFunction7_CSTATE[0] + sim_ROV_v0_R2018b_P.T200TransferFunction7_C[1] * sim_ROV_v0_R2018b_X.T200TransferFunction7_CSTATE[1]) + sim_ROV_v0_R2018b_P.T200TransferFunction7_C[2] * sim_ROV_v0_R2018b_X.T200TransferFunction7_CSTATE[2]) + sim_ROV_v0_R2018b_P.T200TransferFunction7_C[3] * sim_ROV_v0_R2018b_X.T200TransferFunction7_CSTATE[3]) * sim_ROV_v0_R2018b_P.lbfN_Gain;
+sim_ROV_v0_R2018b_B.ThrustN[7] = (((sim_ROV_v0_R2018b_P.T200TransferFunction8_C[0] * sim_ROV_v0_R2018b_X.T200TransferFunction8_CSTATE[0] + sim_ROV_v0_R2018b_P.T200TransferFunction8_C[1] * sim_ROV_v0_R2018b_X.T200TransferFunction8_CSTATE[1]) + sim_ROV_v0_R2018b_P.T200TransferFunction8_C[2] * sim_ROV_v0_R2018b_X.T200TransferFunction8_CSTATE[2]) + sim_ROV_v0_R2018b_P.T200TransferFunction8_C[3] * sim_ROV_v0_R2018b_X.T200TransferFunction8_CSTATE[3]) * sim_ROV_v0_R2018b_P.lbfN_Gain;
+for (i = 0; i < 6; i++) {
+    /* {S!d652}Gain: '<S2>/Thrust Configuration Matrix' */
+    rtb_WhiteNoise_idx_0 = 0.0;
+    for (i_0 = 0; i_0 < 8; i_0++) {
+        rtb_WhiteNoise_idx_0 += sim_ROV_v0_R2018b_P.TCM[6 * i_0 + i] * sim_ROV_v0_R2018b_B.ThrustN[i_0];
+    }
+    sim_ROV_v0_R2018b_B.ForcesMoments[i] = rtb_WhiteNoise_idx_0;
+    /* {E!d652}End of Gain: '<S2>/Thrust Configuration Matrix' */
+
+    /* {S!d654}Integrator: '<S19>/Integrator' */
+    sim_ROV_v0_R2018b_B.Pose[i] = sim_ROV_v0_R2018b_X.Integrator_CSTATE_e[i];
+}
+/* {S!d656}MATLAB Function: '<S24>/hydrostatics' incorporates:
+ *  Constant: '<S24>/Buoyancy'
+ *  Constant: '<S24>/CoB'
+ *  Constant: '<S24>/CoM'
+ *  Constant: '<S24>/Gravity Force'
+ *  MATLAB Function: '<S19>/kinematics'
+ */
+sim_ROV_v0_R2018b_DW.sfEvent_o = sim_ROV_v0_R2018b_CALL_EVENT;
+rtb_T200TransferFunction1 = std::sin(sim_ROV_v0_R2018b_B.Pose[4]);
+rtb_WhiteNoise_idx_2 = sim_ROV_v0_R2018b_P.W - sim_ROV_v0_R2018b_P.B;
+sim_ROV_v0_R2018b_B.F_g[0] = rtb_WhiteNoise_idx_2 * rtb_T200TransferFunction1;
+rtb_T200TransferFunction2 = std::cos(sim_ROV_v0_R2018b_B.Pose[4]);
+rtb_jxi_tmp = std::sin(sim_ROV_v0_R2018b_B.Pose[3]);
+sim_ROV_v0_R2018b_B.F_g[1] = -rtb_WhiteNoise_idx_2 * rtb_T200TransferFunction2 * rtb_jxi_tmp;
+rtb_WhiteNoise_idx_0 = std::cos(sim_ROV_v0_R2018b_B.Pose[3]);
+rtb_WhiteNoise_idx_1 = std::cos(sim_ROV_v0_R2018b_B.Pose[4]);
+sim_ROV_v0_R2018b_B.F_g[2] = -rtb_WhiteNoise_idx_2 * rtb_WhiteNoise_idx_1 * rtb_WhiteNoise_idx_0;
+rtb_WhiteNoise_idx_2 = sim_ROV_v0_R2018b_P.r_g[2] * sim_ROV_v0_R2018b_P.W - sim_ROV_v0_R2018b_P.r_b[2] * sim_ROV_v0_R2018b_P.B;
+rtb_kxi = sim_ROV_v0_R2018b_P.r_g[1] * sim_ROV_v0_R2018b_P.W - sim_ROV_v0_R2018b_P.r_b[1] * sim_ROV_v0_R2018b_P.B;
+sim_ROV_v0_R2018b_B.F_g[3] = -rtb_kxi * rtb_T200TransferFunction2 * rtb_WhiteNoise_idx_0 + rtb_WhiteNoise_idx_2 * rtb_T200TransferFunction2 * rtb_jxi_tmp;
+F_g_tmp = sim_ROV_v0_R2018b_P.r_g[0] * sim_ROV_v0_R2018b_P.W - sim_ROV_v0_R2018b_P.r_b[0] * sim_ROV_v0_R2018b_P.B;
+sim_ROV_v0_R2018b_B.F_g[4] = F_g_tmp * rtb_T200TransferFunction2 * rtb_WhiteNoise_idx_0 + rtb_WhiteNoise_idx_2 * rtb_T200TransferFunction1;
+sim_ROV_v0_R2018b_B.F_g[5] = -F_g_tmp * rtb_T200TransferFunction2 * rtb_jxi_tmp - rtb_kxi * rtb_T200TransferFunction1;
+for (i_0 = 0; i_0 < 6; i_0++) {
+    /* {S!d658}Product: '<S23>/Product' incorporates:
+ *  Abs: '<S23>/Abs'
+ *  Integrator: '<S18>/Integrator'
+ */
+    a[i_0] = sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[i_0] * std::abs(sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[i_0]);
+    /* {S!d660}Gain: '<S23>/Linear Damping' incorporates:
+ *  Integrator: '<S18>/Integrator'
+ */
+    rtb_jxi = 0.0;
+    for (i = 0; i < 6; i++) {
+        rtb_jxi += sim_ROV_v0_R2018b_P.D_linear[6 * i + i_0] * sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[i];
+    }
+    tmp[i_0] = rtb_jxi;
+    /* {E!d660}End of Gain: '<S23>/Linear Damping' */
+}
+for (i_0 = 0; i_0 < 6; i_0++) {
+    /* {S!d662}Gain: '<S23>/Quadratic Damping' */
+    rtb_jxi = 0.0;
+    for (i = 0; i < 6; i++) {
+        rtb_jxi += sim_ROV_v0_R2018b_P.D_quadratic[6 * i + i_0] * a[i];
+    }
+    /* {S!d664}Sum: '<S23>/Sum' incorporates:
+ *  Gain: '<S23>/Quadratic Damping'
+ */
+    sim_ROV_v0_R2018b_B.Sum[i_0] = tmp[i_0] + rtb_jxi;
+}
+/* {S!d666}MATLAB Function: '<S22>/Rigid Body Coriolis & Centripetal' incorporates:
+ *  Constant: '<S22>/Inertia Tensor'
+ *  Integrator: '<S18>/Integrator'
+ */
+sim_ROV_v0_R2018b_DW.sfEvent_ou = sim_ROV_v0_R2018b_CALL_EVENT;
+rtb_T200TransferFunction2 = sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[4];
+rtb_jxi = sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[3];
+rtb_WhiteNoise_idx_2 = sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[5];
+for (i_0 = 0; i_0 < 3; i_0++) {
+    rtb_Sum4[i_0] = (sim_ROV_v0_R2018b_P.I[i_0 + 3] * rtb_T200TransferFunction2 + sim_ROV_v0_R2018b_P.I[i_0] * rtb_jxi) + sim_ROV_v0_R2018b_P.I[i_0 + 6] * rtb_WhiteNoise_idx_2;
+}
+/* {S!d668}MATLAB Function: '<S22>/Added Coriolis & Centripetal' incorporates:
+ *  Constant: '<S22>/Added Mass'
+ *  Integrator: '<S18>/Integrator'
+ */
+sim_ROV_v0_R2018b_DW.sfEvent_i = sim_ROV_v0_R2018b_CALL_EVENT;
+for (i_0 = 0; i_0 < 6; i_0++) {
+    rtb_T200TransferFunction2 = 0.0;
+    for (i = 0; i < 6; i++) {
+        rtb_T200TransferFunction2 += sim_ROV_v0_R2018b_P.M_addedMass[6 * i + i_0] * sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[i];
+    }
+    a[i_0] = rtb_T200TransferFunction2;
+}
+/* {S!d670}MATLAB Function: '<S22>/Rigid Body Coriolis & Centripetal' incorporates:
+ *  Constant: '<S22>/CoM'
+ *  Constant: '<S22>/Rigid Body Mass'
+ *  Integrator: '<S18>/Integrator'
+ */
+rtb_jxi = -sim_ROV_v0_R2018b_P.m * 0.0;
+tmp_0[0] = rtb_jxi;
+tmp_0[3] = -sim_ROV_v0_R2018b_P.m * -sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[5];
+tmp_0[6] = -sim_ROV_v0_R2018b_P.m * sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[4];
+tmp_0[1] = -sim_ROV_v0_R2018b_P.m * sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[5];
+tmp_0[4] = rtb_jxi;
+tmp_0[7] = -sim_ROV_v0_R2018b_P.m * -sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[3];
+tmp_0[2] = -sim_ROV_v0_R2018b_P.m * -sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[4];
+tmp_0[5] = -sim_ROV_v0_R2018b_P.m * sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[3];
+tmp_0[8] = rtb_jxi;
+tmp_1[0] = 0.0;
+tmp_1[3] = -sim_ROV_v0_R2018b_P.r_g[2];
+tmp_1[6] = sim_ROV_v0_R2018b_P.r_g[1];
+tmp_1[1] = sim_ROV_v0_R2018b_P.r_g[2];
+tmp_1[4] = 0.0;
+tmp_1[7] = -sim_ROV_v0_R2018b_P.r_g[0];
+tmp_1[2] = -sim_ROV_v0_R2018b_P.r_g[1];
+tmp_1[5] = sim_ROV_v0_R2018b_P.r_g[0];
+tmp_1[8] = 0.0;
+tmp_3[0] = sim_ROV_v0_R2018b_P.m * 0.0;
+tmp_3[3] = sim_ROV_v0_R2018b_P.m * -sim_ROV_v0_R2018b_P.r_g[2];
+tmp_3[6] = sim_ROV_v0_R2018b_P.m * sim_ROV_v0_R2018b_P.r_g[1];
+tmp_3[1] = sim_ROV_v0_R2018b_P.m * sim_ROV_v0_R2018b_P.r_g[2];
+tmp_3[4] = sim_ROV_v0_R2018b_P.m * 0.0;
+tmp_3[7] = sim_ROV_v0_R2018b_P.m * -sim_ROV_v0_R2018b_P.r_g[0];
+tmp_3[2] = sim_ROV_v0_R2018b_P.m * -sim_ROV_v0_R2018b_P.r_g[1];
+tmp_3[5] = sim_ROV_v0_R2018b_P.m * sim_ROV_v0_R2018b_P.r_g[0];
+tmp_3[8] = sim_ROV_v0_R2018b_P.m * 0.0;
+tmp_4[0] = 0.0;
+tmp_4[3] = -sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[5];
+tmp_4[6] = sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[4];
+tmp_4[1] = sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[5];
+tmp_4[4] = 0.0;
+tmp_4[7] = -sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[3];
+tmp_4[2] = -sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[4];
+tmp_4[5] = sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[3];
+tmp_4[8] = 0.0;
+for (i_0 = 0; i_0 < 3; i_0++) {
+    i = 3 * i_0 + 1;
+    rtb_jxi = tmp_4[i];
+    rtb_WhiteNoise_idx_2 = tmp_4[3 * i_0];
+    tmp_8 = 3 * i_0 + 2;
+    rtb_T200TransferFunction2 = tmp_4[tmp_8];
+    rtb_T200TransferFunction1 = tmp_1[i];
+    rtb_kxi = tmp_1[3 * i_0];
+    F_g_tmp = tmp_1[tmp_8];
+    for (i = 0; i < 3; i++) {
+        tmp_8 = 3 * i_0 + i;
+        tmp_5[tmp_8] = (tmp_3[i + 3] * rtb_jxi + rtb_WhiteNoise_idx_2 * tmp_3[i]) + tmp_3[i + 6] * rtb_T200TransferFunction2;
+        tmp_2[tmp_8] = (tmp_0[i + 3] * rtb_T200TransferFunction1 + rtb_kxi * tmp_0[i]) + tmp_0[i + 6] * F_g_tmp;
+    }
+}
+rtb_T200TransferFunction1_0[0] = sim_ROV_v0_R2018b_P.m * 0.0;
+rtb_T200TransferFunction1_0[6] = sim_ROV_v0_R2018b_P.m * -sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[5];
+rtb_T200TransferFunction1_0[12] = sim_ROV_v0_R2018b_P.m * sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[4];
+rtb_T200TransferFunction1_0[1] = sim_ROV_v0_R2018b_P.m * sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[5];
+rtb_T200TransferFunction1_0[7] = sim_ROV_v0_R2018b_P.m * 0.0;
+rtb_T200TransferFunction1_0[13] = sim_ROV_v0_R2018b_P.m * -sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[3];
+rtb_T200TransferFunction1_0[2] = sim_ROV_v0_R2018b_P.m * -sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[4];
+rtb_T200TransferFunction1_0[8] = sim_ROV_v0_R2018b_P.m * sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[3];
+rtb_T200TransferFunction1_0[14] = sim_ROV_v0_R2018b_P.m * 0.0;
+for (i_0 = 0; i_0 < 3; i_0++) {
+    i = (i_0 + 3) * 6;
+    rtb_T200TransferFunction1_0[i] = tmp_2[3 * i_0];
+    rtb_T200TransferFunction1_0[6 * i_0 + 3] = tmp_5[3 * i_0];
+    tmp_8 = 3 * i_0 + 1;
+    rtb_T200TransferFunction1_0[i + 1] = tmp_2[tmp_8];
+    rtb_T200TransferFunction1_0[6 * i_0 + 4] = tmp_5[tmp_8];
+    tmp_8 = 3 * i_0 + 2;
+    rtb_T200TransferFunction1_0[i + 2] = tmp_2[tmp_8];
+    rtb_T200TransferFunction1_0[6 * i_0 + 5] = tmp_5[tmp_8];
+}
+rtb_T200TransferFunction1_0[21] = -0.0;
+rtb_T200TransferFunction1_0[27] = rtb_Sum4[2];
+rtb_T200TransferFunction1_0[33] = -rtb_Sum4[1];
+rtb_T200TransferFunction1_0[22] = -rtb_Sum4[2];
+rtb_T200TransferFunction1_0[28] = -0.0;
+rtb_T200TransferFunction1_0[34] = rtb_Sum4[0];
+rtb_T200TransferFunction1_0[23] = rtb_Sum4[1];
+rtb_T200TransferFunction1_0[29] = -rtb_Sum4[0];
+rtb_T200TransferFunction1_0[35] = -0.0;
+/* {S!d672}MATLAB Function: '<S22>/Added Coriolis & Centripetal' */
+tmp_6[0] = 0.0;
+tmp_6[6] = 0.0;
+tmp_6[12] = 0.0;
+tmp_6[18] = 0.0;
+tmp_6[24] = -a[2];
+tmp_6[30] = a[1];
+tmp_6[1] = 0.0;
+tmp_6[7] = 0.0;
+tmp_6[13] = 0.0;
+tmp_6[19] = a[2];
+tmp_6[25] = 0.0;
+tmp_6[31] = -a[0];
+tmp_6[2] = 0.0;
+tmp_6[8] = 0.0;
+tmp_6[14] = 0.0;
+tmp_6[20] = -a[1];
+tmp_6[26] = a[0];
+tmp_6[32] = 0.0;
+tmp_6[3] = 0.0;
+tmp_6[9] = -a[2];
+tmp_6[15] = a[1];
+tmp_6[21] = 0.0;
+tmp_6[27] = -a[5];
+tmp_6[33] = a[4];
+tmp_6[4] = a[2];
+tmp_6[10] = 0.0;
+tmp_6[16] = -a[0];
+tmp_6[22] = a[5];
+tmp_6[28] = 0.0;
+tmp_6[34] = -a[3];
+tmp_6[5] = -a[1];
+tmp_6[11] = a[0];
+tmp_6[17] = 0.0;
+tmp_6[23] = -a[4];
+tmp_6[29] = a[3];
+tmp_6[35] = 0.0;
+for (i_0 = 0; i_0 < 6; i_0++) {
+    /* {S!d674}MATLAB Function: '<S22>/Rigid Body Coriolis & Centripetal' */
+    rtb_jxi = 0.0;
+    /* {S!d676}MATLAB Function: '<S22>/Added Coriolis & Centripetal' */
+    rtb_WhiteNoise_idx_2 = 0.0;
+    for (i = 0; i < 6; i++) {
+        /* {S!d678}Integrator: '<S18>/Integrator' incorporates:
+ *  MATLAB Function: '<S22>/Rigid Body Coriolis & Centripetal'
+ */
+        rtb_T200TransferFunction2 = sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[i];
+        /* {S!d680}MATLAB Function: '<S22>/Rigid Body Coriolis & Centripetal' incorporates:
+ *  Integrator: '<S18>/Integrator'
+ *  MATLAB Function: '<S22>/Added Coriolis & Centripetal'
+ */
+        tmp_8 = 6 * i + i_0;
+        rtb_jxi += rtb_T200TransferFunction1_0[tmp_8] * rtb_T200TransferFunction2;
+        /* {S!d682}MATLAB Function: '<S22>/Added Coriolis & Centripetal' incorporates:
+ *  Integrator: '<S18>/Integrator'
+ */
+        rtb_WhiteNoise_idx_2 += tmp_6[tmp_8] * rtb_T200TransferFunction2;
+    }
+    /* {S!d684}Sum: '<S22>/Add' incorporates:
+ *  MATLAB Function: '<S22>/Added Coriolis & Centripetal'
+ *  MATLAB Function: '<S22>/Rigid Body Coriolis & Centripetal'
+ */
+    rtb_T200TransferFunction2 = rtb_jxi + rtb_WhiteNoise_idx_2;
+    sim_ROV_v0_R2018b_B.Add[i_0] = rtb_T200TransferFunction2;
+    /* {S!d686}Sum: '<S18>/Sum' incorporates:
+ *  Sum: '<S18>/Sum1'
+ *  Sum: '<S18>/Sum2'
+ */
+    a[i_0] = sim_ROV_v0_R2018b_B.ForcesMoments[i_0] - ((sim_ROV_v0_R2018b_B.F_g[i_0] + sim_ROV_v0_R2018b_B.Sum[i_0]) + rtb_T200TransferFunction2);
+}
+for (i_0 = 0; i_0 < 6; i_0++) {
+    /* {S!d688}Product: '<S18>/Product1' incorporates:
+ *  Constant: '<S18>/Inverse of total mass'
+ */
+    rtb_T200TransferFunction2 = 0.0;
+    for (i = 0; i < 6; i++) {
+        rtb_T200TransferFunction2 += sim_ROV_v0_R2018b_P.Inverseoftotalmass_Value[6 * i + i_0] * a[i];
+    }
+    sim_ROV_v0_R2018b_B.BodyAcceleration[i_0] = rtb_T200TransferFunction2;
+    /* {E!d688}End of Product: '<S18>/Product1' */
+}
+/* {S!d690}Sum: '<S35>/Sum4' incorporates:
+ *  Constant: '<S35>/Measurement bias'
+ *  Constant: '<S35>/Scale factors & Cross-coupling  errors '
+ *  Constant: '<S35>/g-sensitive bias'
+ *  Gain: '<S35>/Zero-Order Hold'
+ *  Gain: '<S35>/Zero-Order Hold1'
+ *  Integrator: '<S18>/Integrator'
+ *  Product: '<S35>/Product'
+ *  Product: '<S35>/Product1'
+ *  UnitConversion: '<S33>/Unit Conversion'
+ */
+/* Unit Conversion - from: m/s^2 to: gn
+ Expression: output = (0.101972*input) + (0) */
+rtb_T200TransferFunction2 = sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[3];
+rtb_jxi = sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[4];
+rtb_WhiteNoise_idx_2 = sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[5];
+for (i_0 = 0; i_0 < 3; i_0++) {
+    rtb_Sum4[i_0] = (((sim_ROV_v0_R2018b_P.ZeroOrderHold_Gain * rtb_T200TransferFunction2 * sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_m[i_0] + sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_m[i_0 + 3] * (sim_ROV_v0_R2018b_P.ZeroOrderHold_Gain * rtb_jxi)) + sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_m[i_0 + 6] * (sim_ROV_v0_R2018b_P.ZeroOrderHold_Gain * rtb_WhiteNoise_idx_2)) + sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_n[i_0]) + 0.10197162129779282 * sim_ROV_v0_R2018b_B.BodyAcceleration[i_0] * sim_ROV_v0_R2018b_P.ZeroOrderHold1_Gain * sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_p[i_0];
+}
+/* {E!d690}End of Sum: '<S35>/Sum4' */
+if (%<(SLibCGIRIsSampleHit(2, 9))>) {
+    /* {S!d692}Sqrt: '<S51>/Sqrt1' incorporates:
+ *  Constant: '<S51>/Constant1'
+ */
+    rtb_T200TransferFunction1 = std::sqrt(sim_ROV_v0_R2018b_P.Randombias_Ts);
+    /* {S!d694}Product: '<S51>/Product' incorporates:
+ *  Constant: '<S51>/Constant'
+ *  Product: '<S51>/Divide'
+ *  RandomNumber: '<S51>/White Noise'
+ *  Sqrt: '<S51>/Sqrt'
+ */
+    sim_ROV_v0_R2018b_B.Product[0] = std::sqrt(sim_ROV_v0_R2018b_P.ThreeaxisGyroscope_g_pow[0]) / rtb_T200TransferFunction1 * sim_ROV_v0_R2018b_DW.NextOutput[0];
+    sim_ROV_v0_R2018b_B.Product[1] = std::sqrt(sim_ROV_v0_R2018b_P.ThreeaxisGyroscope_g_pow[1]) / rtb_T200TransferFunction1 * sim_ROV_v0_R2018b_DW.NextOutput[1];
+    sim_ROV_v0_R2018b_B.Product[2] = std::sqrt(sim_ROV_v0_R2018b_P.ThreeaxisGyroscope_g_pow[2]) / rtb_T200TransferFunction1 * sim_ROV_v0_R2018b_DW.NextOutput[2];
+}
+/* {S!d696}Switch: '<S50>/Switch' incorporates:
+ *  Constant: '<S50>/Constant'
+ *  SecondOrderIntegrator: '<S53>/Integrator, Second-Order Limited'
+ */
+if (sim_ROV_v0_R2018b_P.Constant_Value >= sim_ROV_v0_R2018b_P.Switch_Threshold) {
+    rtb_jxi = sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited_CS[0];
+} else {
+    rtb_jxi = rtb_Sum4[0];
+}
+/* {S!d698}Sum: '<S35>/Sum1' incorporates:
+ *  Switch: '<S50>/Switch'
+ */
+rtb_T200TransferFunction2 = rtb_jxi + sim_ROV_v0_R2018b_B.Product[0];
+/* {S!d706}Saturate: '<S35>/Saturation' */
+if (rtb_T200TransferFunction2 > sim_ROV_v0_R2018b_P.Saturation_UpperSat[0]) {
+    /* {S!d700}Saturate: '<S35>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation[0] = sim_ROV_v0_R2018b_P.Saturation_UpperSat[0];
+} else if (rtb_T200TransferFunction2 < sim_ROV_v0_R2018b_P.Saturation_LowerSat[0]) {
+    /* {S!d702}Saturate: '<S35>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation[0] = sim_ROV_v0_R2018b_P.Saturation_LowerSat[0];
+} else {
+    /* {S!d704}Saturate: '<S35>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation[0] = rtb_T200TransferFunction2;
+}
+/* {S!d708}Switch: '<S50>/Switch' incorporates:
+ *  Constant: '<S50>/Constant'
+ *  SecondOrderIntegrator: '<S53>/Integrator, Second-Order Limited'
+ */
+if (sim_ROV_v0_R2018b_P.Constant_Value >= sim_ROV_v0_R2018b_P.Switch_Threshold) {
+    rtb_jxi = sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited_CS[1];
+} else {
+    rtb_jxi = rtb_Sum4[1];
+}
+/* {S!d710}Sum: '<S35>/Sum1' incorporates:
+ *  Switch: '<S50>/Switch'
+ */
+rtb_T200TransferFunction2 = rtb_jxi + sim_ROV_v0_R2018b_B.Product[1];
+/* {S!d718}Saturate: '<S35>/Saturation' */
+if (rtb_T200TransferFunction2 > sim_ROV_v0_R2018b_P.Saturation_UpperSat[1]) {
+    /* {S!d712}Saturate: '<S35>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation[1] = sim_ROV_v0_R2018b_P.Saturation_UpperSat[1];
+} else if (rtb_T200TransferFunction2 < sim_ROV_v0_R2018b_P.Saturation_LowerSat[1]) {
+    /* {S!d714}Saturate: '<S35>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation[1] = sim_ROV_v0_R2018b_P.Saturation_LowerSat[1];
+} else {
+    /* {S!d716}Saturate: '<S35>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation[1] = rtb_T200TransferFunction2;
+}
+/* {S!d720}Switch: '<S50>/Switch' incorporates:
+ *  Constant: '<S50>/Constant'
+ *  SecondOrderIntegrator: '<S53>/Integrator, Second-Order Limited'
+ */
+if (sim_ROV_v0_R2018b_P.Constant_Value >= sim_ROV_v0_R2018b_P.Switch_Threshold) {
+    rtb_jxi = sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited_CS[2];
+} else {
+    rtb_jxi = rtb_Sum4[2];
+}
+/* {S!d722}Sum: '<S35>/Sum1' incorporates:
+ *  Switch: '<S50>/Switch'
+ */
+rtb_T200TransferFunction2 = rtb_jxi + sim_ROV_v0_R2018b_B.Product[2];
+/* {S!d730}Saturate: '<S35>/Saturation' */
+if (rtb_T200TransferFunction2 > sim_ROV_v0_R2018b_P.Saturation_UpperSat[2]) {
+    /* {S!d724}Saturate: '<S35>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation[2] = sim_ROV_v0_R2018b_P.Saturation_UpperSat[2];
+} else if (rtb_T200TransferFunction2 < sim_ROV_v0_R2018b_P.Saturation_LowerSat[2]) {
+    /* {S!d726}Saturate: '<S35>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation[2] = sim_ROV_v0_R2018b_P.Saturation_LowerSat[2];
+} else {
+    /* {S!d728}Saturate: '<S35>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation[2] = rtb_T200TransferFunction2;
+}
+if (%<(SLibCGIRIsSampleHit(1, 9))>) {
+%if !SLibCGSysFcnIsEmptyForTid(CompiledModel.System[7], "Output",0)
+%if SLibCG_SystemFcnArgAccessed("sim_ROV_v0_R2018_LowpassFilter3",7,0)
+%assign _modelSS = RTMGetModelSSFromIR()
+%endif
+
+%<SLibCGIRGenReusableSysCall("sim_ROV_v0_R2018_LowpassFilter3", ["%<_modelSS>", "sim_ROV_v0_R2018b_B.Saturation[0]", "&sim_ROV_v0_R2018b_B.LowpassFilter3", "&sim_ROV_v0_R2018b_DW.LowpassFilter3"], 7, 0, 6, 0, 6, 9)>\
+%assign ss = ::CompiledModel.System[7]
+%if !LibSystemIsInlined(ss)
+;
+%else
+\
+%endif
+%endif
+%if !SLibCGSysFcnIsEmptyForTid(CompiledModel.System[7], "Output",0)
+%if SLibCG_SystemFcnArgAccessed("sim_ROV_v0_R2018_LowpassFilter3",7,0)
+%assign _modelSS = RTMGetModelSSFromIR()
+%endif
+
+%<SLibCGIRGenReusableSysCall("sim_ROV_v0_R2018_LowpassFilter3", ["%<_modelSS>", "sim_ROV_v0_R2018b_B.Saturation[1]", "&sim_ROV_v0_R2018b_B.LowpassFilter4", "&sim_ROV_v0_R2018b_DW.LowpassFilter4"], 7, 1, 6, 0, 6, 9)>\
+%assign ss = ::CompiledModel.System[7]
+%if !LibSystemIsInlined(ss)
+;
+%else
+\
+%endif
+%endif
+%if !SLibCGSysFcnIsEmptyForTid(CompiledModel.System[7], "Output",0)
+%if SLibCG_SystemFcnArgAccessed("sim_ROV_v0_R2018_LowpassFilter3",7,0)
+%assign _modelSS = RTMGetModelSSFromIR()
+%endif
+
+%<SLibCGIRGenReusableSysCall("sim_ROV_v0_R2018_LowpassFilter3", ["%<_modelSS>", "sim_ROV_v0_R2018b_B.Saturation[2]", "&sim_ROV_v0_R2018b_B.LowpassFilter5", "&sim_ROV_v0_R2018b_DW.LowpassFilter5"], 7, 2, 6, 0, 6, 9)>\
+%assign ss = ::CompiledModel.System[7]
+%if !LibSystemIsInlined(ss)
+;
+%else
+\
+%endif
+
+%endif
+%if !WHITE_SPACE(tlcOutputsFcnOfS9B21)
+    /* {S!d732}Scope: '<Root>/Scope' */
+%<tlcOutputsFcnOfS9B21>\
+%endif
+}
+/* {S!d734}MATLAB Function: '<S19>/kinematics' incorporates:
+ *  Integrator: '<S18>/Integrator'
+ */
+sim_ROV_v0_R2018b_DW.sfEvent = sim_ROV_v0_R2018b_CALL_EVENT;
+rtb_WhiteNoise_idx_2 = std::cos(sim_ROV_v0_R2018b_B.Pose[5]);
+rtb_T200TransferFunction2 = std::sin(sim_ROV_v0_R2018b_B.Pose[5]);
+rtb_T200TransferFunction1 = std::sin(sim_ROV_v0_R2018b_B.Pose[4]);
+rtb_kxi = std::tan(sim_ROV_v0_R2018b_B.Pose[4]);
+rtb_T200TransferFunction1_0[0] = rtb_WhiteNoise_idx_2 * rtb_WhiteNoise_idx_1;
+rtb_T200TransferFunction1_0[6] = rtb_WhiteNoise_idx_2 * rtb_T200TransferFunction1 * rtb_jxi_tmp + -rtb_T200TransferFunction2 * rtb_WhiteNoise_idx_0;
+F_g_tmp = rtb_WhiteNoise_idx_2 * rtb_WhiteNoise_idx_0;
+rtb_T200TransferFunction1_0[12] = F_g_tmp * rtb_T200TransferFunction1 + rtb_T200TransferFunction2 * rtb_jxi_tmp;
+rtb_T200TransferFunction1_0[1] = rtb_T200TransferFunction2 * rtb_WhiteNoise_idx_1;
+rtb_T200TransferFunction1_0[7] = rtb_jxi_tmp * rtb_T200TransferFunction1 * rtb_T200TransferFunction2 + F_g_tmp;
+rtb_T200TransferFunction1_0[13] = rtb_T200TransferFunction1 * rtb_T200TransferFunction2 * rtb_WhiteNoise_idx_0 + -rtb_WhiteNoise_idx_2 * rtb_jxi_tmp;
+rtb_T200TransferFunction1_0[2] = -rtb_T200TransferFunction1;
+rtb_T200TransferFunction1_0[8] = rtb_WhiteNoise_idx_1 * rtb_jxi_tmp;
+rtb_T200TransferFunction1_0[14] = rtb_WhiteNoise_idx_1 * rtb_WhiteNoise_idx_0;
+for (i_0 = 0; i_0 < 3; i_0++) {
+    i = (i_0 + 3) * 6;
+    rtb_T200TransferFunction1_0[i] = 0.0;
+    rtb_T200TransferFunction1_0[6 * i_0 + 3] = 0.0;
+    rtb_T200TransferFunction1_0[i + 1] = 0.0;
+    rtb_T200TransferFunction1_0[6 * i_0 + 4] = 0.0;
+    rtb_T200TransferFunction1_0[i + 2] = 0.0;
+    rtb_T200TransferFunction1_0[6 * i_0 + 5] = 0.0;
+}
+rtb_T200TransferFunction1_0[21] = 1.0;
+rtb_T200TransferFunction1_0[27] = rtb_jxi_tmp * rtb_kxi;
+rtb_T200TransferFunction1_0[33] = rtb_WhiteNoise_idx_0 * rtb_kxi;
+rtb_T200TransferFunction1_0[22] = 0.0;
+rtb_T200TransferFunction1_0[28] = rtb_WhiteNoise_idx_0;
+rtb_T200TransferFunction1_0[34] = -rtb_jxi_tmp;
+rtb_T200TransferFunction1_0[23] = 0.0;
+rtb_T200TransferFunction1_0[29] = rtb_jxi_tmp / rtb_WhiteNoise_idx_1;
+rtb_T200TransferFunction1_0[35] = rtb_WhiteNoise_idx_0 / rtb_WhiteNoise_idx_1;
+for (i_0 = 0; i_0 < 6; i_0++) {
+    rtb_WhiteNoise_idx_0 = 0.0;
+    for (i = 0; i < 6; i++) {
+        rtb_WhiteNoise_idx_0 += rtb_T200TransferFunction1_0[6 * i + i_0] * sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[i];
+    }
+    sim_ROV_v0_R2018b_B.eta_dot[i_0] = rtb_WhiteNoise_idx_0;
+}
+/* {S!d740}Derivative: '<S19>/Derivative' */
+rtb_T200TransferFunction1 = %<(SLibCG_SE(LibGetT()))>;
+if ((sim_ROV_v0_R2018b_DW.TimeStampA >= rtb_T200TransferFunction1) && (sim_ROV_v0_R2018b_DW.TimeStampB >= rtb_T200TransferFunction1)) {
+    /* {S!d736}Derivative: '<S19>/Derivative' */
+    for (i = 0; i < 6; i++) {
+        sim_ROV_v0_R2018b_B.Acceleration[i] = 0.0;
+    }
+} else {
+    rtb_T200TransferFunction2 = sim_ROV_v0_R2018b_DW.TimeStampA;
+    lastU = &sim_ROV_v0_R2018b_DW.LastUAtTimeA;
+    if (sim_ROV_v0_R2018b_DW.TimeStampA < sim_ROV_v0_R2018b_DW.TimeStampB) {
+        if (sim_ROV_v0_R2018b_DW.TimeStampB < rtb_T200TransferFunction1) {
+            rtb_T200TransferFunction2 = sim_ROV_v0_R2018b_DW.TimeStampB;
+            lastU = &sim_ROV_v0_R2018b_DW.LastUAtTimeB;
+        }
+    } else if (sim_ROV_v0_R2018b_DW.TimeStampA >= rtb_T200TransferFunction1) {
+        rtb_T200TransferFunction2 = sim_ROV_v0_R2018b_DW.TimeStampB;
+        lastU = &sim_ROV_v0_R2018b_DW.LastUAtTimeB;
+    }
+    rtb_T200TransferFunction1 -= rtb_T200TransferFunction2;
+    /* {S!d738}Derivative: '<S19>/Derivative' */
+    for (i = 0; i < 6; i++) {
+        sim_ROV_v0_R2018b_B.Acceleration[i] = (sim_ROV_v0_R2018b_B.eta_dot[i] - (*lastU)[i]) / rtb_T200TransferFunction1;
+    }
+}
+/* {E!d740}End of Derivative: '<S19>/Derivative' */
+if (%<(SLibCGIRIsSampleHit(1, 9))>) {
+%if !WHITE_SPACE(tlcOutputsFcnOfS9B24)
+    /* {S!d742}Scope: '<S6>/Visualization (Kinematics)' */
+%<tlcOutputsFcnOfS9B24>\
+%endif
+%if !WHITE_SPACE(tlcOutputsFcnOfS9B25)
+    /* {S!d744}Scope: '<S6>/Visualization (Propulsion)' */
+%<tlcOutputsFcnOfS9B25>\
+%endif
+}
+/* {S!d746}Saturate: '<S7>/Saturation' */
+rtb_T200TransferFunction1 = sim_ROV_v0_R2018b_P.force[0] * 9.8;
+rtb_T200TransferFunction2 = sim_ROV_v0_R2018b_P.force[200] * 9.8;
+/* {S!d748}SignalConversion generated from: '<S1>/Gain2' */
+tmp_7[0] = sim_ROV_v0_R2018b_B.Integrator;
+tmp_7[1] = sim_ROV_v0_R2018b_B.Integrator1;
+tmp_7[2] = sim_ROV_v0_R2018b_B.Integrator2;
+tmp_7[3] = sim_ROV_v0_R2018b_B.LowpassFilter3.LowpassFilter3;
+tmp_7[4] = sim_ROV_v0_R2018b_B.LowpassFilter4.LowpassFilter3;
+tmp_7[5] = sim_ROV_v0_R2018b_B.LowpassFilter5.LowpassFilter3;
+tmp_7[6] = sim_ROV_v0_R2018b_B.Integrator6;
+tmp_7[7] = sim_ROV_v0_R2018b_B.Integrator7;
+tmp_7[8] = sim_ROV_v0_R2018b_B.Integrator8;
+tmp_7[9] = sim_ROV_v0_R2018b_B.Integrator3;
+tmp_7[10] = sim_ROV_v0_R2018b_B.Integrator4;
+tmp_7[11] = sim_ROV_v0_R2018b_B.Integrator5;
+for (i_0 = 0; i_0 < 6; i_0++) {
+    /* {S!d750}Sum: '<S1>/Sum2' incorporates:
+ *  Gain: '<S1>/Gain1'
+ *  Integrator: '<S1>/Integrator'
+ */
+    rtb_jxi = 0.0;
+    for (i = 0; i < 6; i++) {
+        rtb_jxi += sim_ROV_v0_R2018b_P.Kq[6 * i + i_0] * sim_ROV_v0_R2018b_X.Integrator_CSTATE_i[i];
+    }
+    /* {S!d752}Gain: '<S1>/Gain2' */
+    rtb_WhiteNoise_idx_2 = 0.0;
+    for (i = 0; i < 12; i++) {
+        rtb_WhiteNoise_idx_2 += sim_ROV_v0_R2018b_P.Kx[6 * i + i_0] * tmp_7[i];
+    }
+    /* {S!d754}Sum: '<S1>/Sum2' incorporates:
+ *  Gain: '<S1>/Gain2'
+ */
+    a[i_0] = (0.0 - rtb_jxi) - rtb_WhiteNoise_idx_2;
+}
+for (i = 0; i < 8; i++) {
+    /* {S!d756}Gain: '<S7>/Control Allocation' */
+    rtb_jxi = 0.0;
+    for (i_0 = 0; i_0 < 6; i_0++) {
+        rtb_jxi += sim_ROV_v0_R2018b_P.ControlAllocation_Gain[(i_0 << 3) + i] * a[i_0];
+    }
+    /* {S!d758}Saturate: '<S7>/Saturation' incorporates:
+ *  Gain: '<S7>/Control Allocation'
+ */
+    if (rtb_jxi > rtb_T200TransferFunction2) {
+        rtb_jxi = rtb_T200TransferFunction2;
+    } else if (rtb_jxi < rtb_T200TransferFunction1) {
+        rtb_jxi = rtb_T200TransferFunction1;
+    }
+    /* {S!d760}Lookup_n-D: '<S7>/1-D Lookup Table' incorporates:
+ *  Gain: '<S7>/N → kgf'
+ *  Saturate: '<S7>/Saturation'
+ */
+    rtb_uDLookupTable[i] = look1_binlxpw(sim_ROV_v0_R2018b_P.Nkgf_Gain * rtb_jxi, sim_ROV_v0_R2018b_P.force, sim_ROV_v0_R2018b_P.pwm, 200U);
+}
+if (%<(SLibCGIRIsSampleHit(1, 9))>) {
+    for (i = 0; i < 6; i++) {
+        /* {S!d762}Gain: '<S4>/Gain' incorporates:
+ *  Constant: '<S4>/Constant Reference'
+ */
+        sim_ROV_v0_R2018b_B.Gain[i] = sim_ROV_v0_R2018b_P.Gain_Gain[i] * sim_ROV_v0_R2018b_P.ConstantReference_Value[i];
+    }
+    /* {S!d764}Gain: '<S4>/Gain1' incorporates:
+ *  Constant: '<S4>/Constant'
+ */
+    sim_ROV_v0_R2018b_B.Gain1 = sim_ROV_v0_R2018b_P.Gain1_Gain * sim_ROV_v0_R2018b_P.Constant_Value_c;
+    /* {S!d766}Gain: '<S4>/Gain2' incorporates:
+ *  Constant: '<S4>/Constant'
+ */
+    sim_ROV_v0_R2018b_B.Gain2 = sim_ROV_v0_R2018b_P.Gain2_Gain * sim_ROV_v0_R2018b_P.Constant_Value_c;
+}
+/* {S!d776}ManualSwitch: '<S4>/Manual Switch' incorporates:
+ *  Gain: '<S4>/Gain3'
+ *  Step: '<S4>/Step2'
+ *  Step: '<S4>/Step3'
+ *  Sum: '<S4>/Sum1'
+ */
+if (sim_ROV_v0_R2018b_P.ManualSwitch_CurrentSetting == 1) {
+    for (i = 0; i < 6; i++) {
+        a[i] = sim_ROV_v0_R2018b_B.Gain[i];
+    }
+} else {
+    /* {S!d768}Step: '<S4>/Step' incorporates:
+ *  Step: '<S4>/Step1'
+ *  Step: '<S4>/Step2'
+ *  Step: '<S4>/Step3'
+ */
+    rtb_jxi = %<(SLibCG_SE(LibGetTaskTime(0)))>;
+    if (rtb_jxi < sim_ROV_v0_R2018b_P.Step_Time) {
+        rtb_WhiteNoise_idx_2 = sim_ROV_v0_R2018b_P.Step_Y0;
+    } else {
+        rtb_WhiteNoise_idx_2 = sim_ROV_v0_R2018b_P.Step_YFinal;
+    }
+    /* {S!d770}Step: '<S4>/Step1' */
+    if (rtb_jxi < sim_ROV_v0_R2018b_P.Step1_Time) {
+        rtb_T200TransferFunction2 = sim_ROV_v0_R2018b_P.Step1_Y0;
+    } else {
+        rtb_T200TransferFunction2 = sim_ROV_v0_R2018b_P.Step1_YFinal;
+    }
+    /* {S!d772}Sum: '<S4>/Sum' incorporates:
+ *  Step: '<S4>/Step'
+ *  Step: '<S4>/Step1'
+ */
+    rtb_T200TransferFunction1 = rtb_WhiteNoise_idx_2 - rtb_T200TransferFunction2;
+    a[0] = rtb_T200TransferFunction1;
+    a[1] = rtb_T200TransferFunction1;
+    a[2] = rtb_T200TransferFunction1;
+    a[3] = sim_ROV_v0_R2018b_B.Gain1;
+    a[4] = sim_ROV_v0_R2018b_B.Gain2;
+    /* {S!d774}Gain: '<S4>/Gain3' incorporates:
+ *  Step: '<S4>/Step2'
+ *  Step: '<S4>/Step3'
+ */
+    if (rtb_jxi < sim_ROV_v0_R2018b_P.Step2_Time) {
+        rtb_WhiteNoise_idx_2 = sim_ROV_v0_R2018b_P.Step2_Y0;
+    } else {
+        rtb_WhiteNoise_idx_2 = sim_ROV_v0_R2018b_P.Step2_YFinal;
+    }
+    if (rtb_jxi < sim_ROV_v0_R2018b_P.Step3_Time) {
+        rtb_jxi = sim_ROV_v0_R2018b_P.Step3_Y0;
+    } else {
+        rtb_jxi = sim_ROV_v0_R2018b_P.Step3_YFinal;
+    }
+    a[5] = (rtb_WhiteNoise_idx_2 - rtb_jxi) * sim_ROV_v0_R2018b_P.Gain3_Gain;
+}
+/* {E!d776}End of ManualSwitch: '<S4>/Manual Switch' */
+
+/* {S!d778}SignalConversion generated from: '<S1>/Integrator' incorporates:
+ *  Sum: '<S8>/Sum'
+ *  Sum: '<S8>/Sum1'
+ *  Sum: '<S8>/Sum2'
+ *  Sum: '<S8>/Sum3'
+ *  Sum: '<S8>/Sum4'
+ *  Sum: '<S8>/Sum6'
+ */
+sim_ROV_v0_R2018b_B.TmpSignalConversionAtIntegrator[0] = a[0] - sim_ROV_v0_R2018b_B.Integrator6;
+sim_ROV_v0_R2018b_B.TmpSignalConversionAtIntegrator[1] = a[1] - sim_ROV_v0_R2018b_B.Integrator7;
+sim_ROV_v0_R2018b_B.TmpSignalConversionAtIntegrator[2] = a[2] - sim_ROV_v0_R2018b_B.Integrator8;
+sim_ROV_v0_R2018b_B.TmpSignalConversionAtIntegrator[3] = a[3] - sim_ROV_v0_R2018b_B.Integrator3;
+sim_ROV_v0_R2018b_B.TmpSignalConversionAtIntegrator[4] = a[4] - sim_ROV_v0_R2018b_B.Integrator4;
+sim_ROV_v0_R2018b_B.TmpSignalConversionAtIntegrator[5] = a[5] - sim_ROV_v0_R2018b_B.Integrator5;
+/* {S!d790}MATLAB Function: '<S16>/Normalization' incorporates:
+ *  Saturate: '<S16>/Saturation'
+ */
+sim_ROV_v0_R2018b_DW.sfEvent_c = sim_ROV_v0_R2018b_CALL_EVENT;
+for (i = 0; i < 8; i++) {
+    /* {S!d780}Saturate: '<S16>/Saturation' */
+    rtb_WhiteNoise_idx_0 = rtb_uDLookupTable[i];
+    if (rtb_WhiteNoise_idx_0 > sim_ROV_v0_R2018b_P.Saturation_UpperSat_f) {
+        rtb_WhiteNoise_idx_0 = sim_ROV_v0_R2018b_P.Saturation_UpperSat_f;
+    } else if (rtb_WhiteNoise_idx_0 < sim_ROV_v0_R2018b_P.Saturation_LowerSat_p) {
+        rtb_WhiteNoise_idx_0 = sim_ROV_v0_R2018b_P.Saturation_LowerSat_p;
+    }
+    rtb_WhiteNoise_idx_0 = (rtb_WhiteNoise_idx_0 - 1500.0) * 150.0 / 400.0;
+    rtb_uDLookupTable[i] = rtb_WhiteNoise_idx_0;
+    /* {S!d788}DeadZone: '<S16>/Dead Zone' incorporates:
+ *  Saturate: '<S16>/Saturation'
+ */
+    if (rtb_WhiteNoise_idx_0 > sim_ROV_v0_R2018b_P.DeadZone_End) {
+        /* {S!d782}DeadZone: '<S16>/Dead Zone' */
+        sim_ROV_v0_R2018b_B.DeadZone[i] = rtb_WhiteNoise_idx_0 - sim_ROV_v0_R2018b_P.DeadZone_End;
+    } else if (rtb_WhiteNoise_idx_0 >= sim_ROV_v0_R2018b_P.DeadZone_Start) {
+        /* {S!d784}DeadZone: '<S16>/Dead Zone' */
+        sim_ROV_v0_R2018b_B.DeadZone[i] = 0.0;
+    } else {
+        /* {S!d786}DeadZone: '<S16>/Dead Zone' */
+        sim_ROV_v0_R2018b_B.DeadZone[i] = rtb_WhiteNoise_idx_0 - sim_ROV_v0_R2018b_P.DeadZone_Start;
+    }
+    /* {E!d788}End of DeadZone: '<S16>/Dead Zone' */
+}
+/* {E!d790}End of MATLAB Function: '<S16>/Normalization' */
+if (%<(SLibCGIRIsSampleHit(1, 9))>) {
+%if !WHITE_SPACE(tlcOutputsFcnOfS9B32)
+    /* {S!d792}Scope: '<S18>/Scope' */
+%<tlcOutputsFcnOfS9B32>\
+%endif
+%if !WHITE_SPACE(tlcOutputsFcnOfS9B33)
+    /* {S!d794}Scope: '<S18>/Scope1' */
+%<tlcOutputsFcnOfS9B33>\
+%endif
+%if !WHITE_SPACE(tlcOutputsFcnOfS9B34)
+    /* {S!d796}Scope: '<S18>/Scope2' */
+%<tlcOutputsFcnOfS9B34>\
+%endif
+%if !WHITE_SPACE(tlcOutputsFcnOfS9B35)
+    /* {S!d798}Scope: '<S18>/Scope3' */
+%<tlcOutputsFcnOfS9B35>\
+%endif
+    /* {S!d800}Gain: '<S34>/Zero-Order Hold2' incorporates:
+ *  Constant: '<S17>/Gravity Acceleration'
+ */
+    sim_ROV_v0_R2018b_B.ZeroOrderHold2[0] = sim_ROV_v0_R2018b_P.ZeroOrderHold2_Gain * sim_ROV_v0_R2018b_P.GravityAcceleration_Value[0];
+    sim_ROV_v0_R2018b_B.ZeroOrderHold2[1] = sim_ROV_v0_R2018b_P.ZeroOrderHold2_Gain * sim_ROV_v0_R2018b_P.GravityAcceleration_Value[1];
+    sim_ROV_v0_R2018b_B.ZeroOrderHold2[2] = sim_ROV_v0_R2018b_P.ZeroOrderHold2_Gain * sim_ROV_v0_R2018b_P.GravityAcceleration_Value[2];
+    /* {S!d802}Gain: '<S34>/Gain' incorporates:
+ *  Constant: '<S17>/CoG'
+ *  Constant: '<S34>/wl_ins'
+ *  Gain: '<S34>/Zero-Order Hold4'
+ *  Sum: '<S34>/Sum7'
+ */
+    sim_ROV_v0_R2018b_B.Gain_n[0] = (sim_ROV_v0_R2018b_P.ZeroOrderHold4_Gain * sim_ROV_v0_R2018b_P.r_g[0] - sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_g[0]) * sim_ROV_v0_R2018b_P.Gain_Gain_f[0];
+    sim_ROV_v0_R2018b_B.Gain_n[1] = (sim_ROV_v0_R2018b_P.ZeroOrderHold4_Gain * sim_ROV_v0_R2018b_P.r_g[1] - sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_g[1]) * sim_ROV_v0_R2018b_P.Gain_Gain_f[1];
+    sim_ROV_v0_R2018b_B.Gain_n[2] = (sim_ROV_v0_R2018b_P.ZeroOrderHold4_Gain * sim_ROV_v0_R2018b_P.r_g[2] - sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_g[2]) * sim_ROV_v0_R2018b_P.Gain_Gain_f[2];
+}
+/* {S!d804}Gain: '<S34>/Zero-Order Hold' incorporates:
+ *  Integrator: '<S18>/Integrator'
+ */
+rtb_WhiteNoise_idx_0 = sim_ROV_v0_R2018b_P.ZeroOrderHold_Gain_a * sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[3];
+rtb_WhiteNoise_idx_1 = sim_ROV_v0_R2018b_P.ZeroOrderHold_Gain_a * sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[4];
+rtb_WhiteNoise_idx_2 = sim_ROV_v0_R2018b_P.ZeroOrderHold_Gain_a * sim_ROV_v0_R2018b_X.Integrator_CSTATE_o[5];
+/* {S!d806}Sum: '<S43>/Sum' incorporates:
+ *  Product: '<S46>/i x j'
+ *  Product: '<S46>/j x k'
+ *  Product: '<S46>/k x i'
+ *  Product: '<S47>/i x k'
+ *  Product: '<S47>/j x i'
+ *  Product: '<S47>/k x j'
+ */
+rtb_Sum4_j[0] = rtb_WhiteNoise_idx_1 * sim_ROV_v0_R2018b_B.Gain_n[2] - sim_ROV_v0_R2018b_B.Gain_n[1] * rtb_WhiteNoise_idx_2;
+rtb_Sum4_j[1] = sim_ROV_v0_R2018b_B.Gain_n[0] * rtb_WhiteNoise_idx_2 - rtb_WhiteNoise_idx_0 * sim_ROV_v0_R2018b_B.Gain_n[2];
+rtb_Sum4_j[2] = rtb_WhiteNoise_idx_0 * sim_ROV_v0_R2018b_B.Gain_n[1] - sim_ROV_v0_R2018b_B.Gain_n[0] * rtb_WhiteNoise_idx_1;
+/* {S!d808}Sum: '<S42>/Sum' incorporates:
+ *  Product: '<S44>/i x j'
+ *  Product: '<S44>/j x k'
+ *  Product: '<S44>/k x i'
+ *  Product: '<S45>/i x k'
+ *  Product: '<S45>/j x i'
+ *  Product: '<S45>/k x j'
+ */
+rtb_jxi = rtb_WhiteNoise_idx_1 * rtb_Sum4_j[2] - rtb_Sum4_j[1] * rtb_WhiteNoise_idx_2;
+rtb_T200TransferFunction1 = rtb_Sum4_j[0] * rtb_WhiteNoise_idx_2 - rtb_WhiteNoise_idx_0 * rtb_Sum4_j[2];
+rtb_T200TransferFunction2 = rtb_WhiteNoise_idx_0 * rtb_Sum4_j[1] - rtb_Sum4_j[0] * rtb_WhiteNoise_idx_1;
+/* {S!d810}Gain: '<S34>/Zero-Order Hold3' */
+rtb_WhiteNoise_idx_0 = sim_ROV_v0_R2018b_P.ZeroOrderHold3_Gain * sim_ROV_v0_R2018b_B.BodyAcceleration[3];
+rtb_WhiteNoise_idx_1 = sim_ROV_v0_R2018b_P.ZeroOrderHold3_Gain * sim_ROV_v0_R2018b_B.BodyAcceleration[4];
+rtb_WhiteNoise_idx_2 = sim_ROV_v0_R2018b_P.ZeroOrderHold3_Gain * sim_ROV_v0_R2018b_B.BodyAcceleration[5];
+/* {S!d812}Sum: '<S34>/Sum' incorporates:
+ *  Gain: '<S34>/Zero-Order Hold1'
+ *  Product: '<S48>/i x j'
+ *  Product: '<S48>/j x k'
+ *  Product: '<S48>/k x i'
+ *  Product: '<S49>/i x k'
+ *  Product: '<S49>/j x i'
+ *  Product: '<S49>/k x j'
+ *  Sum: '<S39>/Sum'
+ */
+rtb_jxi = ((sim_ROV_v0_R2018b_P.ZeroOrderHold1_Gain_m * sim_ROV_v0_R2018b_B.BodyAcceleration[0] - sim_ROV_v0_R2018b_B.ZeroOrderHold2[0]) + rtb_jxi) + (rtb_WhiteNoise_idx_1 * sim_ROV_v0_R2018b_B.Gain_n[2] - sim_ROV_v0_R2018b_B.Gain_n[1] * rtb_WhiteNoise_idx_2);
+rtb_WhiteNoise_idx_2 = ((sim_ROV_v0_R2018b_P.ZeroOrderHold1_Gain_m * sim_ROV_v0_R2018b_B.BodyAcceleration[1] - sim_ROV_v0_R2018b_B.ZeroOrderHold2[1]) + rtb_T200TransferFunction1) + (sim_ROV_v0_R2018b_B.Gain_n[0] * rtb_WhiteNoise_idx_2 - rtb_WhiteNoise_idx_0 * sim_ROV_v0_R2018b_B.Gain_n[2]);
+rtb_WhiteNoise_idx_0 = ((sim_ROV_v0_R2018b_P.ZeroOrderHold1_Gain_m * sim_ROV_v0_R2018b_B.BodyAcceleration[2] - sim_ROV_v0_R2018b_B.ZeroOrderHold2[2]) + rtb_T200TransferFunction2) + (rtb_WhiteNoise_idx_0 * sim_ROV_v0_R2018b_B.Gain_n[1] - sim_ROV_v0_R2018b_B.Gain_n[0] * rtb_WhiteNoise_idx_1);
+/* {S!d814}Sum: '<S34>/Sum4' incorporates:
+ *  Constant: '<S34>/Measurement bias'
+ *  Constant: '<S34>/Scale factors & Cross-coupling  errors'
+ *  Product: '<S34>/Product'
+ */
+for (i_0 = 0; i_0 < 3; i_0++) {
+    rtb_Sum4_j[i_0] = ((sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_l[i_0 + 3] * rtb_WhiteNoise_idx_2 + sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_l[i_0] * rtb_jxi) + sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_l[i_0 + 6] * rtb_WhiteNoise_idx_0) + sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementUni[i_0];
+}
+/* {E!d814}End of Sum: '<S34>/Sum4' */
+if (%<(SLibCGIRIsSampleHit(2, 9))>) {
+    /* {S!d816}Sqrt: '<S37>/Sqrt1' incorporates:
+ *  Constant: '<S37>/Constant1'
+ */
+    rtb_T200TransferFunction1 = std::sqrt(sim_ROV_v0_R2018b_P.Randombias_Ts_e);
+    /* {S!d818}Product: '<S37>/Product' incorporates:
+ *  Constant: '<S37>/Constant'
+ *  Product: '<S37>/Divide'
+ *  RandomNumber: '<S37>/White Noise'
+ *  Sqrt: '<S37>/Sqrt'
+ */
+    sim_ROV_v0_R2018b_B.Product_i[0] = std::sqrt(sim_ROV_v0_R2018b_P.ThreeaxisAccelerometer_a_pow[0]) / rtb_T200TransferFunction1 * sim_ROV_v0_R2018b_DW.NextOutput_p[0];
+    sim_ROV_v0_R2018b_B.Product_i[1] = std::sqrt(sim_ROV_v0_R2018b_P.ThreeaxisAccelerometer_a_pow[1]) / rtb_T200TransferFunction1 * sim_ROV_v0_R2018b_DW.NextOutput_p[1];
+    sim_ROV_v0_R2018b_B.Product_i[2] = std::sqrt(sim_ROV_v0_R2018b_P.ThreeaxisAccelerometer_a_pow[2]) / rtb_T200TransferFunction1 * sim_ROV_v0_R2018b_DW.NextOutput_p[2];
+}
+/* {S!d820}Switch: '<S36>/Switch' incorporates:
+ *  Constant: '<S36>/Constant'
+ *  SecondOrderIntegrator: '<S41>/Integrator, Second-Order Limited'
+ */
+if (sim_ROV_v0_R2018b_P.Constant_Value_b >= sim_ROV_v0_R2018b_P.Switch_Threshold_j) {
+    rtb_jxi = sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited__a[0];
+} else {
+    rtb_jxi = rtb_Sum4_j[0];
+}
+/* {S!d822}Sum: '<S34>/Sum1' incorporates:
+ *  Switch: '<S36>/Switch'
+ */
+rtb_WhiteNoise_idx_0 = rtb_jxi + sim_ROV_v0_R2018b_B.Product_i[0];
+/* {S!d830}Saturate: '<S34>/Saturation' */
+if (rtb_WhiteNoise_idx_0 > sim_ROV_v0_R2018b_P.Saturation_UpperSat_e[0]) {
+    /* {S!d824}Saturate: '<S34>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation_m[0] = sim_ROV_v0_R2018b_P.Saturation_UpperSat_e[0];
+} else if (rtb_WhiteNoise_idx_0 < sim_ROV_v0_R2018b_P.Saturation_LowerSat_a[0]) {
+    /* {S!d826}Saturate: '<S34>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation_m[0] = sim_ROV_v0_R2018b_P.Saturation_LowerSat_a[0];
+} else {
+    /* {S!d828}Saturate: '<S34>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation_m[0] = rtb_WhiteNoise_idx_0;
+}
+/* {S!d832}Switch: '<S36>/Switch' incorporates:
+ *  Constant: '<S36>/Constant'
+ *  SecondOrderIntegrator: '<S41>/Integrator, Second-Order Limited'
+ */
+if (sim_ROV_v0_R2018b_P.Constant_Value_b >= sim_ROV_v0_R2018b_P.Switch_Threshold_j) {
+    rtb_jxi = sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited__a[1];
+} else {
+    rtb_jxi = rtb_Sum4_j[1];
+}
+/* {S!d834}Sum: '<S34>/Sum1' incorporates:
+ *  Switch: '<S36>/Switch'
+ */
+rtb_WhiteNoise_idx_0 = rtb_jxi + sim_ROV_v0_R2018b_B.Product_i[1];
+/* {S!d842}Saturate: '<S34>/Saturation' */
+if (rtb_WhiteNoise_idx_0 > sim_ROV_v0_R2018b_P.Saturation_UpperSat_e[1]) {
+    /* {S!d836}Saturate: '<S34>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation_m[1] = sim_ROV_v0_R2018b_P.Saturation_UpperSat_e[1];
+} else if (rtb_WhiteNoise_idx_0 < sim_ROV_v0_R2018b_P.Saturation_LowerSat_a[1]) {
+    /* {S!d838}Saturate: '<S34>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation_m[1] = sim_ROV_v0_R2018b_P.Saturation_LowerSat_a[1];
+} else {
+    /* {S!d840}Saturate: '<S34>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation_m[1] = rtb_WhiteNoise_idx_0;
+}
+/* {S!d844}Switch: '<S36>/Switch' incorporates:
+ *  Constant: '<S36>/Constant'
+ *  SecondOrderIntegrator: '<S41>/Integrator, Second-Order Limited'
+ */
+if (sim_ROV_v0_R2018b_P.Constant_Value_b >= sim_ROV_v0_R2018b_P.Switch_Threshold_j) {
+    rtb_jxi = sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited__a[2];
+} else {
+    rtb_jxi = rtb_Sum4_j[2];
+}
+/* {S!d846}Sum: '<S34>/Sum1' incorporates:
+ *  Switch: '<S36>/Switch'
+ */
+rtb_WhiteNoise_idx_0 = rtb_jxi + sim_ROV_v0_R2018b_B.Product_i[2];
+/* {S!d854}Saturate: '<S34>/Saturation' */
+if (rtb_WhiteNoise_idx_0 > sim_ROV_v0_R2018b_P.Saturation_UpperSat_e[2]) {
+    /* {S!d848}Saturate: '<S34>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation_m[2] = sim_ROV_v0_R2018b_P.Saturation_UpperSat_e[2];
+} else if (rtb_WhiteNoise_idx_0 < sim_ROV_v0_R2018b_P.Saturation_LowerSat_a[2]) {
+    /* {S!d850}Saturate: '<S34>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation_m[2] = sim_ROV_v0_R2018b_P.Saturation_LowerSat_a[2];
+} else {
+    /* {S!d852}Saturate: '<S34>/Saturation' */
+    sim_ROV_v0_R2018b_B.Saturation_m[2] = rtb_WhiteNoise_idx_0;
+}
+if (%<(SLibCGIRIsSampleHit(1, 9))>) {
+%if !SLibCGSysFcnIsEmptyForTid(CompiledModel.System[6], "Output",0)
+%if SLibCG_SystemFcnArgAccessed("sim_ROV_v0_R2018b_LowpassFilter",6,0)
+%assign _modelSS = RTMGetModelSSFromIR()
+%endif
+
+%<SLibCGIRGenReusableSysCall("sim_ROV_v0_R2018b_LowpassFilter", ["%<_modelSS>", "sim_ROV_v0_R2018b_B.Saturation_m[0]", "&sim_ROV_v0_R2018b_B.LowpassFilter", "&sim_ROV_v0_R2018b_DW.LowpassFilter"], 6, 0, 6, 0, 6, 9)>\
+%assign ss = ::CompiledModel.System[6]
+%if !LibSystemIsInlined(ss)
+;
+%else
+\
+%endif
+%endif
+%if !SLibCGSysFcnIsEmptyForTid(CompiledModel.System[6], "Output",0)
+%if SLibCG_SystemFcnArgAccessed("sim_ROV_v0_R2018b_LowpassFilter",6,0)
+%assign _modelSS = RTMGetModelSSFromIR()
+%endif
+
+%<SLibCGIRGenReusableSysCall("sim_ROV_v0_R2018b_LowpassFilter", ["%<_modelSS>", "sim_ROV_v0_R2018b_B.Saturation_m[1]", "&sim_ROV_v0_R2018b_B.LowpassFilter1", "&sim_ROV_v0_R2018b_DW.LowpassFilter1"], 6, 1, 6, 0, 6, 9)>\
+%assign ss = ::CompiledModel.System[6]
+%if !LibSystemIsInlined(ss)
+;
+%else
+\
+%endif
+%endif
+%if !SLibCGSysFcnIsEmptyForTid(CompiledModel.System[6], "Output",0)
+%if SLibCG_SystemFcnArgAccessed("sim_ROV_v0_R2018b_LowpassFilter",6,0)
+%assign _modelSS = RTMGetModelSSFromIR()
+%endif
+
+%<SLibCGIRGenReusableSysCall("sim_ROV_v0_R2018b_LowpassFilter", ["%<_modelSS>", "sim_ROV_v0_R2018b_B.Saturation_m[2]", "&sim_ROV_v0_R2018b_B.LowpassFilter2", "&sim_ROV_v0_R2018b_DW.LowpassFilter2"], 6, 2, 6, 0, 6, 9)>\
+%assign ss = ::CompiledModel.System[6]
+%if !LibSystemIsInlined(ss)
+;
+%else
+\
+%endif
+%endif
+}
+/* {S!d856}Gain: '<S41>/2*zeta * wn' */
+rtb_T200TransferFunction1 = 2.0 * sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurement_gc * sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_f;
+/* {S!d858}Gain: '<S41>/wn^2' */
+rtb_T200TransferFunction2 = sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_f * sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_f;
+/* {S!d860}Sum: '<S41>/Sum2' incorporates:
+ *  Gain: '<S41>/2*zeta * wn'
+ *  Gain: '<S41>/wn^2'
+ *  SecondOrderIntegrator: '<S41>/Integrator, Second-Order Limited'
+ *  Sum: '<S41>/Sum3'
+ */
+sim_ROV_v0_R2018b_B.Sum2[0] = (rtb_Sum4_j[0] - sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited__a[0]) * rtb_T200TransferFunction2 - rtb_T200TransferFunction1 * sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited__a[3];
+sim_ROV_v0_R2018b_B.Sum2[1] = (rtb_Sum4_j[1] - sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited__a[1]) * rtb_T200TransferFunction2 - rtb_T200TransferFunction1 * sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited__a[4];
+sim_ROV_v0_R2018b_B.Sum2[2] = (rtb_Sum4_j[2] - sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited__a[2]) * rtb_T200TransferFunction2 - rtb_T200TransferFunction1 * sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited__a[5];
+/* {S!d862}Gain: '<S53>/2*zeta * wn' */
+rtb_T200TransferFunction1 = 2.0 * sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_o * sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_h;
+/* {S!d864}Gain: '<S53>/wn^2' */
+rtb_T200TransferFunction2 = sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_h * sim_ROV_v0_R2018b_P.ThreeaxisInertialMeasurementU_h;
+/* {S!d866}Sum: '<S53>/Sum2' incorporates:
+ *  Gain: '<S53>/2*zeta * wn'
+ *  Gain: '<S53>/wn^2'
+ *  SecondOrderIntegrator: '<S53>/Integrator, Second-Order Limited'
+ *  Sum: '<S53>/Sum3'
+ */
+sim_ROV_v0_R2018b_B.Sum2_c[0] = (rtb_Sum4[0] - sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited_CS[0]) * rtb_T200TransferFunction2 - rtb_T200TransferFunction1 * sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited_CS[3];
+sim_ROV_v0_R2018b_B.Sum2_c[1] = (rtb_Sum4[1] - sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited_CS[1]) * rtb_T200TransferFunction2 - rtb_T200TransferFunction1 * sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited_CS[4];
+sim_ROV_v0_R2018b_B.Sum2_c[2] = (rtb_Sum4[2] - sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited_CS[2]) * rtb_T200TransferFunction2 - rtb_T200TransferFunction1 * sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited_CS[5];
+%<SLibInsertSolverResetCode()>\
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedOutputLocalVars", localVarDecl)>
+%endfunction
+%function OutputsFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Outputs(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(2, 4, fcnProtoType)>
+%endfunction

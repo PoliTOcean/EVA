@@ -1,0 +1,151 @@
+%implements s13_b0_ks2xg_ForcingFunction "C"
+
+%function ForcingFunction(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%openfile localVarDecl
+
+XDot_sim_ROV_v0_R2018b_T *_rtXdot;
+int32_T i;
+%closefile localVarDecl
+_rtXdot = %<(SLibCG_SE(SLibGetContStatesDerivativeStructPtr()))>;
+/* {S!d918}ForcingFunction for Integrator: '<S30>/Integrator6' */
+_rtXdot->Integrator6_CSTATE = sim_ROV_v0_R2018b_B.Integrator;
+/* {S!d920}ForcingFunction for Integrator: '<S30>/Integrator7' */
+_rtXdot->Integrator7_CSTATE = sim_ROV_v0_R2018b_B.Integrator1;
+/* {S!d922}ForcingFunction for Integrator: '<S30>/Integrator8' */
+_rtXdot->Integrator8_CSTATE = sim_ROV_v0_R2018b_B.Integrator2;
+/* {S!d924}ForcingFunction for Integrator: '<S30>/Integrator' */
+_rtXdot->Integrator_CSTATE = sim_ROV_v0_R2018b_B.LowpassFilter.LowpassFilter;
+/* {S!d926}ForcingFunction for Integrator: '<S30>/Integrator1' */
+_rtXdot->Integrator1_CSTATE = sim_ROV_v0_R2018b_B.LowpassFilter1.LowpassFilter;
+/* {S!d928}ForcingFunction for Integrator: '<S30>/Integrator2' */
+_rtXdot->Integrator2_CSTATE = sim_ROV_v0_R2018b_B.LowpassFilter2.LowpassFilter;
+/* {S!d930}ForcingFunction for Integrator: '<S30>/Integrator3' */
+_rtXdot->Integrator3_CSTATE = sim_ROV_v0_R2018b_B.LowpassFilter3.LowpassFilter3;
+/* {S!d932}ForcingFunction for Integrator: '<S30>/Integrator4' */
+_rtXdot->Integrator4_CSTATE = sim_ROV_v0_R2018b_B.LowpassFilter4.LowpassFilter3;
+/* {S!d934}ForcingFunction for Integrator: '<S30>/Integrator5' */
+_rtXdot->Integrator5_CSTATE = sim_ROV_v0_R2018b_B.LowpassFilter5.LowpassFilter3;
+/* {S!d936}ForcingFunction for SecondOrderIntegrator: '<S53>/Integrator, Second-Order Limited' */
+if (sim_ROV_v0_R2018b_DW.IntegratorSecondOrderLimited_MO[0] == 0) {
+    _rtXdot->IntegratorSecondOrderLimited_CS[0] = sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited_CS[3];
+    _rtXdot->IntegratorSecondOrderLimited_CS[3] = sim_ROV_v0_R2018b_B.Sum2_c[0];
+}
+if (sim_ROV_v0_R2018b_DW.IntegratorSecondOrderLimited_MO[1] == 0) {
+    _rtXdot->IntegratorSecondOrderLimited_CS[1] = sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited_CS[4];
+    _rtXdot->IntegratorSecondOrderLimited_CS[4] = sim_ROV_v0_R2018b_B.Sum2_c[1];
+}
+if (sim_ROV_v0_R2018b_DW.IntegratorSecondOrderLimited_MO[2] == 0) {
+    _rtXdot->IntegratorSecondOrderLimited_CS[2] = sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited_CS[5];
+    _rtXdot->IntegratorSecondOrderLimited_CS[5] = sim_ROV_v0_R2018b_B.Sum2_c[2];
+}
+/* {E!d936}End of ForcingFunction for SecondOrderIntegrator: '<S53>/Integrator, Second-Order Limited' */
+
+/* {S!d938}ForcingFunction for TransferFcn: '<S20>/T200 Transfer Function 1' */
+_rtXdot->T200TransferFunction1_CSTATE[0] = sim_ROV_v0_R2018b_P.T200TransferFunction1_A[0] * sim_ROV_v0_R2018b_X.T200TransferFunction1_CSTATE[0];
+_rtXdot->T200TransferFunction1_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction1_A[1] * sim_ROV_v0_R2018b_X.T200TransferFunction1_CSTATE[1];
+_rtXdot->T200TransferFunction1_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction1_A[2] * sim_ROV_v0_R2018b_X.T200TransferFunction1_CSTATE[2];
+_rtXdot->T200TransferFunction1_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction1_A[3] * sim_ROV_v0_R2018b_X.T200TransferFunction1_CSTATE[3];
+_rtXdot->T200TransferFunction1_CSTATE[1] = sim_ROV_v0_R2018b_X.T200TransferFunction1_CSTATE[0];
+_rtXdot->T200TransferFunction1_CSTATE[2] = sim_ROV_v0_R2018b_X.T200TransferFunction1_CSTATE[1];
+_rtXdot->T200TransferFunction1_CSTATE[3] = sim_ROV_v0_R2018b_X.T200TransferFunction1_CSTATE[2];
+_rtXdot->T200TransferFunction1_CSTATE[0] += sim_ROV_v0_R2018b_B.DeadZone[0];
+/* {S!d940}ForcingFunction for TransferFcn: '<S20>/T200 Transfer Function 2' */
+_rtXdot->T200TransferFunction2_CSTATE[0] = sim_ROV_v0_R2018b_P.T200TransferFunction2_A[0] * sim_ROV_v0_R2018b_X.T200TransferFunction2_CSTATE[0];
+_rtXdot->T200TransferFunction2_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction2_A[1] * sim_ROV_v0_R2018b_X.T200TransferFunction2_CSTATE[1];
+_rtXdot->T200TransferFunction2_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction2_A[2] * sim_ROV_v0_R2018b_X.T200TransferFunction2_CSTATE[2];
+_rtXdot->T200TransferFunction2_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction2_A[3] * sim_ROV_v0_R2018b_X.T200TransferFunction2_CSTATE[3];
+_rtXdot->T200TransferFunction2_CSTATE[1] = sim_ROV_v0_R2018b_X.T200TransferFunction2_CSTATE[0];
+_rtXdot->T200TransferFunction2_CSTATE[2] = sim_ROV_v0_R2018b_X.T200TransferFunction2_CSTATE[1];
+_rtXdot->T200TransferFunction2_CSTATE[3] = sim_ROV_v0_R2018b_X.T200TransferFunction2_CSTATE[2];
+_rtXdot->T200TransferFunction2_CSTATE[0] += sim_ROV_v0_R2018b_B.DeadZone[1];
+/* {S!d942}ForcingFunction for TransferFcn: '<S20>/T200 Transfer Function 3' */
+_rtXdot->T200TransferFunction3_CSTATE[0] = sim_ROV_v0_R2018b_P.T200TransferFunction3_A[0] * sim_ROV_v0_R2018b_X.T200TransferFunction3_CSTATE[0];
+_rtXdot->T200TransferFunction3_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction3_A[1] * sim_ROV_v0_R2018b_X.T200TransferFunction3_CSTATE[1];
+_rtXdot->T200TransferFunction3_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction3_A[2] * sim_ROV_v0_R2018b_X.T200TransferFunction3_CSTATE[2];
+_rtXdot->T200TransferFunction3_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction3_A[3] * sim_ROV_v0_R2018b_X.T200TransferFunction3_CSTATE[3];
+_rtXdot->T200TransferFunction3_CSTATE[1] = sim_ROV_v0_R2018b_X.T200TransferFunction3_CSTATE[0];
+_rtXdot->T200TransferFunction3_CSTATE[2] = sim_ROV_v0_R2018b_X.T200TransferFunction3_CSTATE[1];
+_rtXdot->T200TransferFunction3_CSTATE[3] = sim_ROV_v0_R2018b_X.T200TransferFunction3_CSTATE[2];
+_rtXdot->T200TransferFunction3_CSTATE[0] += sim_ROV_v0_R2018b_B.DeadZone[2];
+/* {S!d944}ForcingFunction for TransferFcn: '<S20>/T200 Transfer Function 4' */
+_rtXdot->T200TransferFunction4_CSTATE[0] = sim_ROV_v0_R2018b_P.T200TransferFunction4_A[0] * sim_ROV_v0_R2018b_X.T200TransferFunction4_CSTATE[0];
+_rtXdot->T200TransferFunction4_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction4_A[1] * sim_ROV_v0_R2018b_X.T200TransferFunction4_CSTATE[1];
+_rtXdot->T200TransferFunction4_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction4_A[2] * sim_ROV_v0_R2018b_X.T200TransferFunction4_CSTATE[2];
+_rtXdot->T200TransferFunction4_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction4_A[3] * sim_ROV_v0_R2018b_X.T200TransferFunction4_CSTATE[3];
+_rtXdot->T200TransferFunction4_CSTATE[1] = sim_ROV_v0_R2018b_X.T200TransferFunction4_CSTATE[0];
+_rtXdot->T200TransferFunction4_CSTATE[2] = sim_ROV_v0_R2018b_X.T200TransferFunction4_CSTATE[1];
+_rtXdot->T200TransferFunction4_CSTATE[3] = sim_ROV_v0_R2018b_X.T200TransferFunction4_CSTATE[2];
+_rtXdot->T200TransferFunction4_CSTATE[0] += sim_ROV_v0_R2018b_B.DeadZone[3];
+/* {S!d946}ForcingFunction for TransferFcn: '<S20>/T200 Transfer Function 5' */
+_rtXdot->T200TransferFunction5_CSTATE[0] = sim_ROV_v0_R2018b_P.T200TransferFunction5_A[0] * sim_ROV_v0_R2018b_X.T200TransferFunction5_CSTATE[0];
+_rtXdot->T200TransferFunction5_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction5_A[1] * sim_ROV_v0_R2018b_X.T200TransferFunction5_CSTATE[1];
+_rtXdot->T200TransferFunction5_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction5_A[2] * sim_ROV_v0_R2018b_X.T200TransferFunction5_CSTATE[2];
+_rtXdot->T200TransferFunction5_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction5_A[3] * sim_ROV_v0_R2018b_X.T200TransferFunction5_CSTATE[3];
+_rtXdot->T200TransferFunction5_CSTATE[1] = sim_ROV_v0_R2018b_X.T200TransferFunction5_CSTATE[0];
+_rtXdot->T200TransferFunction5_CSTATE[2] = sim_ROV_v0_R2018b_X.T200TransferFunction5_CSTATE[1];
+_rtXdot->T200TransferFunction5_CSTATE[3] = sim_ROV_v0_R2018b_X.T200TransferFunction5_CSTATE[2];
+_rtXdot->T200TransferFunction5_CSTATE[0] += sim_ROV_v0_R2018b_B.DeadZone[4];
+/* {S!d948}ForcingFunction for TransferFcn: '<S20>/T200 Transfer Function 6' */
+_rtXdot->T200TransferFunction6_CSTATE[0] = sim_ROV_v0_R2018b_P.T200TransferFunction6_A[0] * sim_ROV_v0_R2018b_X.T200TransferFunction6_CSTATE[0];
+_rtXdot->T200TransferFunction6_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction6_A[1] * sim_ROV_v0_R2018b_X.T200TransferFunction6_CSTATE[1];
+_rtXdot->T200TransferFunction6_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction6_A[2] * sim_ROV_v0_R2018b_X.T200TransferFunction6_CSTATE[2];
+_rtXdot->T200TransferFunction6_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction6_A[3] * sim_ROV_v0_R2018b_X.T200TransferFunction6_CSTATE[3];
+_rtXdot->T200TransferFunction6_CSTATE[1] = sim_ROV_v0_R2018b_X.T200TransferFunction6_CSTATE[0];
+_rtXdot->T200TransferFunction6_CSTATE[2] = sim_ROV_v0_R2018b_X.T200TransferFunction6_CSTATE[1];
+_rtXdot->T200TransferFunction6_CSTATE[3] = sim_ROV_v0_R2018b_X.T200TransferFunction6_CSTATE[2];
+_rtXdot->T200TransferFunction6_CSTATE[0] += sim_ROV_v0_R2018b_B.DeadZone[5];
+/* {S!d950}ForcingFunction for TransferFcn: '<S20>/T200 Transfer Function 7' */
+_rtXdot->T200TransferFunction7_CSTATE[0] = sim_ROV_v0_R2018b_P.T200TransferFunction7_A[0] * sim_ROV_v0_R2018b_X.T200TransferFunction7_CSTATE[0];
+_rtXdot->T200TransferFunction7_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction7_A[1] * sim_ROV_v0_R2018b_X.T200TransferFunction7_CSTATE[1];
+_rtXdot->T200TransferFunction7_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction7_A[2] * sim_ROV_v0_R2018b_X.T200TransferFunction7_CSTATE[2];
+_rtXdot->T200TransferFunction7_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction7_A[3] * sim_ROV_v0_R2018b_X.T200TransferFunction7_CSTATE[3];
+_rtXdot->T200TransferFunction7_CSTATE[1] = sim_ROV_v0_R2018b_X.T200TransferFunction7_CSTATE[0];
+_rtXdot->T200TransferFunction7_CSTATE[2] = sim_ROV_v0_R2018b_X.T200TransferFunction7_CSTATE[1];
+_rtXdot->T200TransferFunction7_CSTATE[3] = sim_ROV_v0_R2018b_X.T200TransferFunction7_CSTATE[2];
+_rtXdot->T200TransferFunction7_CSTATE[0] += sim_ROV_v0_R2018b_B.DeadZone[6];
+/* {S!d952}ForcingFunction for TransferFcn: '<S20>/T200 Transfer Function 8' */
+_rtXdot->T200TransferFunction8_CSTATE[0] = sim_ROV_v0_R2018b_P.T200TransferFunction8_A[0] * sim_ROV_v0_R2018b_X.T200TransferFunction8_CSTATE[0];
+_rtXdot->T200TransferFunction8_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction8_A[1] * sim_ROV_v0_R2018b_X.T200TransferFunction8_CSTATE[1];
+_rtXdot->T200TransferFunction8_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction8_A[2] * sim_ROV_v0_R2018b_X.T200TransferFunction8_CSTATE[2];
+_rtXdot->T200TransferFunction8_CSTATE[0] += sim_ROV_v0_R2018b_P.T200TransferFunction8_A[3] * sim_ROV_v0_R2018b_X.T200TransferFunction8_CSTATE[3];
+_rtXdot->T200TransferFunction8_CSTATE[1] = sim_ROV_v0_R2018b_X.T200TransferFunction8_CSTATE[0];
+_rtXdot->T200TransferFunction8_CSTATE[2] = sim_ROV_v0_R2018b_X.T200TransferFunction8_CSTATE[1];
+_rtXdot->T200TransferFunction8_CSTATE[3] = sim_ROV_v0_R2018b_X.T200TransferFunction8_CSTATE[2];
+_rtXdot->T200TransferFunction8_CSTATE[0] += sim_ROV_v0_R2018b_B.DeadZone[7];
+for (i = 0; i < 6; i++) {
+    /* {S!d954}ForcingFunction for Integrator: '<S18>/Integrator' */
+    _rtXdot->Integrator_CSTATE_o[i] = sim_ROV_v0_R2018b_B.BodyAcceleration[i];
+    /* {S!d956}ForcingFunction for Integrator: '<S19>/Integrator' */
+    _rtXdot->Integrator_CSTATE_e[i] = sim_ROV_v0_R2018b_B.eta_dot[i];
+    /* {S!d958}ForcingFunction for Integrator: '<S1>/Integrator' */
+    _rtXdot->Integrator_CSTATE_i[i] = sim_ROV_v0_R2018b_B.TmpSignalConversionAtIntegrator[i];
+}
+/* {S!d960}ForcingFunction for SecondOrderIntegrator: '<S41>/Integrator, Second-Order Limited' */
+if (sim_ROV_v0_R2018b_DW.IntegratorSecondOrderLimited__o[0] == 0) {
+    _rtXdot->IntegratorSecondOrderLimited__a[0] = sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited__a[3];
+    _rtXdot->IntegratorSecondOrderLimited__a[3] = sim_ROV_v0_R2018b_B.Sum2[0];
+}
+if (sim_ROV_v0_R2018b_DW.IntegratorSecondOrderLimited__o[1] == 0) {
+    _rtXdot->IntegratorSecondOrderLimited__a[1] = sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited__a[4];
+    _rtXdot->IntegratorSecondOrderLimited__a[4] = sim_ROV_v0_R2018b_B.Sum2[1];
+}
+if (sim_ROV_v0_R2018b_DW.IntegratorSecondOrderLimited__o[2] == 0) {
+    _rtXdot->IntegratorSecondOrderLimited__a[2] = sim_ROV_v0_R2018b_X.IntegratorSecondOrderLimited__a[5];
+    _rtXdot->IntegratorSecondOrderLimited__a[5] = sim_ROV_v0_R2018b_B.Sum2[2];
+}
+/* {E!d960}End of ForcingFunction for SecondOrderIntegrator: '<S41>/Integrator, Second-Order Limited' */
+%closefile cfgTxt
+%<cfgTxt>
+%<LibSetSystemField(system, "CachedForcingFunctionLocalVars", localVarDecl)>
+%endfunction
+%function ForcingFunctionFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void ForcingFunction(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(2, 7, fcnProtoType)>
+%endfunction

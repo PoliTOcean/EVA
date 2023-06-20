@@ -1,0 +1,622 @@
+%implements s13_b0_ks2xg_TLCInterface "C"
+
+%function getInputAddr_9_21_2_2_0_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator6"
+%endfunction
+
+%function getInput_9_21_2_2_0_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator6"
+%endfunction
+
+%function getInputAddr_9_21_2_2_0_0_1(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator7"
+%endfunction
+
+%function getInput_9_21_2_2_0_0_1(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator7"
+%endfunction
+
+%function getInputAddr_9_21_2_2_0_0_2(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator8"
+%endfunction
+
+%function getInput_9_21_2_2_0_0_2(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator8"
+%endfunction
+
+%function getInputAddr_9_21_2_2_0_0_3(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator"
+%endfunction
+
+%function getInput_9_21_2_2_0_0_3(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator"
+%endfunction
+
+%function getInputAddr_9_21_2_2_0_0_4(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator1"
+%endfunction
+
+%function getInput_9_21_2_2_0_0_4(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator1"
+%endfunction
+
+%function getInputAddr_9_21_2_2_0_0_5(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator2"
+%endfunction
+
+%function getInput_9_21_2_2_0_0_5(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator2"
+%endfunction
+
+%function getInputAddr_9_21_2_2_0_0_6(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator3"
+%endfunction
+
+%function getInput_9_21_2_2_0_0_6(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator3"
+%endfunction
+
+%function getInputAddr_9_21_2_2_0_0_7(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator4"
+%endfunction
+
+%function getInput_9_21_2_2_0_0_7(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator4"
+%endfunction
+
+%function getInputAddr_9_21_2_2_0_0_8(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator5"
+%endfunction
+
+%function getInput_9_21_2_2_0_0_8(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator5"
+%endfunction
+
+%function getInputAddr_9_21_2_2_0_0_9(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.LowpassFilter3.LowpassFilter3"
+%endfunction
+
+%function getInput_9_21_2_2_0_0_9(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.LowpassFilter3.LowpassFilter3"
+%endfunction
+
+%function getInputAddr_9_21_2_2_0_0_10(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.LowpassFilter4.LowpassFilter3"
+%endfunction
+
+%function getInput_9_21_2_2_0_0_10(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.LowpassFilter4.LowpassFilter3"
+%endfunction
+
+%function getInputAddr_9_21_2_2_0_0_11(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.LowpassFilter5.LowpassFilter3"
+%endfunction
+
+%function getInput_9_21_2_2_0_0_11(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.LowpassFilter5.LowpassFilter3"
+%endfunction
+
+%function getDWorkAddr_9_21_2_2_0_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.Scope_PWORK"
+%endfunction
+
+%function getDWork_9_21_2_2_0_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.Scope_PWORK"
+%endfunction
+
+%function getInputAddr_9_24_2_2_1_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Acceleration" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_24_2_2_1_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Acceleration" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_24_2_2_1_1_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.eta_dot" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_24_2_2_1_1_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.eta_dot" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_24_2_2_1_2_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Pose" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_24_2_2_1_2_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Pose" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_24_2_2_1_3_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Acceleration" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_24_2_2_1_3_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Acceleration" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_24_2_2_1_4_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.eta_dot" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_24_2_2_1_4_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.eta_dot" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_24_2_2_1_5_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Pose" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_24_2_2_1_5_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Pose" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWorkAddr_9_24_2_2_1_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.VisualizationKinematics_PWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_9_24_2_2_1_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.VisualizationKinematics_PWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_25_2_2_2_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.ThrustN" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_25_2_2_2_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.ThrustN" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_25_2_2_2_1_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.ForcesMoments" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_25_2_2_2_1_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.ForcesMoments" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWorkAddr_9_25_2_2_2_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.VisualizationPropulsion_PWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_9_25_2_2_2_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.VisualizationPropulsion_PWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_32_2_2_3_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.ForcesMoments" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_32_2_2_3_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.ForcesMoments" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWorkAddr_9_32_2_2_3_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.Scope_PWORK_i"
+%endfunction
+
+%function getDWork_9_32_2_2_3_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.Scope_PWORK_i"
+%endfunction
+
+%function getInputAddr_9_33_2_2_4_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Add" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_33_2_2_4_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Add" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWorkAddr_9_33_2_2_4_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.Scope1_PWORK"
+%endfunction
+
+%function getDWork_9_33_2_2_4_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.Scope1_PWORK"
+%endfunction
+
+%function getInputAddr_9_34_2_2_5_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.F_g" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_34_2_2_5_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.F_g" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWorkAddr_9_34_2_2_5_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.Scope2_PWORK"
+%endfunction
+
+%function getDWork_9_34_2_2_5_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.Scope2_PWORK"
+%endfunction
+
+%function getInputAddr_9_35_2_2_6_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Sum" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_35_2_2_6_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Sum" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWorkAddr_9_35_2_2_6_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.Scope3_PWORK"
+%endfunction
+
+%function getDWork_9_35_2_2_6_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.Scope3_PWORK"
+%endfunction
+
+%function getInputAddr_9_21_2_4_0_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator6"
+%endfunction
+
+%function getInput_9_21_2_4_0_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator6"
+%endfunction
+
+%function getInputAddr_9_21_2_4_0_0_1(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator7"
+%endfunction
+
+%function getInput_9_21_2_4_0_0_1(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator7"
+%endfunction
+
+%function getInputAddr_9_21_2_4_0_0_2(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator8"
+%endfunction
+
+%function getInput_9_21_2_4_0_0_2(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator8"
+%endfunction
+
+%function getInputAddr_9_21_2_4_0_0_3(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator"
+%endfunction
+
+%function getInput_9_21_2_4_0_0_3(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator"
+%endfunction
+
+%function getInputAddr_9_21_2_4_0_0_4(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator1"
+%endfunction
+
+%function getInput_9_21_2_4_0_0_4(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator1"
+%endfunction
+
+%function getInputAddr_9_21_2_4_0_0_5(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator2"
+%endfunction
+
+%function getInput_9_21_2_4_0_0_5(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator2"
+%endfunction
+
+%function getInputAddr_9_21_2_4_0_0_6(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator3"
+%endfunction
+
+%function getInput_9_21_2_4_0_0_6(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator3"
+%endfunction
+
+%function getInputAddr_9_21_2_4_0_0_7(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator4"
+%endfunction
+
+%function getInput_9_21_2_4_0_0_7(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator4"
+%endfunction
+
+%function getInputAddr_9_21_2_4_0_0_8(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Integrator5"
+%endfunction
+
+%function getInput_9_21_2_4_0_0_8(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Integrator5"
+%endfunction
+
+%function getInputAddr_9_21_2_4_0_0_9(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.LowpassFilter3.LowpassFilter3"
+%endfunction
+
+%function getInput_9_21_2_4_0_0_9(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.LowpassFilter3.LowpassFilter3"
+%endfunction
+
+%function getInputAddr_9_21_2_4_0_0_10(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.LowpassFilter4.LowpassFilter3"
+%endfunction
+
+%function getInput_9_21_2_4_0_0_10(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.LowpassFilter4.LowpassFilter3"
+%endfunction
+
+%function getInputAddr_9_21_2_4_0_0_11(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.LowpassFilter5.LowpassFilter3"
+%endfunction
+
+%function getInput_9_21_2_4_0_0_11(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.LowpassFilter5.LowpassFilter3"
+%endfunction
+
+%function getDWorkAddr_9_21_2_4_0_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.Scope_PWORK"
+%endfunction
+
+%function getDWork_9_21_2_4_0_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.Scope_PWORK"
+%endfunction
+
+%function getInputAddr_9_24_2_4_1_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Acceleration" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_24_2_4_1_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Acceleration" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_24_2_4_1_1_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.eta_dot" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_24_2_4_1_1_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.eta_dot" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_24_2_4_1_2_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Pose" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_24_2_4_1_2_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Pose" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_24_2_4_1_3_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Acceleration" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_24_2_4_1_3_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Acceleration" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_24_2_4_1_4_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.eta_dot" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_24_2_4_1_4_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.eta_dot" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_24_2_4_1_5_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Pose" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_24_2_4_1_5_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Pose" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWorkAddr_9_24_2_4_1_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.VisualizationKinematics_PWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_9_24_2_4_1_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.VisualizationKinematics_PWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_25_2_4_2_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.ThrustN" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_25_2_4_2_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.ThrustN" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_25_2_4_2_1_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.ForcesMoments" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_25_2_4_2_1_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.ForcesMoments" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWorkAddr_9_25_2_4_2_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.VisualizationPropulsion_PWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWork_9_25_2_4_2_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.VisualizationPropulsion_PWORK" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInputAddr_9_32_2_4_3_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.ForcesMoments" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_32_2_4_3_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.ForcesMoments" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWorkAddr_9_32_2_4_3_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.Scope_PWORK_i"
+%endfunction
+
+%function getDWork_9_32_2_4_3_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.Scope_PWORK_i"
+%endfunction
+
+%function getInputAddr_9_33_2_4_4_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Add" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_33_2_4_4_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Add" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWorkAddr_9_33_2_4_4_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.Scope1_PWORK"
+%endfunction
+
+%function getDWork_9_33_2_4_4_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.Scope1_PWORK"
+%endfunction
+
+%function getInputAddr_9_34_2_4_5_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.F_g" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_34_2_4_5_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.F_g" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWorkAddr_9_34_2_4_5_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.Scope2_PWORK"
+%endfunction
+
+%function getDWork_9_34_2_4_5_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.Scope2_PWORK"
+%endfunction
+
+%function getInputAddr_9_35_2_4_6_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_B.Sum" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getInput_9_35_2_4_6_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_B.Sum" + SLibCG_ArrayIndexer(ucv, lcv, sigIdx)
+%endfunction
+
+%function getDWorkAddr_9_35_2_4_6_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "&sim_ROV_v0_R2018b_DW.Scope3_PWORK"
+%endfunction
+
+%function getDWork_9_35_2_4_6_0_0(opaqueBlock, block, lcv, ucv, sigIdx, reim) void
+
+%return "sim_ROV_v0_R2018b_DW.Scope3_PWORK"
+%endfunction
+

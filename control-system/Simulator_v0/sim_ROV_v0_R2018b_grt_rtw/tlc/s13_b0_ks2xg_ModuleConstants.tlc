@@ -1,0 +1,8 @@
+%implements s13_b0_ks2xg_ModuleConstants "C"
+
+%function ModuleConstants(block) Output
+
+
+/* Named constants for MATLAB Function: '<S16>/Normalization' */
+const int32_T sim_ROV_v0_R2018b_CALL_EVENT{-1};
+%endfunction

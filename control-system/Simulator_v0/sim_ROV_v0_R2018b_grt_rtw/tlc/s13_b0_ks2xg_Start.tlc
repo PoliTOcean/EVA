@@ -1,0 +1,52 @@
+%implements s13_b0_ks2xg_Start "C"
+
+%function Start(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%assign tlcSetupRuntimeResourcesFcnOfS9B21 = OpaqueTLCBlockFcn("SetupRuntimeResources", 9, 21, 2, 2, 0)
+%assign tlcSetupRuntimeResourcesFcnOfS9B24 = OpaqueTLCBlockFcn("SetupRuntimeResources", 9, 24, 2, 2, 1)
+%assign tlcSetupRuntimeResourcesFcnOfS9B25 = OpaqueTLCBlockFcn("SetupRuntimeResources", 9, 25, 2, 2, 2)
+%assign tlcSetupRuntimeResourcesFcnOfS9B32 = OpaqueTLCBlockFcn("SetupRuntimeResources", 9, 32, 2, 2, 3)
+%assign tlcSetupRuntimeResourcesFcnOfS9B33 = OpaqueTLCBlockFcn("SetupRuntimeResources", 9, 33, 2, 2, 4)
+%assign tlcSetupRuntimeResourcesFcnOfS9B34 = OpaqueTLCBlockFcn("SetupRuntimeResources", 9, 34, 2, 2, 5)
+%assign tlcSetupRuntimeResourcesFcnOfS9B35 = OpaqueTLCBlockFcn("SetupRuntimeResources", 9, 35, 2, 2, 6)
+%if !WHITE_SPACE(tlcSetupRuntimeResourcesFcnOfS9B21)
+/* SetupRuntimeResources for Scope: '<Root>/Scope' */
+%<tlcSetupRuntimeResourcesFcnOfS9B21>\
+%endif
+%if !WHITE_SPACE(tlcSetupRuntimeResourcesFcnOfS9B24)
+/* SetupRuntimeResources for Scope: '<S6>/Visualization (Kinematics)' */
+%<tlcSetupRuntimeResourcesFcnOfS9B24>\
+%endif
+%if !WHITE_SPACE(tlcSetupRuntimeResourcesFcnOfS9B25)
+/* SetupRuntimeResources for Scope: '<S6>/Visualization (Propulsion)' */
+%<tlcSetupRuntimeResourcesFcnOfS9B25>\
+%endif
+%if !WHITE_SPACE(tlcSetupRuntimeResourcesFcnOfS9B32)
+/* SetupRuntimeResources for Scope: '<S18>/Scope' */
+%<tlcSetupRuntimeResourcesFcnOfS9B32>\
+%endif
+%if !WHITE_SPACE(tlcSetupRuntimeResourcesFcnOfS9B33)
+/* SetupRuntimeResources for Scope: '<S18>/Scope1' */
+%<tlcSetupRuntimeResourcesFcnOfS9B33>\
+%endif
+%if !WHITE_SPACE(tlcSetupRuntimeResourcesFcnOfS9B34)
+/* SetupRuntimeResources for Scope: '<S18>/Scope2' */
+%<tlcSetupRuntimeResourcesFcnOfS9B34>\
+%endif
+%if !WHITE_SPACE(tlcSetupRuntimeResourcesFcnOfS9B35)
+/* SetupRuntimeResources for Scope: '<S18>/Scope3' */
+%<tlcSetupRuntimeResourcesFcnOfS9B35>\
+%endif
+%closefile cfgTxt
+%<cfgTxt>
+%endfunction
+%function StartFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Start(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(2, 2, fcnProtoType)>
+%endfunction

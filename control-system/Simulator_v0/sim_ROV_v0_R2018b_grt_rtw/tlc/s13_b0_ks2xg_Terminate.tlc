@@ -1,0 +1,97 @@
+%implements s13_b0_ks2xg_Terminate "C"
+
+%function Terminate(block, system) Output
+%assign cfgTxt = ""
+%openfile cfgTxt
+%assign localVarDecl = ""
+%assign _modelSS = ""
+
+%if !SLibCGSysFcnIsEmptyForTid(CompiledModel.System[7], "Terminate",0)
+%if SLibCG_SystemFcnArgAccessed("sim_ROV_v0__LowpassFilter3_Term",7,0)
+%assign _modelSS = RTMGetModelSSFromIR()
+%endif
+
+%<SLibCGIRGenReusableSysCall("sim_ROV_v0__LowpassFilter3_Term", ["%<_modelSS>", "&sim_ROV_v0_R2018b_DW.LowpassFilter3"], 7, 0, 18, 0, 18, 9)>\
+%assign ss = ::CompiledModel.System[7]
+%if !LibSystemIsInlined(ss)
+;
+%else
+\
+%endif
+%endif
+%if !SLibCGSysFcnIsEmptyForTid(CompiledModel.System[7], "Terminate",0)
+%if SLibCG_SystemFcnArgAccessed("sim_ROV_v0__LowpassFilter3_Term",7,0)
+%assign _modelSS = RTMGetModelSSFromIR()
+%endif
+
+%<SLibCGIRGenReusableSysCall("sim_ROV_v0__LowpassFilter3_Term", ["%<_modelSS>", "&sim_ROV_v0_R2018b_DW.LowpassFilter4"], 7, 1, 18, 0, 18, 9)>\
+%assign ss = ::CompiledModel.System[7]
+%if !LibSystemIsInlined(ss)
+;
+%else
+\
+%endif
+%endif
+%if !SLibCGSysFcnIsEmptyForTid(CompiledModel.System[7], "Terminate",0)
+%if SLibCG_SystemFcnArgAccessed("sim_ROV_v0__LowpassFilter3_Term",7,0)
+%assign _modelSS = RTMGetModelSSFromIR()
+%endif
+
+%<SLibCGIRGenReusableSysCall("sim_ROV_v0__LowpassFilter3_Term", ["%<_modelSS>", "&sim_ROV_v0_R2018b_DW.LowpassFilter5"], 7, 2, 18, 0, 18, 9)>\
+%assign ss = ::CompiledModel.System[7]
+%if !LibSystemIsInlined(ss)
+;
+%else
+\
+%endif
+%endif
+%if !SLibCGSysFcnIsEmptyForTid(CompiledModel.System[6], "Terminate",0)
+%if SLibCG_SystemFcnArgAccessed("sim_ROV_v0_R_LowpassFilter_Term",6,0)
+%assign _modelSS = RTMGetModelSSFromIR()
+%endif
+
+%<SLibCGIRGenReusableSysCall("sim_ROV_v0_R_LowpassFilter_Term", ["%<_modelSS>", "&sim_ROV_v0_R2018b_DW.LowpassFilter"], 6, 0, 18, 0, 18, 9)>\
+%assign ss = ::CompiledModel.System[6]
+%if !LibSystemIsInlined(ss)
+;
+%else
+\
+%endif
+%endif
+%if !SLibCGSysFcnIsEmptyForTid(CompiledModel.System[6], "Terminate",0)
+%if SLibCG_SystemFcnArgAccessed("sim_ROV_v0_R_LowpassFilter_Term",6,0)
+%assign _modelSS = RTMGetModelSSFromIR()
+%endif
+
+%<SLibCGIRGenReusableSysCall("sim_ROV_v0_R_LowpassFilter_Term", ["%<_modelSS>", "&sim_ROV_v0_R2018b_DW.LowpassFilter1"], 6, 1, 18, 0, 18, 9)>\
+%assign ss = ::CompiledModel.System[6]
+%if !LibSystemIsInlined(ss)
+;
+%else
+\
+%endif
+%endif
+%if !SLibCGSysFcnIsEmptyForTid(CompiledModel.System[6], "Terminate",0)
+%if SLibCG_SystemFcnArgAccessed("sim_ROV_v0_R_LowpassFilter_Term",6,0)
+%assign _modelSS = RTMGetModelSSFromIR()
+%endif
+
+%<SLibCGIRGenReusableSysCall("sim_ROV_v0_R_LowpassFilter_Term", ["%<_modelSS>", "&sim_ROV_v0_R2018b_DW.LowpassFilter2"], 6, 2, 18, 0, 18, 9)>\
+%assign ss = ::CompiledModel.System[6]
+%if !LibSystemIsInlined(ss)
+;
+%else
+\
+%endif
+%endif
+%closefile cfgTxt
+%<cfgTxt>
+%endfunction
+%function TerminateFcnProtoType(block, system) Output
+%assign fcnProtoType = ""
+%openfile fcnProtoType
+static void Terminate(\
+%assign comma = ""
+%closefile fcnProtoType
+%<SLibCG_SetFcnProtoType(2, 8, fcnProtoType)>
+%endfunction
