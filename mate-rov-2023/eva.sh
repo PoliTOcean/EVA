@@ -17,6 +17,7 @@ function run_x_wait_y
 
 alias shutdown="ssh -t prova@10.0.0.254 sudo poweroff"
 alias get_ip="nmap -sP 10.0.0.*"
+alias nucleo_upload="scp /data/git-repos/EVA/firmware/nucleo_pid/.pio/build/nucleo_l432kc/firmware.bin prova@10.0.0.254:/media/prova/NODE_L432KC"
 
 function help
 {
@@ -27,6 +28,7 @@ function help
     echo "   - sensors"
     echo "   - commands"
     echo "   - components"
+    echo "   - debug"
     echo "  get_ip"
     echo "  arm"
     echo "   - calibrate"
@@ -36,6 +38,7 @@ function help
     echo "   - rotate_cw"
     echo "   - open_claw"
     echo "   - close_claw"
+    echo "  nucleo_upload"
 }
 
 function gui

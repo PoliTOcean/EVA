@@ -104,14 +104,14 @@ void setup() {
   // Initialize pressure sensor
   // Returns true if initialization was successful
   // We can't continue with the rest of the program unless we can initialize the sensor
-  while (!sensor.init()) {
+  while (!sensor.begin()) {
     //Serial.println("Pressure sensor init failed!");
     //Serial.println("Are SDA/SCL connected correctly?");
     //Serial.println("Blue Robotics Bar30: White=SDA, Green=SCL");
     //Serial.println("\n\n\n");
     delay(5000);
   }
-  sensor.setFluidDensity(1023); // kg/m^3 (freshwater, 1029 for seawater)
+  sensor.setFluidDensity(997); // kg/m^3 (freshwater, 1029 for seawater)
   //Serial.println("aa");
 }
 
@@ -164,7 +164,7 @@ void loop() {
   sprintf(pressure_packet,
           "{\"depth\":%s}",
           //String(sensor.pressure()).c_str(),
-          String((sensor.depth() - 189)/20).c_str());
+          String(sensor.depth()).c_str());
 
   //Serial.println(pressure_packet);
 
