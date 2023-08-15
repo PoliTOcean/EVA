@@ -104,7 +104,7 @@ void setup() {
   // Initialize pressure sensor
   // Returns true if initialization was successful
   // We can't continue with the rest of the program unless we can initialize the sensor
-  while (!sensor.begin()) {
+  while (!sensor.init()) {
     //Serial.println("Pressure sensor init failed!");
     //Serial.println("Are SDA/SCL connected correctly?");
     //Serial.println("Blue Robotics Bar30: White=SDA, Green=SCL");

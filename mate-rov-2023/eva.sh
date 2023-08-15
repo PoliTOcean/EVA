@@ -15,19 +15,22 @@ function run_x_wait_y
 # commands
 ################################################################################
 
-alias shutdown="ssh -t prova@10.0.0.254 sudo poweroff"
+alias shutdown_eva="ssh -t prova@10.0.0.254 sudo poweroff"
+alias shutdown_control="ssh politocean@10.0.0.253 \"(sleep 30 && sudo shutdown now)&\"; shutdown now"
 alias get_ip="nmap -sP 10.0.0.*"
 alias nucleo_upload="scp /data/git-repos/EVA/firmware/nucleo_pid/.pio/build/nucleo_l432kc/firmware.bin prova@10.0.0.254:/media/prova/NODE_L432KC"
 
 function help
 {
     echo "commands:"
-    echo "  shutdown"
+    echo "  shutdown_eva"
+    echo "  shutdown_control"
     echo "  gui"
     echo "  watch"
     echo "   - sensors"
     echo "   - commands"
     echo "   - components"
+    echo "   - status"
     echo "   - debug"
     echo "  get_ip"
     echo "  arm"
@@ -43,9 +46,12 @@ function help
 
 function gui
 {
-    cd /data/git-repos/EVA/gui && workon eva && python3 main.py
+    #cd /data/git-repos/EVA/gui && workon eva && python3 main.py
+    #read -p "Premere invio per chiudere..."
+    #deactivate
+
+    cd /home/politocean/eva/gui && python3 main.py
     read -p "Premere invio per chiudere..."
-    deactivate
 }
 
 function watch
@@ -58,10 +64,10 @@ function arm
 
     if [[ $1 == "calibrate" ]]; then
     
-        mosquitto_pub -h 10.0.0.254 -t commands/ -m TORQUE_OFF
-        read -p "Muovi il braccio fino al livello più basso che vuoi ottenere (invio per continuare) "
-        mosquitto_pub -h 10.0.0.254 -t commands/ -m TORQUE_ON
-        read -p "Il led dovrebbe diventare giallo (invio per continuare) "
+        #mosquitto_pub -h 10.0.0.254 -t commands/ -m TORQUE_OFF
+        #read -p "Muovi il braccio fino al livello più basso che vuoi ottenere (invio per continuare) "
+        #mosquitto_pub -h 10.0.0.254 -t commands/ -m TORQUE_ON
+        #read -p "Il led dovrebbe diventare giallo (invio per continuare) "
         mosquitto_pub -h 10.0.0.254 -t commands/ -m START_CALIBRATION
         read -p "Il led dovrebbe diventare verde. Il braccio si può ora usare (invio per chiudere) "
     
@@ -88,8 +94,12 @@ function arm
     elif [[ $1 == "close_claw" ]]; then
 
         run_x_wait_y "CLOSE NIPPER" "STOP NIPPER" $2
-        
-   fi
+    
+    else
+
+        echo "Unknown command \"$1\""
+    
+    fi
 }
 
 # prompt
