@@ -37,7 +37,13 @@ make test
 * Never tested on Windows
 
 ## Documentation
-The GUI is developed as a web application where data, such as HTML pages, is fetched via HTTP requests; Real-time information is obtained through WebSocket implementation. Request types are handled by the Flask framework.
+The Graphical User Interface (GUI) is used by the operator to remotely control the ROV and the FLOAT.
+
+It was developed in Python using the Flask framework, which handles HTTP requests, socket connections, MQTT communications and many utilities related to the ROV, as a cross-platform desktop web application. The frontend is built with HTML, CSS, and JavaScript.
+
+The GUI is divided into several sections (ROV, Float, PID, etc.). The one concerning the ROV is split into two sides: on the left, there is the cameras section. On the right side, there is a designated area for displaying plots of sensor data, joystick inputs, and more.
+
+
 ![SCHEMA](./static/IMG/SCHEMA.png)
 ## License
 No license

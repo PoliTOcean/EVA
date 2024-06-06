@@ -1,4 +1,11 @@
 {
+    "mqtt": {
+        "ip": "10.0.0.254:9000",
+        "topics": [
+            "/gui",
+            "/state_commands"
+        ]
+    },
     "cameras": {
         "0": {
             "status": 0,
@@ -14,20 +21,61 @@
         },
         "n_cameras": 3
     },
-    "mqtt": {
-        "ip": "10.0.0.254:8080",
-        "topics": ["/depth"]
-    },
+    "statuses": ["JOYSTICK", "ARMED", "PID"],
     "PID": {
         "1": {
-            "enabled": true,
-            "parameter_1": 40,
-            "parameter_2": 100
+            "enabled": false,
+            "settings": {
+                "denFHeave2": 0.9707346821748989,
+                "numFHeave1": 0.1035893968397062,
+                "numFHeave2": -0.07432407901462731,
+                "denCHeave2": 1.957950722205744,
+                "denCHeave3": -0.9583248488573046,
+                "numCHeave2": 2.731159402758247e-05,
+                "numCHeave3": -2.734087307424701e-05,
+                "cZ_inf": 12777.96561640476,
+                "denFPitch2": 1.842948100065568,
+                "denFPitch3": -0.8509319344544103,
+                "numFPitch2": 0.01645432378158562,
+                "numFPitch3": -0.008470489392742607,
+                "denCPitch2": 1.842948100065568,
+                "denCPitch3": -0.8509319344544103,
+                "numCPitch2": 4.118452858606612e-05,
+                "numCPitch3": -4.157888878087835e-05,
+                "cPITCH_inf": 20245.03104996161,
+                "denCRoll2": 1.843014689206624,
+                "denCRoll3": -0.8510012064159749,
+                "numCRoll2": 5.983821909621034e-05,
+                "numCRoll3": -6.041137943904093e-05,
+                "cROLL_inf": 13934.17620261203
+            }
         },
         "2": {
             "enabled": false,
-            "parameter_1": 90,
-            "parameter_2": 200
+            "settings": {
+                "denFHeave2": 0.0322201,
+                "numFHeave1": 0.1035893968397062,
+                "numFHeave2": -0.07432407901462731,
+                "denCHeave2": 1.957950722205744,
+                "denCHeave3": -0.9583248488573046,
+                "numCHeave2": 2.731159402758247e-05,
+                "numCHeave3": -2.734087307424701e-05,
+                "cZ_inf": 12777.96561640476,
+                "denFPitch2": 1.842948100065568,
+                "denFPitch3": -0.8509319344544103,
+                "numFPitch2": 0.01645432378158562,
+                "numFPitch3": -0.008470489392742607,
+                "denCPitch2": 1.842948100065568,
+                "denCPitch3": -0.8509319344544103,
+                "numCPitch2": 4.118452858606612e-05,
+                "numCPitch3": -4.157888878087835e-05,
+                "cPITCH_inf": 20245.03104996161,
+                "denCRoll2": 1.843014689206624,
+                "denCRoll3": -0.8510012064159749,
+                "numCRoll2": 5.983821909621034e-05,
+                "numCRoll3": -6.041137943904093e-05,
+                "cROLL_inf": 13934.17620261203
+            }
         }
     }
 }

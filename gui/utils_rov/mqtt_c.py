@@ -42,7 +42,7 @@ class MQTTClient():
     def unsubscribe(self, topic):
         self.__client.unsubscribe(topic)
         if topic in self.__callbacks.keys():
-            del self.__calbacks[topic]
+            del self.__callbacks[topic]
     
     def publish(self, topic, payload):
         if self.__status == MQTTStatus.Connected:
@@ -62,7 +62,6 @@ class MQTTClient():
    
     def __on_message(self, mqttc, obj, msg):
         mstr = msg.payload.decode("utf-8")
-
         if msg.topic in self.__callbacks:
             self.__callbacks[msg.topic](mstr)
 

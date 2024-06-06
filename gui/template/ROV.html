@@ -1,15 +1,51 @@
 <div class="wrapper ROV hide">
 <div class="max">
     <div class="div1">
-        <div class="tl">
-            <div id="chart_pres"></div>
-            
+        <div class="indicators">
+            <div id="attitude"></div>
+            <div id="compass"></div>
         </div>
-        <!-- <div class="tl">
-            <div id="chart_temp"></div>
 
+        <div class="container"> 
+            <div class="title">Stopwatch</div>
+            <div class="stopwatch">
+            <div class="display-container">
+                <p id="display">00:00:00:00</p>
+            </div>
+                <div class="buttons">
+                <button id="startButton" onclick="startStopwatch()">Start</button>
+                <button id="resetButton" onclick="resetStopwatch()">Reset</button>
+            </div>
+            </div>
         </div>
-        <div class="tl">
+
+        <div class="sensors">
+            <div class="title">Sensors</div>
+            <div class="sensor" id="sensor_depth">
+                <div class="flex_s">
+                    <img src="{{url_for('static', filename ='SVG/Depth.svg')}}" />
+                    <label>
+                        Depth:
+                    </label>
+                </div>
+                <label id="data_depth">
+                    
+                </label>
+            </div>
+            <div class="sensor" id="sensor_tempExt">
+                <div class="flex_s">
+                    <img src="{{url_for('static', filename ='SVG/temperature.svg')}}" />
+                    <label>
+                        Temperature:
+                    </label>
+                </div>
+                <label id="data_tempExt">
+                    
+                </label>
+            </div>
+        </div>
+
+        <!-- <div class="tl">
             <div id="chart_12v"></div>
 
         </div>
@@ -22,8 +58,8 @@
         <div class="camera_p">
             <div id="c0" class="screen" onclick="switching('camera_0')">
                 <div class="title" >Camera 0</div>
-                <img  id="camera_0" src="http://10.0.0.254:8082/stream" />
-                <!-- <video  id="camera_0" autoplay loop muted src="{{url_for('static',filename= 'rickroll.mp4')}}"type="video/mp4"></video> -->
+                <img  id="camera_0" class="rotate180" src="http://10.0.0.254:8079/stream" />
+                <!-- <video src="{{url_for('static', filename='rain.mp4')}}" muted autoplay loop></video> -->
             </div>
         </div>
     </div>
@@ -31,34 +67,21 @@
         <div class="camera_s">
             <div class="screen" id="c1" onclick="switching('camera_1')">
                 <div class="title" >Camera 1</div>
-                <img  id="camera_1" src="http://10.0.0.254:8081/stream"  />
-                <!-- <video  id="camera_1" autoplay="autoplay" muted loop  src="{{url_for('static', filename='rickroll.mp4')}}" type="video/mp4"></video> -->
+                <img  id="camera_1" class="rotate180" src="http://10.0.0.254:8080/stream"  />
+                <!-- <video src="{{url_for('static', filename='rain.mp4')}}" muted autoplay loop></video> -->
             </div>
-        </div>
+        </div>  
         <div class="camera_s">
             <div id="c2" class="screen" onclick="switching('camera_2')">
                 <div class="title" >Camera 2</div>
-                <img id="camera_2" src="http://10.0.0.254:8083/stream" />
-                <!-- <video  id="camera_2" autoplay loop muted src="{{url_for('static', filename='rickroll.mp4')}}" type="video/mp4"></video> -->
+                <img id="camera_2" src="http://10.0.0.254:8078/stream" />
+                <!-- <video src="{{url_for('static', filename='rain.mp4')}}" muted autoplay loop></video> -->
             </div>
         </div>
     </div>
 
 
     <div class="div4">
-        <!-- <div class="container_prompt"> -->
-            <!-- <div class="title">Prompt</div> -->
-            <!-- <div class="prompt"> -->
-                <!-- <div class="console" id="output"> -->
-                
-                <!-- </div> -->
-                <!-- <div class="consolebody"> -->
-                    <!-- <input type="text" class="input" onkeydown="submit(event, this)" /> -->
-                <!-- </div> -->
-            <!-- </div> -->
-        <!-- </div> -->
-
-
             <div class="container">
                 <div class="title">Camere</div>
                 <div class="elenco">
@@ -82,34 +105,55 @@
             <div class="container">
                 <div class="title">Status</div>
                 <div class="elenco">
-                    <div class="cat status CONTROLLER">
+                    <div class="cat status STATUSES">
                         <label>
                         <span>
-                            Joystick
+                            JOYSTICK
+                        </span>
+                        </label>    
+                    </div>
+                    <div class="cat status STATUSES">
+                        <label>
+                        <span>
+                            ARMED
+                        </span>
+                        </label>    
+                    </div>
+                    <div class="cat status STATUSES">
+                        <label>
+                        <span>
+                            PID
                         </span>
                         </label>    
                     </div>
                 </div>
             </div>
-    </div>
-
-</div>
-</div>
-
-<!-- <div class="zoom hide"></div>
-<div class="max">
-    <div class="container">
-        <div class="parent">
-        </div>
-        <div class="functions">
-            <div class="on_off">
-                <input type="checkbox" id="checkcamera1" checked onclick="onoff('camera_1')"/>
-                <input type="checkbox" id="checkcamera2" checked onclick="onoff('camera_2')"/>
-                <input type="checkbox" id="checkcamera3" checked onclick="onoff('camera_3')"/>
+            <div class="container">
+                <div class="title">Photogrammetry</div>
+                <div class="elenco">
+                    <div class="cat status PHOTO clickable" onclick="startPhotogrammetry(this)">
+                        <label>
+                        <span class="start_stop">
+                            Start
+                        </span>
+                        </label>    
+                    </div>
+                    <div class="cat status">
+                        <label>
+                            <span class="photo_status">
+                                NOT STARTED
+                            </span>
+                        </label>
+                    </div>
+                    <div class="cat status">
+                        <label>
+                            <span class="photo_counter">
+                                0
+                            </span>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div class="terminal">
-                <input type="text" onsubmit="submit()"/>
-            </div>
         </div>
     </div>
-</div> -->
+</div>

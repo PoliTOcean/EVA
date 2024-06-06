@@ -1,18 +1,136 @@
-<div class="wrapper PID hide">
+<div class="wrapper PID hide" id="PID_form">
     <div class="max_pid">
-        <div class="container">
+        <div class="container flex_pid">
+            <div class="up">
 
-            <input type="range" min="0" max="100" value="40" step="1" />
-            <label class="switch">
-                <input type="checkbox" checked>
-                <span class="slider round"></span>
-            </label>
-            <div class="cat status SUBMIT enabled" onclick="submit()">
-                <label>
-                <span>
-                    SUBMIT
-                </span>
-                </label>    
+                <!-- DROPDOWN -->
+                <div class="dropdown">
+                    <div class="select">
+                    <span>Select Gender</span>
+                    <i class="fa fa-chevron-left"></i>
+                    </div>
+                    <input type="hidden">
+                    <ul class="dropdown-menu">
+                    <li >Profile 1</li>
+                    <li >Profile 2</li>
+                    </ul>
+                </div>
+
+
+                <label class="switch">
+                    <input type="checkbox" class="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="list">
+                <div class="un">
+
+                <div class="form">
+                    <p>denFHeave2:</p>
+                    <input id="denFHeave2" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>numFHeave1:</p>
+                    <input id="numFHeave1" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>numFHeave2:</p>
+                    <input id="numFHeave2" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>denCHeave2:</p>
+                    <input id="denCHeave2" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>denCHeave3:</p>
+                    <input id="denCHeave3" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>numCHeave2:</p>
+                    <input id="numCHeave2" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>numCHeave3:</p>
+                    <input id="numCHeave3" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>cZ_inf:</p>
+                    <input id="cZ_inf" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>denFPitch2:</p>
+                    <input id="denFPitch2" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>denFPitch3:</p>
+                    <input id="denFPitch3" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>numFPitch2:</p>
+                    <input id="numFPitch2" class="input" type="number" step="any" placeholder=" " />
+                </div>
+
+                    
+                </div>
+                <div class="do">
+
+
+                <div class="form">
+                    <p>numFPitch3:</p>
+                    <input id="numFPitch3" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>denCPitch2:</p>
+                    <input id="denCPitch2" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>denCPitch3:</p>
+                    <input id="denCPitch3" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>numCPitch2:</p>
+                    <input id="numCPitch2" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>numCPitch3:</p>
+                    <input id="numCPitch3" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>cPITCH_inf:</p>
+                    <input id="cPITCH_inf" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>denCRoll2:</p>
+                    <input id="denCRoll2" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>denCRoll3:</p>
+                    <input id="denCRoll3" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>numCRoll2:</p>
+                    <input id="numCRoll2" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>numCRoll3:</p>
+                    <input id="numCRoll3" class="input" type="number" step="any" placeholder=" " />
+                </div>
+                <div class="form">
+                    <p>cROLL_inf:</p>
+                    <input id="cROLL_inf" class="input" type="number" step="any" placeholder=" " />
+                </div>
+
+
+                </div>
+            </div>
+            <div class="sbm">
+                <div class="cat but SUBMIT disabled" id="sbm_bu" onclick="submit()">
+                    <label>
+                    <span>
+                        SUBMIT
+                    </span>
+                    </label>    
+                </div>
             </div>
         </div>
     </div>

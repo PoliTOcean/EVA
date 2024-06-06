@@ -1,10 +1,8 @@
 from app import app
-from flask import Response, render_template, jsonify, make_response, request
-from flask_socketio import emit
-from utils_rov.controller import ROVController
+from flask import jsonify, make_response
+from utils_rov.main import contr
 import threading
 
-contr = ROVController()
 
 data = {'status': 0, 'isRunning': 0, 'code': 'CONTROLLER'}
 
