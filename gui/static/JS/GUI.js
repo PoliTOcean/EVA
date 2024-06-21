@@ -2,8 +2,8 @@ let info;
 let script = document.currentScript;
 let fullUrl = script.src;
 let jsonUrl = fullUrl.replace("JS/GUI.js", "info.json");
-let pages = ["ROV", "FLOAT", "PID"];
-
+let pages = ["ROV", "FLOAT", "PID", "TASK_1"];
+let stsObj;
 
 // [UTILS]
 async function getRequest(url = '') {
@@ -14,7 +14,7 @@ async function getRequest(url = '') {
             'Accept': 'application/json',
         },
     })
-    return response.json()
+    return response.json();
 }
 
 async function postRequest(url, data) {
@@ -26,19 +26,26 @@ async function postRequest(url, data) {
         },
         body: JSON.stringify(data)
     })
-    return response.json()
+    return response.json();
 }
 
 
 
 // Need this to prevent closing of server
 function keep_alive_server() {
-    let route = "/flaskwebgui-keep-server-alive"
+    let route = "/flaskwebgui-keep-server-alive";
     getRequest(route);
 }
 
 
-// [PAGES]
+// [DYNAMIC PAGES HANDLER]
+async function change(page) {
+    if (page == page_now) return;
+    if (page_now !== "home") document.getElementsByClassName(page_now)[0].classList.toggle("hide");
+    document.getElementsByClassName(page)[0].classList.toggle("hide");
+    page_now = page;
+}
+
 async function loadPages(page) {
     page_now = pages[page];
     const newpage = await (await fetch(page)).text();
@@ -48,18 +55,47 @@ async function loadPages(page) {
     wh.append(html.body.firstChild);
 }
 
-// [CONTROLLER]
+const container = document.querySelector('.window');
+
+const observer = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+            const pid = container.querySelector("#PID_form");
+            const task = container.querySelector("#TASK_1_FORM");
+            // Se l'ultima pagina è pronta, carica i contenuti in tutte le pagine
+            if (task && pid) {
+                ROVLoader();
+                Task1Loader();
+                PIDLoader();
+                observer.disconnect();
+            }
+        }
+    }
+});
+
+observer.observe(container, { childList: true });
+
+
+
+// [STATUSES MANAGMENT]
+
+// * Trasforma il vettore in oggetto 
+
 async function statusController() {
     let response = await fetch("/CONTROLLER/start_status");
     let status = await response.json();
-    const joystick = document.getElementsByClassName("status CONTROLLER")[0];
     console.log(status);
-    if (status['status']) joystick.classList.add("on")
-    else joystick.classList.remove("on");
+    updateStatusesROV({"JOYSTICK": status["status"]});
 }
 
-document.addEventListener('DOMContentLoaded', async function () {
 
+
+
+
+
+// [MAIN]
+
+window.onload = async () => {
     // Force dimensions of window
     let h = window.innerHeight;
     let w = window.innerWidth;
@@ -67,28 +103,26 @@ document.addEventListener('DOMContentLoaded', async function () {
     body.style.width = `${w}px`; 
     body.style.height = `${h}px`;
 
-
-    console.log(jsonUrl)
-
-    // Load Info
-    info = await getRequest(jsonUrl)
-
+    // Load Info and divide
+    info = await getRequest(jsonUrl);
     console.log(info)
+    stsObj = info["statuses"].reduce((obj, key) => {
+        obj[key] = false;
+        return obj;
+    }, {});
+
 
     // Load pages    
     for (let i = 0; i < pages.length; i++) loadPages(pages[i]);
     page_now = "home";
-    
-
-
-   
-    
+       
     // Routines
     let refresh = 2000;
-    setInterval(statusFLOAT, refresh);
+    setInterval(() => statusFLOAT("STATUS"), refresh);
     setInterval(statusController, refresh);
     setInterval(keep_alive_server, refresh + 1000);
-})
+}
+
 
 
 

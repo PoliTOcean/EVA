@@ -1,5 +1,4 @@
 {
     "baudrate": 115200,
-    "port": "/dev/ttyUSB",
-    "portW": "COM"
+    "port": "/dev/ttyUSB"
 }

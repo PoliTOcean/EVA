@@ -20,10 +20,102 @@
         "axes": [
             "LSB-X",
             "LSB-Y",
-            "LT",
             "RSB-X",
             "RSB-Y",
+            "LT",
             "RT"
         ]
+    },
+    "Xbox Series X Controller": {
+        "Darwin" : {
+            "buttons": [
+                "A",
+                "B",
+                "X",
+                "Y",
+                "LB",
+                "RB",
+                "Back",
+                "Start",
+                "GUIDE",
+                "LS",
+                "RS",
+                "D-Pad-Up",
+                "D-Pad-Down",
+                "D-Pad-Left",
+                "D-Pad-Right",
+                "UPLOAD"
+            ],
+            "axes": [
+                "LSB-X",
+                "LSB-Y",
+                "RSB-X",
+                "RSB-Y",
+                "LT",
+                "RT"
+            ]
+        },
+        "Linux": {
+            "buttons": [
+                "A",
+                "B",
+                "X",
+                "Y",
+                "LS",
+                "RS",
+                "LB",
+                "Back",
+                "UPLOAD",
+                "UPLOAD",
+                "UPLOAD",
+                "UPLOAD"
+            ],
+            "axes": [
+                "LSB-X",
+                "LSB-Y",
+                "LT",
+                "RSB-X",
+                "RSB-Y",
+                "RT"
+            ],
+            "joyhat": [
+                "D-Pad-Up",
+                "D-Pad-Down",
+                "D-Pad-Left",
+                "D-Pad-Right"
+            ]
+        }    
+    }, 
+    "Wireless Controller": {
+        "Linux": {
+            "buttons": [
+                "A",
+                "B",
+                "X",
+                "Y",
+                "LS",
+                "RS",
+                "LB",
+                "Back",
+                "UPLOAD",
+                "UPLOAD",
+                "UPLOAD",
+                "UPLOAD"
+            ],
+            "axes": [
+                "LSB-X",
+                "LSB-Y",
+                "LT",
+                "RSB-X",
+                "RSB-Y",
+                "RT"
+            ],
+            "joyhat": [
+                "D-Pad-Up",
+                "D-Pad-Down",
+                "D-Pad-Left",
+                "D-Pad-Right"
+            ]
+        }
     }
 }

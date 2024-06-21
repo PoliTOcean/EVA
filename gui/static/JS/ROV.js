@@ -8,23 +8,17 @@ addEventListener("resize", (event) => {
     body.style.height = `${h}px`;
 });
 
-async function change(page) {
-    if (page == page_now) return;
-    if (page_now !== "home") document.getElementsByClassName(page_now)[0].classList.toggle("hide");
-    document.getElementsByClassName(page)[0].classList.toggle("hide");
-    page_now = page;
-}
 
+// [CAMERA MANAGMENT]
 
 function switching(id) {
     let n_camera = `${id.match(/\d+/)[0]}`;
     if (info["cameras"][n_camera]["status"] == 0) return;
     let z = -1;
-    for (let i = 0; i < info["n_cameras"] && z == -1; i++) if (info["cameras"][`${i}`]["status"] == 0) z = i;
+    for (let i = 0; i < info["cameras"]["n_cameras"] && z == -1; i++) if (info["cameras"][`${i}`]["status"] == 0) z = i;
     let camera_p = document.querySelector(".camera_p");
     let camera_s = document.querySelectorAll(`.camera_s`);
     let target, deploy;
-    console.log(camera_s);
     camera_s.forEach((el) => {
         if (el.firstElementChild.id == `c${n_camera}`) {
             target = el.firstElementChild;
@@ -46,10 +40,85 @@ async function onoff(id) {
     else wh.className += " hide";
 }
 
+// [LOADER INSTRUMENTS]
+let attitude;
+let compass;
 
-function styles(ev){
-    const new_style_element = document.createElement("style");
-    new_style_element.textContent = "html { color: white; }"
-    ev.target.contentDocument.head.appendChild(new_style_element);
+
+const options_instruments = {
+    size: 200, 
+    roll: 0,  
+    pitch: 0, 
+    turn: 0,  
+    heading: 0, 
+    verticalSpeed: 0, 
+    airspeed: 0,
+    altitude: 0, 
+    pressure: 1000,
+    hideBox: true,
+    // LIBRERIE MERDOSE, NON SAPETE GESTIRE NEANCHE UN PATH 
+    imagesDirectory: "/static/SVG",
+};
+
+
+function PIDhandler(pidElement, val) {
+    switch (val) {
+        case 0:
+            pidElement.classList.remove("on");
+            pidElement.classList.remove("stoppable");
+            break;
+        case 1:
+            pidElement.classList.add("stoppable");
+            pidElement.classList.remove("on");
+            break;
+        case 2:
+            pidElement.classList.add("on");
+            pidElement.classList.remove("stoppable");
+            break;
+    }
 }
 
+function updateStatusesROV(obj) {
+    const statuses = document.getElementsByClassName("status STATUSES");
+    Object.keys(obj).forEach((key) => stsObj[key] = obj[key]);
+    Array.from(statuses).forEach((sts, index) => {
+        let txt = sts.querySelector("label span").textContent.trim();
+        if (txt in obj) stsObj[txt] = obj[txt];
+        if (txt == "PID") return PIDhandler(statuses[index], stsObj[txt]); 
+        // Update in DOM
+        if (stsObj[txt]) statuses[index].classList.add("on");
+        else statuses[index].classList.remove("on");
+    });
+}
+
+
+function updateIMU(imuJSON) {
+    attitude.updatePitch(imuJSON["PITCH"]);
+    attitude.updateRoll(imuJSON["ROLL"]);
+    compass.updateHeading(imuJSON["YAW"]);
+}
+
+
+
+function updateSensors(sensorsJSON) {
+    const depth = document.querySelector("#data_depth");
+    const temp = document.querySelector("#data_tempExt");
+    temp.innerHTML = `${parseFloat(sensorsJSON["tempExt"]).toFixed(2)} °C`;
+    depth.innerHTML = `${parseFloat(sensorsJSON["depth"]).toFixed(2)} m`;
+
+}
+
+function ROVLoader() {
+    const attitudeElement = document.querySelector("#attitude");
+    const compassElement = document.querySelector("#compass");
+    attitude = new FlightIndicators(
+        attitudeElement,
+        FlightIndicators.TYPE_ATTITUDE,
+        options_instruments
+    );
+    compass = new FlightIndicators(
+        compassElement,
+        FlightIndicators.TYPE_HEADING,
+        options_instruments
+    );
+}

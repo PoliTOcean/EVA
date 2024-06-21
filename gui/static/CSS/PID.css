@@ -2,4 +2,78 @@
     padding: 10px;
     width: 100%;
     height: 100%;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        width: 30%;
+    }
+}
+
+.up {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    gap: 20px;
+    font-size: 24px;
+}
+
+.input {
+    color: white;
+    height: 25px;
+    font-size: 24px;
+    border: none transparent;
+    outline: none;
+    padding: 3px;
+    background-color: #101214;
+    border-radius: 10px;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.flex_pid {
+    gap: 10px;
+    width: 70%;
+}
+
+.list {
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+    justify-content: center;
+    .un .do {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+
+    }
+}
+
+.sbm {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+#sbm_bu {
+    width: 150px;
 }
