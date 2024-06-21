@@ -25,9 +25,19 @@ static int i2c_read(u8 addr, u8 reg, u8 *data, u32 len);
 static int i2c_write(u8 addr, u8 reg, u8 *data, u32 len);
 int WT61P_begin(char* dev, uint8_t addr);
 void WT61P_read_angle();
+void WT61P_read_acc();
+void WT61P_read_gyro();
+void WT61P_read_all();
 float WT61P_get_roll();
 float WT61P_get_pitch();
 float WT61P_get_yaw();
+float WT61P_get_AX();
+float WT61P_get_AY();
+float WT61P_get_AZ();
+float WT61P_get_GX();
+float WT61P_get_GY();
+float WT61P_get_GZ();
+float WT61P_get_temp();
 
 
 #ifdef __cplusplus

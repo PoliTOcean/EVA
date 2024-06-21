@@ -123,6 +123,19 @@ void WT61P_read_angle(){
 	WitReadReg(Roll, 3);
 }
 
+void WT61P_read_acc(){
+	WitReadReg(AX, 3);
+}
+
+void WT61P_read_gyro(){
+	WitReadReg(GX, 3);
+}
+
+void WT61P_read_all(){
+	WitReadReg(AX, 12);
+}
+
+
 float WT61P_get_roll(){
 	//if(s_cDataUpdate & ANGLE_UPDATE)     s_cDataUpdate &= ~ANGLE_UPDATE;  dovrei leggere tutto insieme e poi settare a 0
 	return sReg[Roll] / 32768.0f * 180.0f;
@@ -134,4 +147,33 @@ float WT61P_get_pitch(){
 
 float WT61P_get_yaw(){
     return sReg[Yaw] / 32768.0f * 180.0f;
+}
+
+float WT61P_get_AX(){
+    return sReg[AX]  / 32768.0f * 16.0f;
+}
+
+float WT61P_get_AY(){
+    return sReg[AY]  / 32768.0f * 16.0f;
+}
+
+float WT61P_get_AZ(){
+    return sReg[AZ]  / 32768.0f * 16.0f;
+}
+
+float WT61P_get_GX(){
+    return sReg[GX]  / 32768.0f * 2000.0f;
+}
+
+float WT61P_get_GY(){
+    return sReg[GY]  / 32768.0f * 2000.0f;
+}
+
+float WT61P_get_GZ(){
+    return sReg[GZ]  / 32768.0f * 2000.0f;
+}
+
+float WT61P_get_temp(){
+	WitReadReg(TEMP, 1);
+	return sReg[TEMP] / 100;
 }
