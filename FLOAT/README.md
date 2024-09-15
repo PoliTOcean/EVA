@@ -34,7 +34,7 @@ The idea is to bring all the complexity on the ESPA and GUI, leaving no trace of
 
 Deploy diagram:
 
-		![[Images/Deploy image.png|500]]
+		![[Images/Deploy_image.png|500]]
 		`Figure 1: Deploy diagram of FLOAT System`
 
 
