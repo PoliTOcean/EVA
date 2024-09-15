@@ -34,8 +34,7 @@ The idea is to bring all the complexity on the ESPA and GUI, leaving no trace of
 
 Deploy diagram:
 
-		![[Images/Deploy_image.png|500]]
-		`Figure 1: Deploy diagram of FLOAT System`
+		![alt text](Images/Deploy_image.png "Figure 1: Deploy diagram of FLOAT System")
 
 
 ##### COMMAND LIFE-CYCLE 
