@@ -34,7 +34,7 @@ The idea is to bring all the complexity on the ESPA and GUI, leaving no trace of
 
 Deploy diagram:
 
-		![[Deploy image.png|500]]
+		![[Images/Deploy image.png|500]]
 		`Figure 1: Deploy diagram of FLOAT System`
 
 
@@ -51,7 +51,7 @@ To maintain consistency with the status stored on the ESPB, and hence with the G
 In the same way, if the acknowledgement fails to be sent due to connection issues, the command is not committed. 
 
 
-![[sd_CS_fresh.png]]
+![[Images/sd_CS_fresh.png]]
 `Figure 2: Sequence diagram of a command execution: CS reads acks by using interrupts (GUI state is fresh)`
 
 
@@ -71,7 +71,7 @@ Periodic polling remains a legit choice in case the CS cannot exploit interrupts
 In some cases, connection losses can undermine consistency between the feedback of the ESPB (either they are polled or real time) and the real current FLOAT state (consistency threats for each FLOAT state later). 
 
 
-![[sd_CS_ESPB_stale.png]]
+![[Images/sd_CS_ESPB_stale.png]]
 `Figure 3: Sequence diagram of a command execution: CS reads stale state by requesting it to ESPB`
 
 ##### GLOSSARY 
@@ -123,7 +123,7 @@ ESPB response to **STATUS** command is composed by three parts of information: E
 
 > ==**WARNING:**== 
 > If committing a profile automatically, the relative acknowledgement will likely fail due to connection loss. The profile is committed anyway as it is generated from connection loss in the first place, but the GUI may not have mean to detect it. So it will likely read an **inconsistent** **idle** **status** (CONNECTED or CONNECTED_W_DATA) until FLOAT is at water level with a stable WiFi connection. In the meantime the command commits will fail, for connection loss or because the FLOAT is underwater. Anyway WiFi connection state can be detected by the STATUS command, hence giving feedback on status consistency.
-> ![[sd_AM_inconsistency.png]]
+> ![[Images/sd_AM_inconsistency.png]]
 > `Figure 4: Sequence diagram of an autonomously committed profile`
 
 - **AM state**:
