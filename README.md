@@ -4,4 +4,4 @@
 </p>
 
 ## Components
-The firmware for a specific component can be find in [this](firmware/) directory
+The firmware for a specific component can be find in [this](firmware/) directory.
